@@ -1,22 +1,22 @@
-import React from 'react'
-import { View, Modal } from 'react-native'
-import DebugConfig from '../../App/Config/DebugConfig'
-import RoundedButton from '../../App/Components/RoundedButton'
-import PresentationScreen from './PresentationScreen'
+import React from 'react';
+import {View, Modal} from 'react-native';
+import DebugConfig from '../../App/Config/DebugConfig';
+import RoundedButton from '../../App/Components/RoundedButton';
+import PresentationScreen from './PresentationScreen';
 
 export default class DevscreensButton extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      showModal: false
-    }
+      showModal: false,
+    };
   }
 
   toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal })
-  }
+    this.setState({showModal: !this.state.showModal});
+  };
 
-  render () {
+  render() {
     if (DebugConfig.showDevScreens) {
       return (
         <View>
@@ -26,12 +26,12 @@ export default class DevscreensButton extends React.Component {
           <Modal
             visible={this.state.showModal}
             onRequestClose={this.toggleModal}>
-            <PresentationScreen screenProps={{ toggle: this.toggleModal }} />
+            <PresentationScreen screenProps={{toggle: this.toggleModal}} />
           </Modal>
         </View>
-      )
+      );
     } else {
-      return <View />
+      return <View />;
     }
   }
 }
