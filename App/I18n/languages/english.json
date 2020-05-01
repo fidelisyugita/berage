@@ -5,6 +5,7 @@
    "inbox": "Inbox",
    "profile": "Profile",
 
+   "searchPlaceholder": "Find food, places, or services..",
    "popular": "Popular",
    "recommended": "Recommended",
    "seeAll": "See All",
@@ -28,6 +29,6 @@
    "tryAgain": "Try again",
 
    "login": "Login",
-   "logout": "Logout"
+   "logout": "Logout",
 
 }

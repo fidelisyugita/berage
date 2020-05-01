@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {ScrollView, Text, Image, View, TouchableHighlight} from 'react-native';
 import DevscreensButton from '../../ignite/DevScreens/DevscreensButton.js';
 
-import {Images} from '../Themes';
 import {Scale} from '../Transforms';
 import Logo from '../Images/svg/Logo.svg';
 

@@ -5,8 +5,8 @@ const {width, height} = Dimensions.get('window');
 
 // Used via Metrics.baseMargin
 const metrics = {
-  marginHorizontal: Scale(16),
-  marginVertical: Scale(18),
+  marginHorizontal: Scale(12),
+  marginVertical: Scale(16),
   section: Scale(25),
   baseMargin: Scale(10),
   doubleBaseMargin: Scale(20),
@@ -17,6 +17,7 @@ const metrics = {
   screenHeight: width < height ? height : width,
   navBarHeight: Platform.OS === 'ios' ? Scale(64) : Scale(54),
   buttonRadius: Scale(4),
+  circleRadius: 50,
   icons: {
     tiny: Scale(20),
     small: Scale(24),
