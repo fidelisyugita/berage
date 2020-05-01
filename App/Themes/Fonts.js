@@ -1,60 +1,44 @@
+import {Scale} from '../Transforms';
+
 const type = {
   base: 'Avenir-Book',
   bold: 'Avenir-Black',
-  emphasis: 'HelveticaNeue-Italic'
-}
+  emphasis: 'HelveticaNeue-Italic',
+};
 
 const size = {
-  h1: 38,
-  h2: 34,
-  h3: 30,
-  h4: 26,
-  h5: 20,
-  h6: 19,
-  input: 18,
-  regular: 17,
-  medium: 14,
-  small: 12,
-  tiny: 8.5
-}
+  tiny: Scale(8),
+  small: Scale(10),
+  medium: Scale(12),
+  large: Scale(14),
+  xl: Scale(16),
+};
 
 const style = {
-  h1: {
+  tiny: {
     fontFamily: type.base,
-    fontSize: size.h1
+    fontSize: size.tiny,
   },
-  h2: {
-    fontWeight: 'bold',
-    fontSize: size.h2
-  },
-  h3: {
-    fontFamily: type.emphasis,
-    fontSize: size.h3
-  },
-  h4: {
+  small: {
     fontFamily: type.base,
-    fontSize: size.h4
+    fontSize: size.small,
   },
-  h5: {
+  medium: {
     fontFamily: type.base,
-    fontSize: size.h5
+    fontSize: size.medium,
   },
-  h6: {
-    fontFamily: type.emphasis,
-    fontSize: size.h6
-  },
-  normal: {
+  large: {
     fontFamily: type.base,
-    fontSize: size.regular
+    fontSize: size.large,
   },
-  description: {
+  xl: {
     fontFamily: type.base,
-    fontSize: size.medium
-  }
-}
+    fontSize: size.xl,
+  },
+};
 
 export default {
   type,
   size,
-  style
-}
+  style,
+};

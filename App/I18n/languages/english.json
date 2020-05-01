@@ -1,26 +1,33 @@
 {
-   "signIn": "Sign In",
-   "logOut": "Log Out",
-   "loginLogoutExampleTitle": "Login/Logout Redux + Sagas Example",
-   "progressiveImageComponent": "Progressive Image Component",
-   "api": "API",
-   "locale": "I18n Locale",
-   "rnVectorIcons": "RN Vector Icons",
-   "loginWithFacebook": "Login with Facebook",
-   "rni18n": "RN i18n",
-   "igniteGenerated": "Ignite Generate Screens",
-   "forgotPassword": "Forgot Password",
-   "username": "Username",
-   "password": "Password",
-   "cancel": "Cancel",
-   "welcome": "Welcome",
+   "explore": "Explore",
+   "saved": "Saved",
+   "chat": "Chat",
+   "inbox": "Inbox",
+   "profile": "Profile",
+
+   "popular": "Popular",
+   "recommended": "Recommended",
+   "seeAll": "See All",
+   
+   "viewProfile": "View profile",
+
+   "hosting": "Hosting",
+   "yourPlaces": "Your places",
+   "listYourSpace": "List your space",
+
+   "support": "Support",
+   "help": "Help",
+   "feedback": "Feedback",
+
+   "legal": "Legal",
+   "termsOfService": "Terms of Service",
+   "privacyPolicy": "Privacy Policy",
+
+   "locationPermissionDenied": "Location permission denied",
+   "cameraPermissionDenied": "Camera permission denied",
+   "tryAgain": "Try again",
+
    "login": "Login",
-   "tempIndicator": "F",
-   "componentExamples": "Component Examples",
-   "usageExamples": "Usage Examples",
-   "apiTesting": "API Testing",
-   "themeSettings": "Theme Settings",
-   "deviceDetails": "Device Details",
-   "noItems": "No Items",
-   "search": "Search"
+   "logout": "Logout"
+
 }

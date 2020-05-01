@@ -1,34 +1,39 @@
-import {Dimensions, Platform} from 'react-native'
+import {Dimensions, Platform} from 'react-native';
+import {Scale} from '../Transforms';
 
-const { width, height } = Dimensions.get('window')
+const {width, height} = Dimensions.get('window');
 
 // Used via Metrics.baseMargin
 const metrics = {
-  marginHorizontal: 10,
-  marginVertical: 10,
-  section: 25,
-  baseMargin: 10,
-  doubleBaseMargin: 20,
-  smallMargin: 5,
-  doubleSection: 50,
+  marginHorizontal: Scale(16),
+  marginVertical: Scale(18),
+  section: Scale(25),
+  baseMargin: Scale(10),
+  doubleBaseMargin: Scale(20),
+  smallMargin: Scale(5),
+  doubleSection: Scale(50),
   horizontalLineHeight: 1,
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
-  navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
-  buttonRadius: 4,
+  navBarHeight: Platform.OS === 'ios' ? Scale(64) : Scale(54),
+  buttonRadius: Scale(4),
   icons: {
-    tiny: 15,
-    small: 20,
-    medium: 30,
-    large: 45,
-    xl: 50
+    tiny: Scale(20),
+    small: Scale(24),
+    medium: Scale(28),
+    large: Scale(32),
+    xl: Scale(36),
   },
   images: {
-    small: 20,
-    medium: 40,
-    large: 60,
-    logo: 200
-  }
-}
+    small: Scale(20),
+    medium: Scale(40),
+    large: Scale(60),
+  },
+  avatars: {
+    small: Scale(20),
+    medium: Scale(40),
+    large: Scale(60),
+  },
+};
 
-export default metrics
+export default metrics;
