@@ -8,10 +8,10 @@ const type = {
 
 const size = {
   tiny: Scale(8),
-  small: Scale(10),
-  medium: Scale(12),
-  large: Scale(14),
-  xl: Scale(16),
+  small: Scale(11),
+  medium: Scale(14),
+  large: Scale(17),
+  xl: Scale(20),
 };
 
 const style = {
