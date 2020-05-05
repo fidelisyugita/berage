@@ -31,6 +31,15 @@ const items = [
       'https://i1.wp.com/digital-photography-school.com/wp-content/uploads/2016/06/Rachel-Korinek-Food-Photographer-DPS-Hero-Angle-12.jpg',
     status: 'Open',
     distance: '1 km',
+    categories: ['Workshop', 'Machine'],
+  },
+  {
+    name: 'Dapoer Fezdaf',
+    image:
+      'https://previews.123rf.com/images/dndavis/dndavis1410/dndavis141000039/33021440-delicious-street-food-of-barbecued-lamb-shish-kebabs-on-the-streets-of-guilin-guangxi-autonomous-reg.jpg',
+    status: 'Closed',
+    distance: '1 km',
+    categories: ['Food', 'Drink', 'Music'],
   },
   {
     name: 'Tarsius',
@@ -38,13 +47,7 @@ const items = [
       'https://thumbs.dreamstime.com/b/photo-steak-brussel-sprout-will-be-great-menus-advertisements-other-places-where-food-photography-needed-129217121.jpg',
     status: 'Open',
     distance: '2 km',
-  },
-  {
-    name: 'Gorong-gorong',
-    image:
-      'https://previews.123rf.com/images/dndavis/dndavis1410/dndavis141000039/33021440-delicious-street-food-of-barbecued-lamb-shish-kebabs-on-the-streets-of-guilin-guangxi-autonomous-reg.jpg',
-    status: 'Closed',
-    distance: '1 km',
+    categories: ['Food', 'Drink'],
   },
 ];
 
@@ -55,7 +58,7 @@ export default class ExploreScreen extends Component {
         <View style={ApplicationStyles.screen.section}>
           <View
             style={{
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.snow,
               borderRadius: Metrics.circleRadius,
               flexDirection: 'row',
               alignItems: 'center',
@@ -67,7 +70,11 @@ export default class ExploreScreen extends Component {
               color={Colors.text}
             />
             <TextInput
-              style={{flex: 1, marginLeft: Metrics.smallMargin}}
+              style={{
+                ...Fonts.style.medium,
+                flex: 1,
+                marginLeft: Metrics.smallMargin,
+              }}
               placeholder={I18n.t('searchPlaceholder')}
             />
           </View>

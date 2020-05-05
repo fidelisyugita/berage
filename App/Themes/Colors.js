@@ -23,7 +23,6 @@ const colors = {
   banner: '#5F3E63',
   text: '#E0D7E5',
 
-  white: '#FFFFFF',
 };
 
 export default colors;

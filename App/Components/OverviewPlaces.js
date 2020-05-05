@@ -15,9 +15,9 @@ const OverviewPlaces = props => {
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text style={Fonts.style.medium}>{title}</Text>
+        <Text style={Fonts.style.large3}>{title}</Text>
         <TouchableOpacity onPress={onPress}>
-          <Text style={Fonts.style.medium}>{I18n.t('seeAll')}</Text>
+          <Text style={Fonts.style.large3}>{I18n.t('seeAll')}</Text>
         </TouchableOpacity>
       </View>
       {children}

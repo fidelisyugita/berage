@@ -1,4 +1,5 @@
 import {Colors, Fonts, Metrics} from '../Themes';
+import {Scale} from '../Transforms';
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
@@ -16,12 +17,10 @@ const ApplicationStyles = {
       marginTop: Metrics.marginVertical,
       paddingHorizontal: Metrics.marginHorizontal,
     },
-    sectionText: {
-      ...Fonts.style.normal,
-      paddingVertical: Metrics.doubleBaseMargin,
-      color: Colors.snow,
-      marginVertical: Metrics.smallMargin,
-      textAlign: 'center',
+    card: {
+      borderRadius: Metrics.imageRadius,
+      borderColor: Colors.steel,
+      borderWidth: Scale(0.3),
     },
     subtitle: {
       color: Colors.snow,
