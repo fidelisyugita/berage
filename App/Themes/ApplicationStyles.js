@@ -5,63 +5,46 @@ import {Scale} from '../Transforms';
 // Similar to an XML fragment layout in Android
 
 const ApplicationStyles = {
-  screen: {
-    mainContainer: {
-      backgroundColor: Colors.transparent,
-    },
-    container: {
-      marginTop: Metrics.marginVertical,
-      backgroundColor: Colors.transparent,
-    },
-    section: {
-      marginTop: Metrics.marginVertical,
-      paddingHorizontal: Metrics.marginHorizontal,
-    },
-    card: {
-      borderRadius: Metrics.imageRadius,
-      borderColor: Colors.steel,
-      borderWidth: Scale(0.3),
-    },
-    subtitle: {
-      color: Colors.snow,
-      padding: Metrics.smallMargin,
-      marginBottom: Metrics.smallMargin,
-      marginHorizontal: Metrics.smallMargin,
-    },
-    titleText: {
-      ...Fonts.style.h2,
-      fontSize: 14,
-      color: Colors.text,
-    },
+  container: {
+    marginTop: Metrics.marginVertical,
   },
-  darkLabelContainer: {
-    padding: Metrics.smallMargin,
-    paddingBottom: Metrics.doubleBaseMargin,
-    borderBottomColor: Colors.border,
-    borderBottomWidth: 1,
-    marginBottom: Metrics.baseMargin,
+  section: {
+    paddingHorizontal: Metrics.marginHorizontal,
   },
-  darkLabel: {
-    fontFamily: Fonts.type.bold,
-    color: Colors.snow,
+  sectionMargin: {
+    marginHorizontal: Metrics.marginHorizontal,
   },
-  groupContainer: {
-    margin: Metrics.smallMargin,
+  bottomSpace: {
+    marginBottom: Metrics.doubleBaseMargin,
+  },
+  row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
   },
-  sectionTitle: {
-    ...Fonts.style.h4,
-    color: Colors.coal,
-    backgroundColor: Colors.ricePaper,
-    padding: Metrics.smallMargin,
-    marginTop: Metrics.smallMargin,
-    marginHorizontal: Metrics.baseMargin,
-    borderWidth: 1,
-    borderColor: Colors.ember,
-    alignItems: 'center',
-    textAlign: 'center',
+  borderImage: {
+    borderRadius: Metrics.imageRadius,
+  },
+  smallMarginLeft: {
+    marginLeft: Metrics.smallMargin,
+  },
+  baseMarginLeft: {
+    marginLeft: Metrics.baseMargin,
+  },
+
+  border3: {
+    borderColor: Colors.steel,
+    borderWidth: Scale(0.3),
+  },
+  border7: {
+    borderColor: Colors.steel,
+    borderWidth: Scale(0.7),
+  },
+  borderBottom3: {
+    borderColor: Colors.steel,
+    borderBottomWidth: Scale(0.3),
+  },
+  borderBottom7: {
+    borderColor: Colors.steel,
+    borderBottomWidth: Scale(0.7),
   },
 };
 

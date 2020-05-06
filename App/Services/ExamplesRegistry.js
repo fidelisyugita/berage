@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import R from 'ramda'
-import { ApplicationStyles } from '../Themes'
+import { AppStyles } from '../Themes'
 import DebugConfig from '../Config/DebugConfig'
 let globalComponentExamplesRegistry = []
 let globalPluginExamplesRegistry = []
@@ -13,8 +13,8 @@ export const addPluginExample = (title, usage = () => {}) => { if (DebugConfig.i
 const renderComponentExample = (example) => {
   return (
     <View key={example.title}>
-      <View style={ApplicationStyles.darkLabelContainer}>
-        <Text style={ApplicationStyles.darkLabel}>{example.title}</Text>
+      <View style={AppStyles.darkLabelContainer}>
+        <Text style={AppStyles.darkLabel}>{example.title}</Text>
       </View>
       {example.usage.call()}
     </View>
@@ -24,8 +24,8 @@ const renderComponentExample = (example) => {
 const renderPluginExample = (example) => {
   return (
     <View key={example.title}>
-      <View style={ApplicationStyles.darkLabelContainer}>
-        <Text style={ApplicationStyles.darkLabel}>{example.title}</Text>
+      <View style={AppStyles.darkLabelContainer}>
+        <Text style={AppStyles.darkLabel}>{example.title}</Text>
       </View>
       {example.usage.call()}
     </View>

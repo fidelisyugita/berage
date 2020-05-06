@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-import {Colors, Fonts, Metrics, Images, ApplicationStyles} from '../Themes';
+import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import I18n from '../I18n';
 
 import ExploreScreen from '../Containers/Explore';
