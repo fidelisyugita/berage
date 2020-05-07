@@ -8,42 +8,30 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
+import ThumbnailImages from '../ThumbnailImages';
+
 const SavedPlace = props => {
   const {children, item, onPress} = props;
 
   return (
-    <View style={[AppStyles.container, AppStyles.section]}>
+    <View style={[AppStyles.section]}>
       <TouchableHighlight
         onPress={onPress}
         underlayColor={Colors.steel}
-        style={{zIndex: 1}}>
-        <View style={[AppStyles.border3, AppStyles.borderImage]}>
-          <Swiper
-            height={Scale(200)}
-            style={{zIndex: 2}}
-            autoplay={true}
-            loop={true}
-            showsButtons={false}
-            showsPagination={true}>
-            {item.images.map(image => (
-              <FastImage
-                style={{
-                  width: '100%',
-                  height: Scale(160),
-                  borderTopLeftRadius: Metrics.imageRadius,
-                  borderTopRightRadius: Metrics.imageRadius,
-                }}
-                source={{
-                  uri: image,
-                }}
-              />
-            ))}
-          </Swiper>
-          <View
-            style={{
-              ...AppStyles.section,
-              bottom: Metrics.marginVertical,
-            }}>
+        style={[
+          AppStyles.border3,
+          AppStyles.borderImage,
+          AppStyles.shadow,
+          AppStyles.baseMarginVertical,
+        ]}>
+        <View>
+          <ThumbnailImages
+            images={item.images}
+            image1Style={{borderTopLeftRadius: Metrics.imageRadius}}
+            image2Style={{borderTopRightRadius: Metrics.imageRadius}}
+          />
+
+          <View style={[AppStyles.section, AppStyles.sectionVertical]}>
             <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
             <Text style={Fonts.style.medium}>{item.categories.join(', ')}</Text>
             <Text style={Fonts.style.medium}>{item.distance || '-'}</Text>

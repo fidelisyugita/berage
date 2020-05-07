@@ -25,7 +25,6 @@ const OverviewPlaces = props => {
       <FlatList
         data={items}
         keyExtractor={(item, idx) => `${title}-${idx}`}
-        style={AppStyles.bottomSpace}
         renderItem={({item, idx}) => (
           <Place
             item={item}

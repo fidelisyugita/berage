@@ -97,11 +97,11 @@ export default class ExploreScreen extends Component {
               color={Colors.text}
             />
             <TextInput
-              style={{
-                ...AppStyles.smallMarginLeft,
-                ...Fonts.style.medium,
-                flex: 1,
-              }}
+              style={[
+                Fonts.style.medium,
+                AppStyles.smallMarginLeft,
+                AppStyles.flex1,
+              ]}
               placeholder={I18n.t('searchPlaceholder')}
             />
           </View>
@@ -114,7 +114,7 @@ export default class ExploreScreen extends Component {
           }}>
           <Swiper
             // width={Scale(375)} //but swiper bigger
-            height={Scale(200)}
+            height={Metrics.images.xl}
             autoplay={true}
             loop={true}
             showsButtons={false}
@@ -129,7 +129,7 @@ export default class ExploreScreen extends Component {
                 <FastImage
                   style={{
                     width: '100%',
-                    height: Scale(200),
+                    height: Metrics.images.xl,
                   }}
                   source={{
                     uri: image,

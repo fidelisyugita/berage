@@ -68,7 +68,7 @@ export default class PlaceScreen extends Component {
               <FastImage
                 style={{
                   width: '100%',
-                  height: Scale(200),
+                  height: Metrics.images.xl,
                 }}
                 source={{
                   uri: image,

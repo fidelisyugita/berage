@@ -11,6 +11,7 @@ const metrics = {
   baseMargin: Scale(10),
   doubleBaseMargin: Scale(20),
   smallMargin: Scale(5),
+  tinyMargin: Scale(2),
   doubleSection: Scale(50),
   horizontalLineHeight: 1,
   screenWidth: width < height ? width : height,
@@ -27,14 +28,18 @@ const metrics = {
     xl: Scale(36),
   },
   images: {
-    small: Scale(20),
-    medium: Scale(40),
-    large: Scale(60),
+    tiny: Scale(80),
+    small: Scale(110),
+    medium: Scale(140),
+    large: Scale(170),
+    xl: Scale(200),
   },
   avatars: {
-    small: Scale(20),
+    tiny: Scale(20),
+    small: Scale(30),
     medium: Scale(40),
-    large: Scale(60),
+    large: Scale(50),
+    xl: Scale(60),
   },
 };
 

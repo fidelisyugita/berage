@@ -82,14 +82,13 @@ export default class SavedScreen extends Component {
 
     return (
       <ScrollView>
-        <View style={[AppStyles.container, AppStyles.section]}>
+        <View style={[AppStyles.section, AppStyles.sectionVertical]}>
           <Text style={Fonts.style.xl3}>{I18n.t('saved')}</Text>
         </View>
 
         <FlatList
           data={items}
           keyExtractor={(item, idx) => `saved-${idx}`}
-          style={{marginBottom: Metrics.doubleBaseMargin}}
           renderItem={({item}) => (
             <SavedPlace
               item={item}

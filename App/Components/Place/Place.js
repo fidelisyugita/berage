@@ -12,23 +12,19 @@ const Place = props => {
 
   return (
     <TouchableOpacity
-      style={[AppStyles.container, AppStyles.row]}
+      style={[AppStyles.sectionVerticalSmall, AppStyles.row]}
       onPress={onPress}>
       <FastImage
         style={{
           width: Scale(120),
-          height: Scale(80),
+          height: Metrics.images.tiny,
           borderRadius: Metrics.imageRadius,
         }}
         source={{
           uri: item.image,
         }}
       />
-      <View
-        style={{
-          ...AppStyles.baseMarginLeft,
-          justifyContent: 'space-around',
-        }}>
+      <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
         <Text style={Fonts.style.medium2}>{item.name || '-'}</Text>
         <Text style={Fonts.style.medium}>{item.status || '-'}</Text>
         <Text style={Fonts.style.medium}>{item.distance || '-'}</Text>
