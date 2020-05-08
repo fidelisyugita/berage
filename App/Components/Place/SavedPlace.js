@@ -17,7 +17,7 @@ const SavedPlace = props => {
     <View style={[AppStyles.section]}>
       <TouchableHighlight
         onPress={onPress}
-        underlayColor={Colors.steel}
+        underlayColor={Colors.highlightUnderlay}
         style={[
           AppStyles.border3,
           AppStyles.borderImage,
@@ -33,8 +33,8 @@ const SavedPlace = props => {
 
           <View style={[AppStyles.section, AppStyles.sectionVertical]}>
             <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
-            <Text style={Fonts.style.medium}>{item.categories.join(', ')}</Text>
-            <Text style={Fonts.style.medium}>{item.distance || '-'}</Text>
+            <Text style={Fonts.style.small}>{item.categories.join(', ')}</Text>
+            <Text style={Fonts.style.small}>{item.distance || '-'}</Text>
           </View>
         </View>
       </TouchableHighlight>

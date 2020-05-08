@@ -60,15 +60,15 @@ const BottomNav = createBottomTabNavigator(
         top: -Scale(Metrics.smallMargin),
       },
       // iconStyle: {
-      //   backgroundColor: Colors.charcoal,
+      //   backgroundColor: Colors.baseText,
       // },
       // tabStyle: {
-      //   backgroundColor: Colors.charcoal,
+      //   backgroundColor: Colors.baseText,
       //   margin: 2,
       // },
       style: {
         height: Scale(50),
-        // backgroundColor: Colors.charcoal,
+        // backgroundColor: Colors.baseText,
       },
     },
   },

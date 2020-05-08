@@ -11,7 +11,7 @@ const OverviewPlaces = props => {
   const {title, items, onPress, navigation} = props;
 
   return (
-    <View style={[AppStyles.container, AppStyles.section]}>
+    <View style={[AppStyles.containerSmall, AppStyles.section]}>
       <View
         style={{
           flexDirection: 'row',

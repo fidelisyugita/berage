@@ -78,7 +78,7 @@ export default class InboxScreen extends Component {
             AppStyles.sectionVertical,
             AppStyles.shadow,
           ]}>
-          <Text style={Fonts.style.xl3}>{I18n.t('inbox')}</Text>
+          <Text style={Fonts.style.xxl3}>{I18n.t('inbox')}</Text>
         </View>
 
         <FlatList

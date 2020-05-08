@@ -29,50 +29,53 @@ const items = [
     image:
       'https://i1.wp.com/digital-photography-school.com/wp-content/uploads/2016/06/Rachel-Korinek-Food-Photographer-DPS-Hero-Angle-12.jpg',
     status: 'Open',
-    distance: '1 km',
+    distance: '0.21 km',
     categories: ['Workshop', 'Machine'],
     images: [
       'https://i1.wp.com/digital-photography-school.com/wp-content/uploads/2016/06/Rachel-Korinek-Food-Photographer-DPS-Hero-Angle-12.jpg',
       ...images,
     ],
-    isLiked: true,
   },
   {
     name: 'Kohvi',
     image:
       'https://www.cancer.org/latest-news/coffee-and-cancer-what-the-research-really-shows/_jcr_content/par/textimage/image.img.jpg/1522697270446.jpg',
     status: 'Open',
-    distance: '1 km',
+    distance: '2.7 km',
     categories: ['Food', 'Drink'],
     images: [
       'https://www.cancer.org/latest-news/coffee-and-cancer-what-the-research-really-shows/_jcr_content/par/textimage/image.img.jpg/1522697270446.jpg',
       ...images,
     ],
     isLiked: true,
+    averagePrice: '10k-40k',
   },
   {
     name: 'Dapoer Fezdaf',
     image:
       'https://previews.123rf.com/images/dndavis/dndavis1410/dndavis141000039/33021440-delicious-street-food-of-barbecued-lamb-shish-kebabs-on-the-streets-of-guilin-guangxi-autonomous-reg.jpg',
     status: 'Closed',
-    distance: '1 km',
+    distance: '4.6 km',
     categories: ['Food', 'Drink', 'Music'],
     images: [
       'https://previews.123rf.com/images/dndavis/dndavis1410/dndavis141000039/33021440-delicious-street-food-of-barbecued-lamb-shish-kebabs-on-the-streets-of-guilin-guangxi-autonomous-reg.jpg',
       ...images,
     ],
+    averagePrice: '5k-40k',
   },
   {
     name: 'Tarsius',
     image:
       'https://thumbs.dreamstime.com/b/photo-steak-brussel-sprout-will-be-great-menus-advertisements-other-places-where-food-photography-needed-129217121.jpg',
     status: 'Open',
-    distance: '2 km',
+    distance: '3.6 km',
     categories: ['Food', 'Drink'],
     images: [
       'https://thumbs.dreamstime.com/b/photo-steak-brussel-sprout-will-be-great-menus-advertisements-other-places-where-food-photography-needed-129217121.jpg',
       ...images,
     ],
+    isLiked: true,
+    averagePrice: '15k-50k',
   },
 ];
 
@@ -85,7 +88,7 @@ export default class ExploreScreen extends Component {
         <View style={[AppStyles.container, AppStyles.section]}>
           <View
             style={{
-              backgroundColor: Colors.snow,
+              backgroundColor: Colors.white,
               borderRadius: Metrics.circleRadius,
               flexDirection: 'row',
               alignItems: 'center',
@@ -94,7 +97,7 @@ export default class ExploreScreen extends Component {
             <Icon
               name="magnifier"
               size={Metrics.icons.tiny}
-              color={Colors.text}
+              color={Colors.placeholder}
             />
             <TextInput
               style={[
@@ -114,11 +117,11 @@ export default class ExploreScreen extends Component {
           }}>
           <Swiper
             // width={Scale(375)} //but swiper bigger
-            height={Metrics.images.xl}
+            height={Metrics.images.xl + Metrics.baseMargin}
             autoplay={true}
             loop={true}
             showsButtons={false}
-            showsPagination={false}>
+            showsPagination={true}>
             {images.map(image => (
               <View
                 style={

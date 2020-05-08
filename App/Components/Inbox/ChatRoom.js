@@ -15,7 +15,7 @@ const ChatRoom = props => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      underlayColor={Colors.steel}
+      underlayColor={Colors.highlightUnderlay}
       style={[AppStyles.section]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
         <FastImage

@@ -25,7 +25,7 @@ const Place = props => {
         }}
       />
       <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
-        <Text style={Fonts.style.medium2}>{item.name || '-'}</Text>
+        <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
         <Text style={Fonts.style.medium}>{item.status || '-'}</Text>
         <Text style={Fonts.style.medium}>{item.distance || '-'}</Text>
       </View>

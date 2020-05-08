@@ -8,6 +8,12 @@ const ApplicationStyles = {
   container: {
     marginTop: Metrics.marginVertical,
   },
+  containerSmall: {
+    marginTop: Metrics.smallMargin,
+  },
+  containerTiny: {
+    marginTop: Metrics.tinyMargin,
+  },
   containerBottom: {
     marginBottom: Metrics.marginVertical,
   },
@@ -43,6 +49,9 @@ const ApplicationStyles = {
   baseMarginVertical: {
     marginVertical: Metrics.baseMargin,
   },
+  baseMarginRight: {
+    marginRight: Metrics.baseMargin,
+  },
   baseMarginLeft: {
     marginLeft: Metrics.baseMargin,
   },
@@ -52,9 +61,27 @@ const ApplicationStyles = {
   tinyMarginLeft: {
     marginLeft: Metrics.tinyMargin,
   },
+  minWidth1: {
+    minWidth: Metrics.screenWidth / 1,
+  },
+  minWidth2: {
+    minWidth: Metrics.screenWidth / 2,
+  },
+  minWidth3: {
+    minWidth: Metrics.screenWidth / 3,
+  },
+  maxWidth1: {
+    maxWidth: Metrics.screenWidth / 1,
+  },
+  maxWidth2: {
+    maxWidth: Metrics.screenWidth / 2,
+  },
+  maxWidth3: {
+    maxWidth: Metrics.screenWidth / 3,
+  },
   shadow: {
-    backgroundColor: Colors.silver,
-    shadowColor: Colors.charcoal,
+    backgroundColor: Colors.backgroundShadow,
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -81,31 +108,35 @@ const ApplicationStyles = {
   },
 
   border3: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderWidth: Scale(0.3),
   },
   border7: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderWidth: Scale(0.7),
   },
   borderBottom3: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderBottomWidth: Scale(0.3),
   },
+  borderBottom5: {
+    borderColor: Colors.border,
+    borderBottomWidth: Scale(0.5),
+  },
   borderBottom7: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderBottomWidth: Scale(0.7),
   },
   borderTop3: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderTopWidth: Scale(0.3),
   },
   borderTop5: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderTopWidth: Scale(0.5),
   },
   borderTop7: {
-    borderColor: Colors.frost,
+    borderColor: Colors.border,
     borderTopWidth: Scale(0.7),
   },
 };

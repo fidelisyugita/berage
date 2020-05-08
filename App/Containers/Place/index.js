@@ -8,7 +8,8 @@ import {
   FlatList,
   TouchableHighlight,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import Swiper from 'react-native-swiper';
 import FastImage from 'react-native-fast-image';
 
@@ -30,63 +31,131 @@ export default class PlaceScreen extends Component {
 
     return (
       <ScrollView>
-        <View>
-          <TouchableHighlight
-            onPress={() => navigation.pop()}
-            style={styles.headerIcon}>
-            <Icon
-              name="arrowleft"
-              size={Metrics.icons.tiny}
-              color={Colors.silver}
-            />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => navigation.pop()}
-            style={{...styles.headerIcon, left: Scale(280)}}>
-            <Icon
-              name="sharealt"
-              size={Metrics.icons.tiny}
-              color={Colors.silver}
-            />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => navigation.pop()}
-            style={{...styles.headerIcon, left: Scale(325)}}>
-            <Icon
-              name={item.isLiked ? 'heart' : 'hearto'}
-              size={Metrics.icons.tiny}
-              color={item.isLiked ? Colors.fire : Colors.silver}
-            />
-          </TouchableHighlight>
-          <Swiper
-            height={Scale(200)}
-            autoplay={true}
-            loop={true}
-            showsButtons={false}
-            showsPagination={true}>
-            {item.images.map(image => (
-              <FastImage
-                style={{
-                  width: '100%',
-                  height: Metrics.images.xl,
-                }}
-                source={{
-                  uri: image,
-                }}
+        <View style={AppStyles.shadow}>
+          <View>
+            <TouchableHighlight
+              onPress={() => navigation.pop()}
+              style={styles.headerIcon}>
+              <AntDesign
+                name="arrowleft"
+                size={Metrics.icons.tiny}
+                color={Colors.silver}
               />
-            ))}
-          </Swiper>
-        </View>
-        <View style={[AppStyles.section, AppStyles.borderBottom3]}>
-          <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
-          <Text style={Fonts.style.medium}>{item.categories.join(', ')}</Text>
-        </View>
-        <View
-          style={[AppStyles.section, AppStyles.borderBottom7, AppStyles.row]}>
-          <Text style={Fonts.style.medium}>{item.status || '-'}</Text>
-          <Text style={[AppStyles.baseMarginLeft, Fonts.style.medium]}>
-            {item.distance || '-'}
-          </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => navigation.pop()}
+              style={{...styles.headerIcon, left: Scale(280)}}>
+              <AntDesign
+                name="sharealt"
+                size={Metrics.icons.tiny}
+                color={Colors.silver}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => navigation.pop()}
+              style={{...styles.headerIcon, left: Scale(325)}}>
+              <AntDesign
+                name={item.isLiked ? 'heart' : 'hearto'}
+                size={Metrics.icons.tiny}
+                color={item.isLiked ? Colors.fire : Colors.silver}
+              />
+            </TouchableHighlight>
+            <Swiper
+              height={Metrics.images.xl + Metrics.marginVertical}
+              autoplay={true}
+              loop={true}
+              showsButtons={false}
+              showsPagination={true}>
+              {item.images.map(image => (
+                <FastImage
+                  style={{
+                    width: '100%',
+                    height: Metrics.images.xl,
+                  }}
+                  source={{
+                    uri: image,
+                  }}
+                />
+              ))}
+            </Swiper>
+          </View>
+
+          <View style={[AppStyles.sectionMargin, AppStyles.borderBottom5]}>
+            <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
+            <Text
+              style={[
+                Fonts.style.small,
+                AppStyles.containerSmall,
+                AppStyles.containerBottom,
+              ]}>
+              {item.categories.join(', ')}
+            </Text>
+          </View>
+          <View
+            style={[
+              AppStyles.sectionVertical,
+              AppStyles.section,
+              AppStyles.row,
+              AppStyles.borderBottom7,
+            ]}>
+            <View style={[AppStyles.baseMarginRight, AppStyles.minWidth3]}>
+              <View style={AppStyles.row}>
+                <Fontisto
+                  name="clock"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+                <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
+                  {item.status || '-'}
+                </Text>
+              </View>
+              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                {'only few seats left' || '-'}
+              </Text>
+            </View>
+            <View style={AppStyles.flex1}>
+              <View style={AppStyles.row}>
+                <Fontisto
+                  name="map-marker-alt"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+                <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
+                  {item.distance || '-'}
+                </Text>
+              </View>
+              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                {'4 min'}
+              </Text>
+            </View>
+            <View style={AppStyles.flex1}>
+              <View style={AppStyles.row}>
+                <Fontisto
+                  name="dollar"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+                <Fontisto
+                  name="dollar"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+                <Fontisto
+                  name="dollar"
+                  size={Metrics.icons.tiny}
+                  color={Colors.border}
+                />
+                <Fontisto
+                  name="dollar"
+                  size={Metrics.icons.tiny}
+                  color={Colors.border}
+                />
+              </View>
+              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                {item.averagePrice || '-'}
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     );
