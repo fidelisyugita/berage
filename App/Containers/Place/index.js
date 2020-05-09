@@ -11,11 +11,12 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
+
+import CustomImage from '../../Components/CustomImage';
 
 export default class PlaceScreen extends Component {
   constructor(props) {
@@ -67,13 +68,11 @@ export default class PlaceScreen extends Component {
               showsButtons={false}
               showsPagination={true}>
               {item.images.map(image => (
-                <FastImage
+                <CustomImage
+                  source={{uri: image}}
                   style={{
                     width: '100%',
                     height: Metrics.images.xl,
-                  }}
-                  source={{
-                    uri: image,
                   }}
                 />
               ))}

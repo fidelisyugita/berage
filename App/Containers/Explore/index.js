@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import OverviewPlaces from '../../Components/Place/OverviewPlaces';
+import CustomImage from '../../Components/CustomImage';
 
 const images = [
   'https://ak1.picdn.net/shutterstock/videos/22497541/thumb/1.jpg',
@@ -129,13 +129,12 @@ export default class ExploreScreen extends Component {
                     //   marginRight: Metrics.marginHorizontal,
                   }
                 }>
-                <FastImage
+                <CustomImage
+                  source={{uri: image}}
                   style={{
+                    ...AppStyles.border3,
                     width: '100%',
                     height: Metrics.images.xl,
-                  }}
-                  source={{
-                    uri: image,
                   }}
                 />
               </View>

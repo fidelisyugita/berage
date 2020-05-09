@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';

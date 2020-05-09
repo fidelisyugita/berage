@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
+
 import moment from 'moment';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
+
+import CustomImage from '../CustomImage';
 
 const ChatRoom = props => {
   const {children, item, onPress} = props;
@@ -18,13 +20,14 @@ const ChatRoom = props => {
       underlayColor={Colors.highlightUnderlay}
       style={[AppStyles.section]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
-        <FastImage
-          style={{
-            width: Metrics.avatars.medium,
-            height: Metrics.avatars.medium,
-            borderRadius: Metrics.circleRadius,
-          }}
+        <CustomImage
           source={{uri: item.image}}
+          style={[
+            AppStyles.border3,
+            AppStyles.avatarMedium,
+            AppStyles.borderCircle,
+          ]}
+          imageBorderRadius={Metrics.circleRadius}
         />
         <View
           style={[

@@ -46,6 +46,13 @@ const ApplicationStyles = {
     borderBottomLeftRadius: Metrics.imageRadius,
     borderBottomRightRadius: Metrics.imageRadius,
   },
+  borderCircle: {
+    borderRadius: Metrics.circleRadius,
+  },
+  avatarMedium: {
+    width: Metrics.avatars.medium,
+    height: Metrics.avatars.medium,
+  },
   baseMarginVertical: {
     marginVertical: Metrics.baseMargin,
   },

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import I18n from '../I18n';
 import {Scale} from '../Transforms';
+
+import CustomImage from './CustomImage';
 
 const ThumbnailImages = props => {
   const {
@@ -24,26 +25,30 @@ const ThumbnailImages = props => {
 
   return (
     <View style={[AppStyles.row, containerStyle]}>
-      <FastImage
+      <CustomImage
+        source={{uri: images[0]}}
         style={[
           {
             height: Metrics.images.large,
           },
           AppStyles.flex2,
+          AppStyles.border3,
           image1Style,
         ]}
-        source={{uri: images[0]}}
+        imageStyle={[AppStyles.flex2, image1Style]}
       />
       {images[1] && images[2] && (
         <View style={[AppStyles.tinyMarginLeft, AppStyles.flex1]}>
-          <FastImage
-            style={[AppStyles.flex1, image2Style]}
+          <CustomImage
             source={{uri: images[1]}}
+            style={[AppStyles.flex1, image2Style, AppStyles.border3]}
+            imageStyle={[AppStyles.flex1, image2Style]}
           />
           <View style={{height: Scale(1)}} />
-          <FastImage
-            style={[AppStyles.flex1, image3Style]}
+          <CustomImage
             source={{uri: images[2]}}
+            style={[AppStyles.flex1, image3Style, AppStyles.border3]}
+            imageStyle={[AppStyles.flex1, image3Style]}
           />
         </View>
       )}

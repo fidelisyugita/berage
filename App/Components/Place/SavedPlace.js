@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableHighlight, Text, View} from 'react-native';
-import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
