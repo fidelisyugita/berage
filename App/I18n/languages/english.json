@@ -31,4 +31,9 @@
    "login": "Login",
    "logout": "Logout",
 
+   "yesterday": "Yesterday",
+   
+   "share": "Share",
+   "comment": "Comment",
+
 }

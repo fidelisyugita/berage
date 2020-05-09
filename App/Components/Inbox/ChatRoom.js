@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale, DateFormatter} from '../../Transforms';
 
 import CustomImage from '../CustomImage';
 
@@ -47,7 +47,7 @@ const ChatRoom = props => {
           </View>
           <View style={AppStyles.baseMarginLeft}>
             <Text style={Fonts.style.small}>
-              {moment(item.updatedAt, 'YYYY-MM-DD hh:mm:ss').fromNow()}
+              {DateFormatter(item.updatedAt)}
             </Text>
           </View>
         </View>

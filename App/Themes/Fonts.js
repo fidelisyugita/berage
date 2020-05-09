@@ -18,6 +18,9 @@ const size = {
 };
 
 const style = {
+  alignJustify: {
+    textAlign: 'justify',
+  },
   tiny: {
     fontFamily: type.regular,
     fontSize: size.tiny,

@@ -17,6 +17,9 @@ import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import CustomImage from '../../Components/CustomImage';
+import Post from '../../Components/Post/Post';
+
+import {posts} from '../Dummy';
 
 export default class PlaceScreen extends Component {
   constructor(props) {
@@ -155,6 +158,19 @@ export default class PlaceScreen extends Component {
               </Text>
             </View>
           </View>
+        </View>
+
+        <View style={[AppStyles.baseMarginVertical]}>
+          <FlatList
+            data={posts}
+            keyExtractor={(item, idx) => `post-${idx}`}
+            renderItem={({item, idx}) => (
+              <Post
+                item={item}
+                // onPress={() => navigation.navigate('PlaceScreen', {item})}
+              />
+            )}
+          />
         </View>
       </ScrollView>
     );
