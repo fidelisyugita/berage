@@ -37,8 +37,7 @@ const colors = {
   backgroundShadow: '#F7F7F7',
   highlightUnderlay: '#CCCCCC',
   placeholder: '#E0D7E5',
-  
-
+  link: '#3b5998',
 };
 
 export default colors;

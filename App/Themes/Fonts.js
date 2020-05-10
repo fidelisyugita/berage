@@ -21,6 +21,9 @@ const style = {
   alignJustify: {
     textAlign: 'justify',
   },
+  linkColor: {
+    color: Colors.link,
+  },
   tiny: {
     fontFamily: type.regular,
     fontSize: size.tiny,

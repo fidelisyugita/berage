@@ -53,6 +53,10 @@ const ApplicationStyles = {
     width: Metrics.avatars.medium,
     height: Metrics.avatars.medium,
   },
+  avatarLarge: {
+    width: Metrics.avatars.large,
+    height: Metrics.avatars.large,
+  },
   baseMarginVertical: {
     marginVertical: Metrics.baseMargin,
   },

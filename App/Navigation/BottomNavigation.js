@@ -8,6 +8,7 @@ import I18n from '../I18n';
 
 import ExploreScreen from '../Containers/Explore';
 import SavedScreen from '../Containers/Saved';
+import ChatScreen from '../Containers/Chat';
 import InboxScreen from '../Containers/Inbox';
 import ProfileScreen from '../Containers/Profile';
 import {Scale} from '../Transforms';
@@ -29,6 +30,15 @@ const BottomNav = createBottomTabNavigator(
         title: I18n.t('saved'),
         tabBarIcon: ({focused, tintColor}) => (
           <Icon name="heart" size={Metrics.icons.small} color={tintColor} />
+        ),
+      }),
+    },
+    Chat: {
+      screen: ChatScreen,
+      navigationOptions: navigation => ({
+        title: I18n.t('chat'),
+        tabBarIcon: ({focused, tintColor}) => (
+          <Icon name="bubble" size={Metrics.icons.small} color={tintColor} />
         ),
       }),
     },

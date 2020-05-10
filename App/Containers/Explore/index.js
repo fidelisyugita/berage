@@ -63,13 +63,15 @@ export default class ExploreScreen extends Component {
             showsButtons={false}
             showsPagination={true}>
             {images.map(image => (
-              <View
-                style={
-                  {
-                    //   marginRight: Metrics.marginHorizontal,
-                  }
-                }>
+              // <View
+              //   key={image}
+              //   style={
+              //     {
+              //       //   marginRight: Metrics.marginHorizontal,
+              //     }
+              //   }>
                 <CustomImage
+                  key={image}
                   source={{uri: image}}
                   style={{
                     ...AppStyles.border3,
@@ -77,7 +79,7 @@ export default class ExploreScreen extends Component {
                     height: Metrics.images.xl,
                   }}
                 />
-              </View>
+              // </View>
             ))}
           </Swiper>
         </View>
