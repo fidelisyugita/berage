@@ -26,6 +26,9 @@ const ApplicationStyles = {
   sectionVertical: {
     paddingVertical: Metrics.marginVertical,
   },
+  sectionVerticalBase: {
+    paddingVertical: Metrics.baseMargin,
+  },
   sectionVerticalSmall: {
     paddingVertical: Metrics.smallMargin,
   },

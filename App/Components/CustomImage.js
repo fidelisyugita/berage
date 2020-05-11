@@ -18,10 +18,12 @@ const CustomImage = props => {
     <Image
       source={source}
       style={style}
-      imageStyle={{
-        ...imageStyle,
-        borderRadius: imageBorderRadius,
-      }}
+      imageStyle={[
+        imageStyle,
+        {
+          borderRadius: imageBorderRadius,
+        },
+      ]}
     />
   );
 };

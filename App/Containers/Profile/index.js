@@ -7,10 +7,11 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 
 import SearchActions from '../../Redux/SearchRedux';
@@ -65,25 +66,152 @@ export class ProfileScreen extends Component {
             )}
           </View>
           <View style={[AppStyles.baseMarginLeft]}>
-            <Text numberOfLines={1} style={Fonts.style.large3}>
+            <Text numberOfLines={1} style={Fonts.style.xl3}>
               {'Fidelis Yugita'}
             </Text>
             <TouchableOpacity
               onPress={() => this.props.performSearch('pencil')}>
-              <Text style={[Fonts.style.small, Fonts.style.linkColor]}>
+              <Text style={[Fonts.style.medium, Fonts.style.linkColor]}>
                 {I18n.t('viewProfile')}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <FlatList
-          data={chats}
-          keyExtractor={(item, idx) => `inbox-${idx}`}
-          renderItem={({item}) => (
-            <ChatRoom item={item} onPress={() => console.tron.log('pressed')} />
-          )}
-        />
+        <View style={[AppStyles.section]}>
+          <View style={[AppStyles.container]}>
+            <Text style={[Fonts.style.medium]}>{I18n.t('hosting')}</Text>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('yourPlaces')}
+              </Text>
+              <Icon
+                name="home"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('listYourSpace')}
+              </Text>
+              <Icon
+                name="home-plus"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={[AppStyles.container]}>
+            <Text style={[Fonts.style.medium]}>{I18n.t('support')}</Text>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('help')}
+              </Text>
+              <Icon
+                name="help"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('feedback')}
+              </Text>
+              <Icon
+                name="card-text"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={[AppStyles.container]}>
+            <Text style={[Fonts.style.medium]}>{I18n.t('legal')}</Text>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('termsOfService')}
+              </Text>
+              <Icon
+                name="file-document"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('privacyPolicy')}
+              </Text>
+              <Icon
+                name="shield-key"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              // onPress={onPress}
+              underlayColor={Colors.highlightUnderlay}
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.medium, AppStyles.flex1]}>
+                {I18n.t('logout')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     );
   }

@@ -65,7 +65,10 @@ ThumbnailImages.propTypes = {
 };
 
 ThumbnailImages.defaultProps = {
-  style: {},
+  containerStyle: {},
+  image1Style: {},
+  image2Style: {},
+  image3Style: {},
 };
 
 export default ThumbnailImages;
