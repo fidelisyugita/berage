@@ -24,6 +24,15 @@ const style = {
   linkColor: {
     color: Colors.link,
   },
+  capitalize: {
+    textTransform: 'capitalize',
+  },
+  uppercase: {
+    textTransform: 'uppercase',
+  },
+  lowercase: {
+    textTransform: 'lowercase',
+  },
   tiny: {
     fontFamily: type.regular,
     fontSize: size.tiny,

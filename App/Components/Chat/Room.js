@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableHighlight, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import moment from 'moment';
@@ -15,7 +15,7 @@ const Room = props => {
   const {children, item, onPress} = props;
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       onPress={onPress}
       underlayColor={Colors.highlightUnderlay}
       style={[AppStyles.section]}>
@@ -52,7 +52,7 @@ const Room = props => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

@@ -8,6 +8,9 @@ const ApplicationStyles = {
   container: {
     marginTop: Metrics.marginVertical,
   },
+  containerPadding: {
+    paddingTop: Metrics.marginVertical,
+  },
   containerSmall: {
     marginTop: Metrics.smallMargin,
   },
@@ -28,6 +31,9 @@ const ApplicationStyles = {
   },
   sectionVerticalBase: {
     paddingVertical: Metrics.baseMargin,
+  },
+  sectionVerticalDouble: {
+    paddingVertical: Metrics.doubleBaseMargin,
   },
   sectionVerticalSmall: {
     paddingVertical: Metrics.smallMargin,
@@ -59,6 +65,14 @@ const ApplicationStyles = {
   avatarLarge: {
     width: Metrics.avatars.large,
     height: Metrics.avatars.large,
+  },
+  avatarXl: {
+    width: Metrics.avatars.xl,
+    height: Metrics.avatars.xl,
+  },
+  imageXl: {
+    width: Metrics.images.xl,
+    height: Metrics.images.xl,
   },
   baseMarginVertical: {
     marginVertical: Metrics.baseMargin,

@@ -14,7 +14,7 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
-import ChatRoom from '../../Components/Inbox/ChatRoom';
+import RenderInbox from '../../Components/Inbox/Inbox';
 
 import {chats} from '../Dummy';
 
@@ -37,7 +37,10 @@ export default class InboxScreen extends Component {
           data={chats}
           keyExtractor={(item, idx) => `inbox-${idx}`}
           renderItem={({item}) => (
-            <ChatRoom item={item} onPress={() => console.tron.log('pressed')} />
+            <RenderInbox
+              item={item}
+              onPress={() => console.tron.log('pressed')}
+            />
           )}
         />
       </ScrollView>
