@@ -1,4 +1,4 @@
-package com.berage;
+package com.fidelisyugita.berage;
 
 import com.facebook.react.ReactActivity;
 

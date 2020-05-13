@@ -1,25 +1,32 @@
-import { put, select } from 'redux-saga/effects'
-import GithubActions, { GithubSelectors } from '../Redux/GithubRedux'
-import { is } from 'ramda'
+import {put, select} from 'redux-saga/effects';
+import GithubActions, {GithubSelectors} from '../Redux/GithubRedux';
+import {is} from 'ramda';
+
+import {GoogleSignin} from '@react-native-community/google-signin';
+import Secrets from 'react-native-config';
 
 // exported to make available for tests
-export const selectAvatar = GithubSelectors.selectAvatar
+export const selectAvatar = GithubSelectors.selectAvatar;
 
 // process STARTUP actions
-export function * startup (action) {
+export function* startup(action) {
+  GoogleSignin.configure({
+    webClientId: Secrets.WEB_CLIENT_ID,
+  });
+
   if (__DEV__ && console.tron) {
     // straight-up string logging
-    console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
+    console.tron.log("Hello, I'm an example of how to log via Reactotron.");
 
     // logging an object for better clarity
     console.tron.log({
       message: 'pass objects for better logging',
-      someGeneratorFunction: selectAvatar
-    })
+      someGeneratorFunction: selectAvatar,
+    });
 
     // fully customized!
-    const subObject = { a: 1, b: [1, 2, 3], c: true }
-    subObject.circularDependency = subObject // osnap!
+    const subObject = {a: 1, b: [1, 2, 3], c: true};
+    subObject.circularDependency = subObject; // osnap!
     console.tron.display({
       name: '🔥 IGNITE 🔥',
       preview: 'You should totally expand this',
@@ -28,13 +35,13 @@ export function * startup (action) {
         subObject,
         someInlineFunction: () => true,
         someGeneratorFunction: startup,
-        someNormalFunction: selectAvatar
-      }
-    })
+        someNormalFunction: selectAvatar,
+      },
+    });
   }
-  const avatar = yield select(selectAvatar)
+  const avatar = yield select(selectAvatar);
   // only get if we don't have it yet
   if (!is(String, avatar)) {
-    yield put(GithubActions.userRequest('GantMan'))
+    yield put(GithubActions.userRequest('GantMan'));
   }
 }

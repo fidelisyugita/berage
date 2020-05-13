@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 
 import SearchActions from '../../Redux/SearchRedux';
+import AuthActions from '../../Redux/AuthRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -27,19 +27,30 @@ import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 import {chats} from '../Dummy';
 
 export class ProfileScreen extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    const {results} = this.props;
-
-    console.tron.log({results});
-    console.tron.log({'prevProps.results': prevProps.results});
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+    };
   }
 
+  onLoginPress = () => {
+    const {loginWithGoogleRequest} = this.props;
+
+    this.setState({isLoading: true});
+
+    loginWithGoogleRequest(null, this.googleLoginCallback);
+  };
+
+  googleLoginCallback = result => {
+    if (result.ok) {
+      console.tron.log({result});
+    }
+    this.setState({isLoading: false});
+  };
+
   render() {
-    const {navigation, loggedInUser} = this.props;
+    const {navigation, currentUser} = this.props;
 
     return (
       <ScrollView>
@@ -53,20 +64,21 @@ export class ProfileScreen extends Component {
           ]}>
           <View style={[AppStyles.flex1]}>
             <Text numberOfLines={1} style={Fonts.style.xxl3}>
-              {'Fidelis Yugita'}
+              {(currentUser && currentUser.displayName) ||
+                I18n.t('personalName')}
             </Text>
-            <TouchableOpacity
-              onPress={() => this.props.performSearch('pencil')}>
+            <TouchableOpacity onPress={this.onLoginPress}>
               <Text style={[Fonts.style.medium]}>
                 {I18n.t('viewEditProfile')}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={AppStyles.baseMarginLeft}>
-            {loggedInUser && loggedInUser.image ? (
+            {currentUser && currentUser.photoURL ? (
               <CustomImage
-                source={{uri: loggedInUser.image}}
+                source={{uri: currentUser.photoURL}}
                 style={[AppStyles.avatarXl]}
+                imageBorderRadius={Metrics.circleRadius}
               />
             ) : (
               <IconUserDefault
@@ -233,14 +245,13 @@ export class ProfileScreen extends Component {
 const styles = StyleSheet.create({});
 
 const mapStateToProps = state => ({
-  results: state.search.results,
-  loggedInUser: state.session.loggedInUser,
+  currentUser: state.session.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // loginRequest: (data, callback) =>
-  //   dispatch(UserActions.loginRequest(data, callback)),
-  performSearch: data => dispatch(SearchActions.search(data)),
+  loginWithGoogleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
+  logoutRequest: () => dispatch(AuthActions.logoutRequest()),
 });
 
 export default connect(

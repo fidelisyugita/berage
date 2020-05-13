@@ -1,4 +1,4 @@
-package com.berage;
+package com.fidelisyugita.berage;
 
 import android.app.Application;
 import android.content.Context;
