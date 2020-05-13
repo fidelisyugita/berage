@@ -9,6 +9,7 @@ import {StartupTypes} from '../Redux/StartupRedux';
 import {GithubTypes} from '../Redux/GithubRedux';
 
 import {AuthTypes} from '../Redux/AuthRedux';
+import {PlaceTypes} from '../Redux/PlaceRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -16,6 +17,7 @@ import {startup} from './StartupSagas';
 import {getUserAvatar} from './GithubSagas';
 
 import {loginWithGoogle, logout} from './AuthSagas';
+import {getPopularPlaces} from './PlaceSagas';
 
 /* ------------- API ------------- */
 
@@ -35,5 +37,6 @@ export default function* root() {
 
     takeLatest(AuthTypes.LOGIN_WITH_GOOGLE_REQUEST, loginWithGoogle, api),
     takeLatest(AuthTypes.LOGOUT_REQUEST, logout, api),
+    takeLatest(PlaceTypes.GET_POPULAR_PLACES_REQUEST, getPopularPlaces, api),
   ]);
 }

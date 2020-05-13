@@ -42,8 +42,10 @@ export function* loginWithGoogle(api, action) {
 
     yield put(SessionActions.saveUser(user));
     yield put(AuthActions.loginWithGoogleSuccess({ok: true}));
+    action.callback({ok: true});
   } catch (error) {
     yield put(AuthActions.loginWithGoogleFailure(error));
+    action.callback({ok: false});
   }
 }
 

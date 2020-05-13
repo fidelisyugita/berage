@@ -13,7 +13,6 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 
-import SearchActions from '../../Redux/SearchRedux';
 import AuthActions from '../../Redux/AuthRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';

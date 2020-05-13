@@ -4,6 +4,7 @@ import {is} from 'ramda';
 
 import {GoogleSignin} from '@react-native-community/google-signin';
 import Secrets from 'react-native-config';
+import functions from '@react-native-firebase/functions';
 
 // exported to make available for tests
 export const selectAvatar = GithubSelectors.selectAvatar;
@@ -15,6 +16,8 @@ export function* startup(action) {
   });
 
   if (__DEV__ && console.tron) {
+    functions().useFunctionsEmulator('http://localhost:5001');
+
     // straight-up string logging
     console.tron.log("Hello, I'm an example of how to log via Reactotron.");
 
