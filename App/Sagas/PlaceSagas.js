@@ -1,21 +1,13 @@
 import {call, put} from 'redux-saga/effects';
-import functions from '@react-native-firebase/functions';
 
+import {httpsCallable} from './Utils';
 import PlaceActions from '../Redux/PlaceRedux';
 
 export function* getPopularPlaces(api, action) {
-  const {username} = action;
-
   try {
-    // yield firebase.auth().signInAnonymously();
-    // const idToken = yield firebase.auth().currentUser.getIdToken(true);
+    const response = yield httpsCallable('place-popular', action.data);
 
-    // make the call to the api
-    const response = yield functions().httpsCallable('place-popular')();
-
-    console.tron.log({
-      getPopularPlaces: response,
-    });
+    console.tron.log({getPopularPlaces: response});
 
     if (response.data.ok) {
       yield put(PlaceActions.getPopularPlacesSuccess(response.data.payload));

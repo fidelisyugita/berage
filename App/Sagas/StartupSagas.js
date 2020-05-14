@@ -16,7 +16,7 @@ export function* startup(action) {
   });
 
   if (__DEV__ && console.tron) {
-    functions().useFunctionsEmulator('http://localhost:5001');
+    // functions().useFunctionsEmulator('http://localhost:5001');
 
     // straight-up string logging
     console.tron.log("Hello, I'm an example of how to log via Reactotron.");
@@ -41,10 +41,5 @@ export function* startup(action) {
         someNormalFunction: selectAvatar,
       },
     });
-  }
-  const avatar = yield select(selectAvatar);
-  // only get if we don't have it yet
-  if (!is(String, avatar)) {
-    yield put(GithubActions.userRequest('GantMan'));
   }
 }

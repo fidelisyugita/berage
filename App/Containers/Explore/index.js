@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -28,6 +29,7 @@ export class ExploreScreen extends Component {
     super(props);
     this.state = {
       isLoading: false,
+      refreshing: false,
     };
   }
 
@@ -38,7 +40,7 @@ export class ExploreScreen extends Component {
   loadData() {
     const {getPopularPlacesRequest} = this.props;
 
-    this.setState({isLoading: true});
+    this.setState({isLoading: true, refreshing: false});
 
     getPopularPlacesRequest(null, this.getPopularPlacesCallback);
   }
@@ -50,11 +52,20 @@ export class ExploreScreen extends Component {
     this.setState({isLoading: false});
   };
 
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    this.componentDidMount();
+  };
+
   render() {
     const {navigation, getPopularPlaces} = this.props;
+    const {refreshing} = this.state;
 
     return (
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+        }>
         <View style={[AppStyles.container, AppStyles.section]}>
           <View
             style={{
