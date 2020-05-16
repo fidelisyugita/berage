@@ -55,7 +55,7 @@ export class ProfileScreen extends Component {
             {loggedInUser && loggedInUser.image ? (
               <CustomImage
                 source={{uri: loggedInUser.image}}
-                style={[AppStyles.avatarLarge]}
+                style={[AppStyles.avatarLarge, AppStyles.border3]}
               />
             ) : (
               <IconUserDefault

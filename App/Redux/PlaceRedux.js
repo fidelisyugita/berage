@@ -28,7 +28,10 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 export const getPopularPlacesRequest = (state, {data}) => {
-  return state.merge({...state, getPopularPlaces: {fetching: true, data}});
+  return state.merge({
+    ...state,
+    getPopularPlaces: {...state.getPopularPlaces, fetching: true, data},
+  });
 };
 export const getPopularPlacesSuccess = (state, {payload}) => {
   return state.merge({

@@ -13,7 +13,7 @@
   "viewProfile": "View profile",
   "viewEditProfile": "View and edit profile",
   "personalName": "Personal Name",
-  
+
   "hosting": "Hosting",
   "yourPlaces": "Your places",
   "listYourSpace": "List your space",
@@ -40,5 +40,10 @@
 
   "savedDesc": "Your messages will appear here.",
   "chatDesc": "Your messages will appear here.",
-  "profileDesc": "Login to enjoy more features."
+  "profileDesc": "Login to enjoy more features.",
+
+  "selectImage": "Select Image",
+  "placeName": "Place name",
+  "placeDesc": "Place description",
+  "submit": "Submit",
 }

@@ -125,7 +125,7 @@ export class ExploreScreen extends Component {
           </Swiper>
         </View>
 
-        {getPopularPlaces.fetching ? (
+        {getPopularPlaces.fetching && !getPopularPlaces.payload ? (
           <LoadingIndicator />
         ) : (
           <OverviewPlaces

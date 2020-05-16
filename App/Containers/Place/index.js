@@ -39,7 +39,7 @@ export default class PlaceScreen extends Component {
           <View>
             <TouchableHighlight
               onPress={() => navigation.pop()}
-              style={styles.headerIcon}>
+              style={{...AppStyles.btnIcon, ...styles.headerIcon}}>
               <AntDesign
                 name="arrowleft"
                 size={Metrics.icons.tiny}
@@ -48,7 +48,11 @@ export default class PlaceScreen extends Component {
             </TouchableHighlight>
             <TouchableHighlight
               onPress={() => navigation.pop()}
-              style={{...styles.headerIcon, left: Scale(280)}}>
+              style={{
+                ...AppStyles.btnIcon,
+                ...styles.headerIcon,
+                left: Scale(280),
+              }}>
               <AntDesign
                 name="sharealt"
                 size={Metrics.icons.tiny}
@@ -57,7 +61,11 @@ export default class PlaceScreen extends Component {
             </TouchableHighlight>
             <TouchableHighlight
               onPress={() => navigation.pop()}
-              style={{...styles.headerIcon, left: Scale(325)}}>
+              style={{
+                ...AppStyles.btnIcon,
+                ...styles.headerIcon,
+                left: Scale(325),
+              }}>
               <AntDesign
                 name={item.isLiked ? 'heart' : 'hearto'}
                 size={Metrics.icons.tiny}
@@ -74,6 +82,7 @@ export default class PlaceScreen extends Component {
                 <CustomImage
                   source={{uri: image}}
                   style={{
+                    ...AppStyles.border5,
                     width: '100%',
                     height: Metrics.images.xl,
                   }}
@@ -181,9 +190,6 @@ const styles = StyleSheet.create({
   headerIcon: {
     backgroundColor: Colors.windowTint,
     borderRadius: Metrics.circleRadius,
-    padding: Metrics.smallMargin,
-    margin: Metrics.baseMargin,
     position: 'absolute',
-    zIndex: 1,
   },
 });

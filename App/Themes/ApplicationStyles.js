@@ -38,6 +38,9 @@ const ApplicationStyles = {
   sectionVerticalSmall: {
     paddingVertical: Metrics.smallMargin,
   },
+  topSpace: {
+    marginTop: Metrics.doubleBaseMargin,
+  },
   bottomSpace: {
     marginBottom: Metrics.doubleBaseMargin,
   },
@@ -142,6 +145,10 @@ const ApplicationStyles = {
     borderColor: Colors.border,
     borderWidth: Scale(0.3),
   },
+  border5: {
+    borderColor: Colors.border,
+    borderWidth: Scale(0.5),
+  },
   border7: {
     borderColor: Colors.border,
     borderWidth: Scale(0.7),
@@ -169,6 +176,11 @@ const ApplicationStyles = {
   borderTop7: {
     borderColor: Colors.border,
     borderTopWidth: Scale(0.7),
+  },
+  btnIcon: {
+    padding: Metrics.smallMargin,
+    margin: Metrics.baseMargin,
+    zIndex: 1,
   },
 };
 

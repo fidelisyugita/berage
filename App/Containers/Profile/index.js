@@ -76,7 +76,11 @@ export class ProfileScreen extends Component {
             {currentUser && currentUser.photoURL ? (
               <CustomImage
                 source={{uri: currentUser.photoURL}}
-                style={[AppStyles.avatarXl]}
+                style={[
+                  AppStyles.avatarXl,
+                  AppStyles.borderCircle,
+                  AppStyles.border3,
+                ]}
                 imageBorderRadius={Metrics.circleRadius}
               />
             ) : (
@@ -111,7 +115,7 @@ export class ProfileScreen extends Component {
         </TouchableHighlight>
 
         <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
+          onPress={() => navigation.navigate('AddPlaceScreen')}
           underlayColor={Colors.highlightUnderlay}
           style={AppStyles.section}>
           <View

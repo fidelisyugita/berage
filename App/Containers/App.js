@@ -5,6 +5,9 @@ import {Provider} from 'react-redux';
 import RootContainer from './RootContainer';
 import createStore from '../Redux';
 
+import DropdownAlert from 'react-native-dropdownalert';
+import {DropDownHolder} from '../Components/DropDownHolder';
+
 // create our store
 const store = createStore();
 
@@ -22,6 +25,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <RootContainer />
+        <DropdownAlert ref={ref => DropDownHolder.setDropDown(ref)} />
       </Provider>
     );
   }
