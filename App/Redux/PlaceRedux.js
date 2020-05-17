@@ -133,7 +133,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_RECOMMENDED_PLACES_SUCCESS]: getRecommendedPlacesSuccess,
   [Types.GET_RECOMMENDED_PLACES_FAILURE]: getRecommendedPlacesFailure,
 
-  [Types.GET_POPULAR_PLACES_REQUEST]: savePlaceRequest,
-  [Types.GET_POPULAR_PLACES_SUCCESS]: savePlaceSuccess,
-  [Types.GET_POPULAR_PLACES_FAILURE]: savePlaceFailure,
+  [Types.SAVE_PLACE_REQUEST]: savePlaceRequest,
+  [Types.SAVE_PLACE_SUCCESS]: savePlaceSuccess,
+  [Types.SAVE_PLACE_FAILURE]: savePlaceFailure,
 });

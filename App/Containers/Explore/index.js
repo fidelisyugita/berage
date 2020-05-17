@@ -133,27 +133,21 @@ export class ExploreScreen extends Component {
           </Swiper>
         </View>
 
-        {getPopularPlaces.fetching && !getPopularPlaces.payload ? (
-          <LoadingIndicator />
-        ) : (
-          <OverviewPlaces
-            title={I18n.t('popular')}
-            items={getPopularPlaces.payload}
-            onPress={() => console.tron.log({clicked: 'See all'})}
-            navigation={navigation}
-          />
-        )}
+        {getPopularPlaces.fetching && <LoadingIndicator />}
+        <OverviewPlaces
+          title={I18n.t('popular')}
+          items={getPopularPlaces.payload}
+          onPress={() => console.tron.log({clicked: 'See all'})}
+          navigation={navigation}
+        />
 
-        {getRecommendedPlaces.fetching && !getRecommendedPlaces.payload ? (
-          <LoadingIndicator />
-        ) : (
-          <OverviewPlaces
-            title={I18n.t('recommended')}
-            items={getRecommendedPlaces.payload}
-            onPress={() => console.tron.log({clicked: 'See all'})}
-            navigation={navigation}
-          />
-        )}
+        {getRecommendedPlaces.fetching && <LoadingIndicator />}
+        <OverviewPlaces
+          title={I18n.t('recommended')}
+          items={getRecommendedPlaces.payload}
+          onPress={() => console.tron.log({clicked: 'See all'})}
+          navigation={navigation}
+        />
       </ScrollView>
     );
   }

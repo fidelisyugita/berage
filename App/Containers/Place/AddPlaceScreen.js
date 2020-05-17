@@ -58,12 +58,17 @@ export class AddPlaceScreen extends Component {
       const reference = storage().ref(refPath);
       const uploadResponse = await reference.putFile(image.path);
       console.tron.log({uploadResponse});
+
+      /**
+       * TODO
+       * - make sure token doesn't bother image to show
+       */
       const url = await storage()
         .ref(refPath)
         .getDownloadURL();
-      console.tron.log({url});
 
-      tempImages.push({...image, url: url});
+      tempImages.push({...image, uri: url.split('&token')[0]});
+      console.tron.log({tempImages});
       this.setState({
         imagePlaces: tempImages,
       });
@@ -84,12 +89,12 @@ export class AddPlaceScreen extends Component {
 
     this.setState({isLoading: true});
 
-    const images = imagePlaces.map(img => img.url);
+    const images = imagePlaces.map(img => img.uri);
     const data = {
       images,
       name: placeName,
       description: placeDesc,
-      categories: placeCategories,
+      categories: placeCategories.split(','),
     };
 
     console.tron.log({data});

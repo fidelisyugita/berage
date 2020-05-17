@@ -16,7 +16,7 @@ const Place = props => {
       style={[AppStyles.sectionVerticalSmall, AppStyles.row]}
       onPress={onPress}>
       <CustomImage
-        source={{uri: item.image}}
+        source={{uri: item.image || item.images[0]}}
         style={{
           ...AppStyles.borderImage,
           ...AppStyles.border3,
