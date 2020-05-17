@@ -26,10 +26,6 @@
   "termsOfService": "Terms of Service",
   "privacyPolicy": "Privacy Policy",
 
-  "locationPermissionDenied": "Location permission denied",
-  "cameraPermissionDenied": "Camera permission denied",
-  "tryAgain": "Try again",
-
   "login": "Login",
   "logout": "Logout",
 
@@ -38,12 +34,19 @@
   "share": "Share",
   "comment": "Comment",
 
+  "submit": "Submit",
+  "add": "Add",
+  "save": "Save",
+
   "savedDesc": "Your messages will appear here.",
   "chatDesc": "Your messages will appear here.",
   "profileDesc": "Login to enjoy more features.",
 
-  "selectImage": "Select Image",
   "placeName": "Place name",
   "placeDesc": "Place description",
-  "submit": "Submit",
+  "placeCategories": "Place categories",
+
+  "successDefault": "Success",
+  "errorDefault": "Error while processing request",
+  "tryAgain": "Plase try again later",
 }

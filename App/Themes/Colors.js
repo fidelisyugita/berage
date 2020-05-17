@@ -35,6 +35,7 @@ const colors = {
   white: '#fff',
   baseText: '#595959',
   backgroundShadow: '#F7F7F7',
+  backgroundDarkShadow: '#F2F2F2',
   highlightUnderlay: '#ddd',
   placeholder: '#E0D7E5',
   link: '#3b5998',

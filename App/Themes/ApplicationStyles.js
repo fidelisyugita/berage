@@ -125,6 +125,30 @@ const ApplicationStyles = {
 
     elevation: 5,
   },
+  darkShadow: {
+    backgroundColor: Colors.backgroundDarkShadow,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  darkShadowSmall: {
+    backgroundColor: Colors.backgroundDarkShadow,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
   justifyBetween: {
     justifyContent: 'space-between',
   },

@@ -18,6 +18,12 @@ const size = {
 };
 
 const style = {
+  alignTop: {
+    textAlignVertical: 'top',
+  },
+  alignBottom: {
+    textAlignVertical: 'bottom',
+  },
   alignJustify: {
     textAlign: 'justify',
   },

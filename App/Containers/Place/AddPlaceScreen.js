@@ -15,13 +15,14 @@ import Swiper from 'react-native-swiper';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 
-import AuthActions from '../../Redux/AuthRedux';
+import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import CustomImage from '../../Components/CustomImage';
+import LoadingIndicator from '../../Components/LoadingIndicator';
 import {DropDownHolder} from '../../Components/DropDownHolder';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
@@ -34,6 +35,7 @@ export class AddPlaceScreen extends Component {
       imagePlaces: [],
       placeName: '',
       placeDesc: '',
+      placeCategories: '',
     };
   }
 
@@ -52,7 +54,7 @@ export class AddPlaceScreen extends Component {
        * TODO
        * - make it better and move it
        */
-      const refPath = `place/${image.modificationDate}.jpg`;
+      const refPath = `places/${image.modificationDate}.jpg`;
       const reference = storage().ref(refPath);
       const uploadResponse = await reference.putFile(image.path);
       console.tron.log({uploadResponse});
@@ -67,16 +69,35 @@ export class AddPlaceScreen extends Component {
       });
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert('error', error, undefined);
+      console.tron.log({error: error.message});
+      DropDownHolder.alert(
+        'error',
+        I18n.t('errorDefault'),
+        error.message || I18n.t('tryAgain'),
+      );
     }
   };
 
-  onSubmit = () => {
-    const {imagePlaces, placeName, placeDesc} = this.state;
-    console.tron.log('submitted');
+  onSavePress = () => {
+    const {imagePlaces, placeName, placeDesc, placeCategories} = this.state;
+    const {savePlaceRequest} = this.props;
+
+    this.setState({isLoading: true});
+
+    const images = imagePlaces.map(img => img.url);
+    const data = {
+      images,
+      name: placeName,
+      description: placeDesc,
+      categories: placeCategories,
+    };
+
+    console.tron.log({data});
+
+    savePlaceRequest(data, this.savePlaceCallback);
   };
 
-  googleLoginCallback = result => {
+  savePlaceCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
@@ -90,11 +111,13 @@ export class AddPlaceScreen extends Component {
       <View>
         {imagePlaces.map(img => (
           <CustomImage
+            key={img.modificationDate}
             source={{uri: img.path}}
             style={{
               ...AppStyles.containerBottom,
               ...AppStyles.borderImage,
               ...AppStyles.border5,
+              ...AppStyles.darkShadowSmall,
               height: Metrics.images.xl,
               width: '100%',
             }}
@@ -109,12 +132,13 @@ export class AddPlaceScreen extends Component {
             AppStyles.sectionVerticalBase,
             AppStyles.alignCenter,
             AppStyles.borderImage,
-            AppStyles.border5,
+            AppStyles.border7,
+            AppStyles.darkShadowSmall,
           ]}>
           <View>
             <IconUserDefault
               width={Metrics.images.xl}
-              height={Metrics.images.xl}
+              height={Metrics.images.xl - Metrics.doubleBaseMargin}
             />
             <AntDesign
               name="pluscircle"
@@ -130,7 +154,7 @@ export class AddPlaceScreen extends Component {
 
   render() {
     const {navigation, currentUser} = this.props;
-    const {placeName, placeDesc} = this.state;
+    const {placeName, placeDesc, placeCategories, isLoading} = this.state;
 
     return (
       <ScrollView>
@@ -151,27 +175,55 @@ export class AddPlaceScreen extends Component {
             value={placeName}
             placeholder={I18n.t('placeName')}
             onChangeText={text => this.setState({placeName: text})}
-            style={[AppStyles.borderBottom7, Fonts.style.medium]}
+            style={[
+              AppStyles.borderBottom7,
+              Fonts.style.medium,
+              Fonts.style.alignBottom,
+            ]}
+          />
+          <TextInput
+            value={placeCategories}
+            placeholder={I18n.t('placeCategories')}
+            onChangeText={text => this.setState({placeCategories: text})}
+            style={[
+              AppStyles.borderBottom7,
+              Fonts.style.medium,
+              Fonts.style.alignBottom,
+            ]}
           />
           <TextInput
             value={placeDesc}
+            multiline={true}
+            numberOfLines={3}
             placeholder={I18n.t('placeDesc')}
             onChangeText={text => this.setState({placeDesc: text})}
-            style={[AppStyles.borderBottom7, Fonts.style.medium]}
-          />
-          <TouchableHighlight
-            underlayColor={Colors.highlightUnderlay}
-            onPress={this.onSubmit}
             style={[
-              AppStyles.topSpace,
-              AppStyles.bottomSpace,
-              AppStyles.sectionVerticalBase,
-              AppStyles.alignCenter,
-              AppStyles.border7,
-              AppStyles.borderImage,
-            ]}>
-            <Text style={[Fonts.style.xl]}>{I18n.t('submit')}</Text>
-          </TouchableHighlight>
+              AppStyles.borderBottom7,
+              Fonts.style.medium,
+              Fonts.style.alignBottom,
+            ]}
+          />
+
+          {isLoading ? (
+            <LoadingIndicator
+              style={[AppStyles.topSpace, AppStyles.bottomSpace]}
+            />
+          ) : (
+            <TouchableHighlight
+              underlayColor={Colors.highlightUnderlay}
+              onPress={this.onSavePress}
+              style={[
+                AppStyles.topSpace,
+                AppStyles.bottomSpace,
+                AppStyles.sectionVerticalBase,
+                AppStyles.alignCenter,
+                AppStyles.border7,
+                AppStyles.borderImage,
+                AppStyles.darkShadowSmall,
+              ]}>
+              <Text style={[Fonts.style.xl]}>{I18n.t('save')}</Text>
+            </TouchableHighlight>
+          )}
         </View>
       </ScrollView>
     );
@@ -185,9 +237,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginWithGoogleRequest: (data, callback) =>
-    dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
-  logoutRequest: () => dispatch(AuthActions.logoutRequest()),
+  savePlaceRequest: (data, callback) =>
+    dispatch(PlaceActions.savePlaceRequest(data, callback)),
 });
 
 export default connect(

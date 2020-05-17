@@ -48,6 +48,11 @@ export class ProfileScreen extends Component {
     this.setState({isLoading: false});
   };
 
+  onLogoutPress = () => {
+    const {logoutRequest} = this.props;
+    logoutRequest();
+  };
+
   render() {
     const {navigation, currentUser} = this.props;
 
@@ -225,7 +230,7 @@ export class ProfileScreen extends Component {
         </TouchableHighlight>
 
         <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
+          onPress={this.onLogoutPress}
           underlayColor={Colors.highlightUnderlay}
           style={AppStyles.section}>
           <View

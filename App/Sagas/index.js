@@ -17,7 +17,7 @@ import {startup} from './StartupSagas';
 import {getUserAvatar} from './GithubSagas';
 
 import {loginWithGoogle, logout} from './AuthSagas';
-import {getPopularPlaces} from './PlaceSagas';
+import {getPopularPlaces, getRecommendedPlaces, savePlace} from './PlaceSagas';
 
 /* ------------- API ------------- */
 
@@ -37,6 +37,13 @@ export default function* root() {
 
     takeLatest(AuthTypes.LOGIN_WITH_GOOGLE_REQUEST, loginWithGoogle, api),
     takeLatest(AuthTypes.LOGOUT_REQUEST, logout, api),
+
     takeLatest(PlaceTypes.GET_POPULAR_PLACES_REQUEST, getPopularPlaces, api),
+    takeLatest(
+      PlaceTypes.GET_RECOMMENDED_PLACES_REQUEST,
+      getRecommendedPlaces,
+      api,
+    ),
+    takeLatest(PlaceTypes.SAVE_PLACE_REQUEST, savePlace, api),
   ]);
 }

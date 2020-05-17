@@ -10,21 +10,23 @@ import I18n from '../I18n';
 import {Scale, DateFormatter} from '../Transforms';
 
 const LoadingIndicator = props => {
-  const {children, size, color} = props;
+  const {children, style, size, color} = props;
 
   return (
-    <View style={[AppStyles.alignCenter]}>
+    <View style={[AppStyles.alignCenter, style]}>
       <ActivityIndicator size={size} color={color} />
     </View>
   );
 };
 
 LoadingIndicator.propTypes = {
+  style: PropTypes.object,
   size: PropTypes.string,
   color: PropTypes.string,
 };
 
 LoadingIndicator.defaultProps = {
+  style: {},
   size: 'large',
   color: Colors.baseText,
 };

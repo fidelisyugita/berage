@@ -55,8 +55,8 @@ export function* logout(api, action) {
     console.tron.log({firebaseUserCredential});
 
     yield put(SessionActions.removeUser());
-    yield put(AuthActions.logoutWithGoogleSuccess({ok: true}));
+    yield put(AuthActions.logoutSuccess({ok: true}));
   } catch (error) {
-    yield put(AuthActions.logoutWithGoogleFailure(error));
+    yield put(AuthActions.logoutFailure(error));
   }
 }

@@ -38,14 +38,22 @@ export class ExploreScreen extends Component {
   }
 
   loadData() {
-    const {getPopularPlacesRequest} = this.props;
+    const {getPopularPlacesRequest, getRecommendedPlacesRequest} = this.props;
 
     this.setState({isLoading: true, refreshing: false});
 
     getPopularPlacesRequest(null, this.getPopularPlacesCallback);
+    getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
   }
 
   getPopularPlacesCallback = result => {
+    if (result.ok) {
+      console.tron.log({result});
+    }
+    this.setState({isLoading: false});
+  };
+
+  getRecommendedPlacesCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
@@ -58,7 +66,7 @@ export class ExploreScreen extends Component {
   };
 
   render() {
-    const {navigation, getPopularPlaces} = this.props;
+    const {navigation, getPopularPlaces, getRecommendedPlaces} = this.props;
     const {refreshing} = this.state;
 
     return (
@@ -136,12 +144,16 @@ export class ExploreScreen extends Component {
           />
         )}
 
-        <OverviewPlaces
-          title={I18n.t('recommended')}
-          items={items}
-          onPress={() => console.tron.log({clicked: 'See all'})}
-          navigation={navigation}
-        />
+        {getRecommendedPlaces.fetching && !getRecommendedPlaces.payload ? (
+          <LoadingIndicator />
+        ) : (
+          <OverviewPlaces
+            title={I18n.t('recommended')}
+            items={getRecommendedPlaces.payload}
+            onPress={() => console.tron.log({clicked: 'See all'})}
+            navigation={navigation}
+          />
+        )}
       </ScrollView>
     );
   }
@@ -152,11 +164,14 @@ const styles = StyleSheet.create({});
 const mapStateToProps = state => ({
   currentUser: state.session.user,
   getPopularPlaces: state.place.getPopularPlaces,
+  getRecommendedPlaces: state.place.getRecommendedPlaces,
 });
 
 const mapDispatchToProps = dispatch => ({
   getPopularPlacesRequest: (data, callback) =>
     dispatch(PlaceActions.getPopularPlacesRequest(data, callback)),
+  getRecommendedPlacesRequest: (data, callback) =>
+    dispatch(PlaceActions.getRecommendedPlacesRequest(data, callback)),
 });
 
 export default connect(

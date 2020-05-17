@@ -1,11 +1,10 @@
 import firebase from '@react-native-firebase/app';
+import {REGION} from './Consts';
 
-const REGION = 'asia-east2';
-
-export async function httpsCallable(functionName, params = {}) {
+export async function httpsCallable(functionName, params) {
   console.tron.log({functionName});
 
-  // return await functions().httpsCallable(functionName)(params);  //didn't work with region
+  // return await functions().httpsCallable(functionName)(params);  //didn't work using region
   return await firebase
     .app()
     .functions(REGION)
