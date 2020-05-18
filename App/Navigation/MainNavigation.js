@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import BottomNav from './BottomNavigation';
 import PlaceScreen from '../Containers/Place';
 import AddPlaceScreen from '../Containers/Place/AddPlaceScreen';
+import MyPlacesScreen from '../Containers/Place/MyPlacesScreen';
 
 import styles from './Styles/NavigationStyles';
 
@@ -12,6 +13,7 @@ const MainNav = createStackNavigator(
     BottomNav: {screen: BottomNav},
     PlaceScreen: {screen: PlaceScreen},
     AddPlaceScreen: {screen: AddPlaceScreen},
+    MyPlacesScreen: {screen: MyPlacesScreen},
   },
   {
     // Default config for all screens

@@ -23,8 +23,6 @@ import CustomImage from '../../Components/CustomImage';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
-import {chats} from '../Dummy';
-
 export class ProfileScreen extends Component {
   constructor(props) {
     super(props);
@@ -60,24 +58,13 @@ export class ProfileScreen extends Component {
       <ScrollView>
         <View
           style={[
-            AppStyles.sectionMargin,
+            AppStyles.section,
             AppStyles.sectionVerticalDouble,
+            AppStyles.shadow,
             AppStyles.row,
             AppStyles.alignCenter,
-            AppStyles.borderBottom5,
           ]}>
-          <View style={[AppStyles.flex1]}>
-            <Text numberOfLines={1} style={Fonts.style.xxl3}>
-              {(currentUser && currentUser.displayName) ||
-                I18n.t('personalName')}
-            </Text>
-            <TouchableOpacity onPress={this.onLoginPress}>
-              <Text style={[Fonts.style.medium]}>
-                {I18n.t('viewEditProfile')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={AppStyles.baseMarginLeft}>
+          <View>
             {currentUser && currentUser.photoURL ? (
               <CustomImage
                 source={{uri: currentUser.photoURL}}
@@ -95,156 +82,193 @@ export class ProfileScreen extends Component {
               />
             )}
           </View>
+          <View style={[AppStyles.baseMarginLeft, AppStyles.flex1]}>
+            <Text numberOfLines={1} style={Fonts.style.xxl3}>
+              {(currentUser && currentUser.displayName) ||
+                I18n.t('personalName')}
+            </Text>
+            <TouchableOpacity onPress={this.onLoginPress}>
+              <Text style={[Fonts.style.medium, Fonts.style.linkColor]}>
+                {I18n.t('viewProfile')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
+        <View style={[AppStyles.container]}>
+          <Text
             style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
+              AppStyles.section,
+              Fonts.style.small,
+              Fonts.style.uppercase,
             ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('yourPlaces')}
-            </Text>
-            <Icon
-              name="home"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+            {I18n.t('hosting')}
+          </Text>
+          <TouchableHighlight
+            onPress={() => navigation.navigate('MyPlacesScreen')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('yourPlaces')}
+              </Text>
+              <Icon
+                name="home"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => navigation.navigate('AddPlaceScreen')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('listYourSpace')}
+              </Text>
+              <Icon
+                name="home-plus"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
 
-        <TouchableHighlight
-          onPress={() => navigation.navigate('AddPlaceScreen')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
+        <View style={[AppStyles.container]}>
+          <Text
             style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
+              AppStyles.section,
+              Fonts.style.small,
+              Fonts.style.uppercase,
             ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('listYourSpace')}
-            </Text>
-            <Icon
-              name="home-plus"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+            {I18n.t('support')}
+          </Text>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('help')}
+              </Text>
+              <Icon
+                name="help"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => navigation.navigate('AddPlaceScreen')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('feedback')}
+              </Text>
+              <Icon
+                name="card-text"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
+        <View style={[AppStyles.container]}>
+          <Text
             style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
+              AppStyles.section,
+              Fonts.style.small,
+              Fonts.style.uppercase,
             ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('help')}
-            </Text>
-            <Icon
-              name="help"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('feedback')}
-            </Text>
-            <Icon
-              name="card-text"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('termsOfService')}
-            </Text>
-            <Icon
-              name="file-document"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('privacyPolicy')}
-            </Text>
-            <Icon
-              name="shield-key"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={this.onLogoutPress}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('logout')}
-            </Text>
-          </View>
-        </TouchableHighlight>
+            {I18n.t('legal')}
+          </Text>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('termsOfService')}
+              </Text>
+              <Icon
+                name="file-document"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => navigation.navigate('AddPlaceScreen')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                {I18n.t('privacyPolicy')}
+              </Text>
+              <Icon
+                name="shield-key"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.onLogoutPress}
+            underlayColor={Colors.highlightUnderlay}
+            style={[AppStyles.section]}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVerticalBase,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('logout')}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
       </ScrollView>
     );
   }

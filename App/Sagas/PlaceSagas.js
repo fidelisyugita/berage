@@ -15,7 +15,7 @@ export function* getPopularPlaces(api, action) {
       yield put(PlaceActions.getPopularPlacesSuccess(response.data.payload));
       action.callback({ok: true});
     } else {
-      yield put(PlaceActions.getPopularPlacesFailure(response));
+      yield put(PlaceActions.getPopularPlacesFailure(response.data.error));
       action.callback({ok: false});
     }
   } catch (error) {
@@ -36,7 +36,7 @@ export function* getRecommendedPlaces(api, action) {
       );
       action.callback({ok: true});
     } else {
-      yield put(PlaceActions.getRecommendedPlacesFailure(response));
+      yield put(PlaceActions.getRecommendedPlacesFailure(response.data.error));
       action.callback({ok: false});
     }
   } catch (error) {
@@ -55,7 +55,7 @@ export function* savePlace(api, action) {
       yield put(PlaceActions.savePlaceSuccess(response.data.payload));
       action.callback({ok: true});
     } else {
-      yield put(PlaceActions.savePlaceFailure(response));
+      yield put(PlaceActions.savePlaceFailure(response.data.error));
       action.callback({ok: false});
     }
   } catch (error) {
