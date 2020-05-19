@@ -8,6 +8,8 @@ import {
   TextInput,
   FlatList,
   RefreshControl,
+  SectionList,
+  TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -19,10 +21,10 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
-import OverviewPlaces from '../../Components/Place/OverviewPlaces';
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
 import ModalLoader from '../../Components/Modal/ModalLoader';
+import Place from '../../Components/Place/Place';
 
 import {images, items} from '../Dummy';
 
@@ -67,9 +69,37 @@ export class ExploreScreen extends Component {
     this.componentDidMount();
   };
 
+  renderHeader = ({section}) => {
+    return (
+      <View
+        style={{
+          ...AppStyles.sectionVerticalSmall,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={Fonts.style.large3}>{section.title}</Text>
+        <TouchableOpacity onPress={section.onPress}>
+          <Text style={Fonts.style.large3}>{I18n.t('seeAll')}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   render() {
     const {navigation, getPopularPlaces, getRecommendedPlaces} = this.props;
     const {refreshing} = this.state;
+    const sections = [
+      {
+        title: I18n.t('popular'),
+        data: getPopularPlaces.payload || [],
+        onPress: () => console.tron.log({clicked: 'See all'}),
+      },
+      {
+        title: I18n.t('recommended'),
+        data: getRecommendedPlaces.payload || [],
+        onPress: () => console.tron.log({clicked: 'See all'}),
+      },
+    ];
 
     return (
       <ScrollView
@@ -140,18 +170,17 @@ export class ExploreScreen extends Component {
           </Swiper>
         </View>
 
-        <OverviewPlaces
-          title={I18n.t('popular')}
-          items={getPopularPlaces.payload}
-          onPress={() => console.tron.log({clicked: 'See all'})}
-          navigation={navigation}
-        />
-
-        <OverviewPlaces
-          title={I18n.t('recommended')}
-          items={getRecommendedPlaces.payload}
-          onPress={() => console.tron.log({clicked: 'See all'})}
-          navigation={navigation}
+        <SectionList
+          sections={sections}
+          keyExtractor={(item, idx) => item + idx}
+          renderSectionHeader={this.renderHeader}
+          renderItem={({item}) => (
+            <Place
+              item={item}
+              onPress={() => navigation.navigate('PlaceScreen', {item})}
+            />
+          )}
+          style={[AppStyles.section]}
         />
       </ScrollView>
     );

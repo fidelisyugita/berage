@@ -24,6 +24,7 @@ import {Scale} from '../../Transforms';
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
 import {DropDownHolder} from '../../Components/DropDownHolder';
+import CustomHeader from '../../Components/CustomHeader';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
@@ -107,6 +108,7 @@ export class AddPlaceScreen extends Component {
       console.tron.log({result});
     }
     this.setState({isLoading: false});
+    this.props.navigation.pop();
   };
 
   renderImagePlaces() {
@@ -163,17 +165,7 @@ export class AddPlaceScreen extends Component {
 
     return (
       <ScrollView>
-        <View style={[AppStyles.row, AppStyles.justifyBetween]}>
-          <TouchableOpacity
-            onPress={() => navigation.pop()}
-            style={[AppStyles.btnIcon]}>
-            <AntDesign
-              name="arrowleft"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </TouchableOpacity>
-        </View>
+        <CustomHeader onBack={() => navigation.pop()} />
         <View style={[AppStyles.container, AppStyles.section]}>
           {this.renderImagePlaces()}
           <TextInput
@@ -210,9 +202,7 @@ export class AddPlaceScreen extends Component {
           />
 
           {isLoading ? (
-            <Loader
-              style={[AppStyles.topSpace, AppStyles.bottomSpace]}
-            />
+            <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
           ) : (
             <TouchableHighlight
               underlayColor={Colors.highlightUnderlay}

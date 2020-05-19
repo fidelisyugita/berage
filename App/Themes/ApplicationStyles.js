@@ -83,6 +83,9 @@ const ApplicationStyles = {
   smallMarginVertical: {
     marginVertical: Metrics.smallMargin,
   },
+  baseMarginBottom: {
+    marginBottom: Metrics.baseMargin,
+  },
   baseMarginRight: {
     marginRight: Metrics.baseMargin,
   },
@@ -161,6 +164,9 @@ const ApplicationStyles = {
   alignCenter: {
     alignItems: 'center',
   },
+  alignEnd: {
+    alignItems: 'flex-end',
+  },
   alignSelfCenter: {
     alignSelf: 'center',
   },
@@ -208,8 +214,8 @@ const ApplicationStyles = {
     borderTopWidth: Scale(0.7),
   },
   btnIcon: {
-    padding: Metrics.smallMargin,
-    margin: Metrics.baseMargin,
+    padding: Metrics.marginHorizontal,
+    // margin: Metrics.baseMargin,
     zIndex: 1,
   },
 };

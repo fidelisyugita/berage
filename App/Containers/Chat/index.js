@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   FlatList,
+  SectionList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Swiper from 'react-native-swiper';
@@ -15,32 +16,31 @@ import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import Room from '../../Components/Chat/Room';
+import HeaderTitle from '../../Components/HeaderTitle';
 
 import {chats} from '../Dummy';
 
 export default class ChatScreen extends Component {
   render() {
     const {navigation} = this.props;
+    const sections = [
+      {
+        title: I18n.t('chat'),
+        data: chats,
+      },
+    ];
 
     return (
-      <ScrollView>
-        <View
-          style={[
-            AppStyles.section,
-            AppStyles.sectionVertical,
-            AppStyles.shadow,
-          ]}>
-          <Text style={Fonts.style.xxl3}>{I18n.t('chat')}</Text>
-        </View>
-
-        <FlatList
-          data={chats}
-          keyExtractor={(item, idx) => `chat-${idx}`}
-          renderItem={({item}) => (
-            <Room item={item} onPress={() => console.tron.log('pressed')} />
-          )}
-        />
-      </ScrollView>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item, idx) => item + idx}
+        renderSectionHeader={({section: {title}}) => (
+          <HeaderTitle title={title} shadow={true} />
+        )}
+        renderItem={({item}) => (
+          <Room item={item} onPress={() => console.tron.log('pressed')} />
+        )}
+      />
     );
   }
 }

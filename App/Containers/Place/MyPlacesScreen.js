@@ -24,6 +24,7 @@ import {Scale} from '../../Transforms';
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
 import SavedPlace from '../../Components/Place/SavedPlace';
+import CustomHeader from '../../Components/CustomHeader';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
@@ -43,17 +44,7 @@ export class MyPlacesScreen extends Component {
 
     return (
       <ScrollView>
-        <View style={[AppStyles.row, AppStyles.justifyBetween]}>
-          <TouchableOpacity
-            onPress={() => navigation.pop()}
-            style={[AppStyles.btnIcon]}>
-            <AntDesign
-              name="arrowleft"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </TouchableOpacity>
-        </View>
+      <CustomHeader onBack={() => navigation.pop()} />
         <FlatList
           data={items.filter(item => item.isLiked)}
           keyExtractor={(item, idx) => `saved-${idx}`}
