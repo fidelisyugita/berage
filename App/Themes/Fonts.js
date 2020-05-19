@@ -27,6 +27,9 @@ const style = {
   alignJustify: {
     textAlign: 'justify',
   },
+  alignCenter: {
+    textAlign: 'center',
+  },
   linkColor: {
     color: Colors.link,
   },

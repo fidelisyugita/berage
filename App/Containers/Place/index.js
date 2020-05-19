@@ -47,7 +47,7 @@ export default class PlaceScreen extends Component {
               />
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => navigation.pop()}
+              // onPress={() => navigation.pop()}
               style={{
                 ...AppStyles.btnIcon,
                 ...styles.headerIcon,
@@ -60,7 +60,7 @@ export default class PlaceScreen extends Component {
               />
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => navigation.pop()}
+              // onPress={() => navigation.pop()}
               style={{
                 ...AppStyles.btnIcon,
                 ...styles.headerIcon,

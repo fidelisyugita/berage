@@ -22,7 +22,7 @@ import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import CustomImage from '../../Components/CustomImage';
-import LoadingIndicator from '../../Components/LoadingIndicator';
+import Loader from '../../Components/Loader';
 import {DropDownHolder} from '../../Components/DropDownHolder';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
@@ -210,7 +210,7 @@ export class AddPlaceScreen extends Component {
           />
 
           {isLoading ? (
-            <LoadingIndicator
+            <Loader
               style={[AppStyles.topSpace, AppStyles.bottomSpace]}
             />
           ) : (

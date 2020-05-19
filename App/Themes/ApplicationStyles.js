@@ -149,6 +149,9 @@ const ApplicationStyles = {
 
     elevation: 2,
   },
+  justifyCenter: {
+    justifyContent: 'center',
+  },
   justifyBetween: {
     justifyContent: 'space-between',
   },
@@ -157,6 +160,9 @@ const ApplicationStyles = {
   },
   alignCenter: {
     alignItems: 'center',
+  },
+  alignSelfCenter: {
+    alignSelf: 'center',
   },
   flex1: {
     flex: 1,

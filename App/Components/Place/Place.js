@@ -6,7 +6,7 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
-import CustomImage from '../../Components/CustomImage';
+import CustomImage from '../CustomImage';
 
 const Place = props => {
   const {children, item, onPress} = props;

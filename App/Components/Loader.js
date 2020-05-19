@@ -9,7 +9,7 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import I18n from '../I18n';
 import {Scale, DateFormatter} from '../Transforms';
 
-const LoadingIndicator = props => {
+const Loader = props => {
   const {children, style, size, color} = props;
 
   return (
@@ -19,16 +19,16 @@ const LoadingIndicator = props => {
   );
 };
 
-LoadingIndicator.propTypes = {
+Loader.propTypes = {
   style: PropTypes.object,
   size: PropTypes.string,
   color: PropTypes.string,
 };
 
-LoadingIndicator.defaultProps = {
+Loader.defaultProps = {
   style: {},
   size: 'large',
   color: Colors.baseText,
 };
 
-export default LoadingIndicator;
+export default Loader;

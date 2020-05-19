@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   Text,
@@ -20,7 +21,8 @@ import {Scale} from '../../Transforms';
 
 import OverviewPlaces from '../../Components/Place/OverviewPlaces';
 import CustomImage from '../../Components/CustomImage';
-import LoadingIndicator from '../../Components/LoadingIndicator';
+import Loader from '../../Components/Loader';
+import ModalLoader from '../../Components/Modal/ModalLoader';
 
 import {images, items} from '../Dummy';
 
@@ -74,6 +76,11 @@ export class ExploreScreen extends Component {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
+        <ModalLoader
+          visible={getPopularPlaces.fetching && getRecommendedPlaces.fetching}
+          imageSource={Images.homeLoader}
+        />
+
         <View style={[AppStyles.container, AppStyles.section]}>
           <View
             style={{
@@ -133,7 +140,6 @@ export class ExploreScreen extends Component {
           </Swiper>
         </View>
 
-        {getPopularPlaces.fetching && <LoadingIndicator />}
         <OverviewPlaces
           title={I18n.t('popular')}
           items={getPopularPlaces.payload}
@@ -141,7 +147,6 @@ export class ExploreScreen extends Component {
           navigation={navigation}
         />
 
-        {getRecommendedPlaces.fetching && <LoadingIndicator />}
         <OverviewPlaces
           title={I18n.t('recommended')}
           items={getRecommendedPlaces.payload}
