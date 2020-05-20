@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale, DateFormatter} from '../../Transforms';
+import {Scale, DateFormatter} from '../../Utils';
 
 import CustomImage from '../../Components/CustomImage';
 

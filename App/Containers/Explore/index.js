@@ -21,7 +21,7 @@ import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale} from '../../Utils';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -37,71 +37,12 @@ export class ExploreScreen extends Component {
     this.state = {
       isLoading: false,
       refreshing: false,
-      userPosition: null,
       isLoadPosition: false,
     };
   }
 
   componentDidMount() {
     this.loadData();
-    this.getUserPosition();
-  }
-
-  async getUserPosition() {
-    this.setState({isLoadPosition: true});
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        Geolocation.getCurrentPosition(
-          position => {
-            console.tron.log({position});
-            this.setState({
-              userPosition: position.coords,
-              isLoadPosition: false,
-            });
-          },
-          error => {
-            console.tron.error({error});
-            DropDownHolder.alert(
-              'error',
-              I18n.t('errorDefault'),
-              error.message || I18n.t('tryAgain'),
-            );
-            this.setState({isLoadPosition: false});
-          },
-        );
-      } else {
-        console.tron.error({error: 'permission'});
-        DropDownHolder.alert('error', I18n.t('permissionDenied'), undefined);
-        this.setState({isLoadPosition: false});
-      }
-    } catch (error) {
-      console.tron.error({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
-      this.setState({isLoadPosition: false});
-    }
-    /**
-     * TODO
-     * dunno why this isn't worked
-     */
-    // try {
-    //   const coords = await GetUserCoordinate();
-    //   console.tron.log({userPosition: coords});
-    //   this.setState({userPosition: coords});
-    // } catch (error) {
-    //   console.tron.error({error});
-    //   DropDownHolder.alert(
-    //     'error',
-    //     I18n.t('errorDefault'),
-    //     error.message || I18n.t('tryAgain'),
-    //   );
-    // }
   }
 
   loadData() {
@@ -149,8 +90,13 @@ export class ExploreScreen extends Component {
   };
 
   render() {
-    const {navigation, getPopularPlaces, getRecommendedPlaces} = this.props;
-    const {refreshing, isLoadPosition, userPosition} = this.state;
+    const {
+      navigation,
+      getPopularPlaces,
+      getRecommendedPlaces,
+      userLocation,
+    } = this.props;
+    const {refreshing} = this.state;
     const sections = [
       {
         title: I18n.t('popular'),
@@ -243,7 +189,7 @@ export class ExploreScreen extends Component {
           renderItem={({item}) => (
             <Place
               item={item}
-              userPosition={userPosition}
+              userLocation={userLocation}
               onPress={() => navigation.navigate('PlaceScreen', {item})}
             />
           )}
@@ -258,6 +204,7 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = state => ({
   currentUser: state.session.user,
+  userLocation: state.session.userLocation,
   getPopularPlaces: state.place.getPopularPlaces,
   getRecommendedPlaces: state.place.getRecommendedPlaces,
 });

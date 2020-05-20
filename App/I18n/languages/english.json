@@ -55,6 +55,7 @@
   "fieldsRequired": "All fields are required",
 
   "permissionDenied": "Permission denied",
+  "needLocationAccess": "Berage needs access to your location to provide more info",
 
 
 }

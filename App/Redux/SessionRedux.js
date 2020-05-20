@@ -6,6 +6,7 @@ import Immutable from 'seamless-immutable';
 const {Types, Creators} = createActions({
   saveUser: ['data'],
   removeUser: null,
+  saveUserLocation: ['data'],
   // removeOnboarding: null,
   // changeLanguage: ['data'],
 });
@@ -17,6 +18,7 @@ export default Creators;
 
 export const INITIAL_STATE = Immutable({
   user: null,
+  userLocation: null,
   language: 'en',
 });
 
@@ -36,9 +38,15 @@ export const removeUser = state => {
   return state.merge({...state, user: null});
 };
 
+export const saveUserLocation = (state, {data}) => {
+  console.tron.log({data});
+  return state.merge({...state, userLocation: data});
+};
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SAVE_USER]: saveUser,
   [Types.REMOVE_USER]: removeUser,
+  [Types.SAVE_USER_LOCATION]: saveUserLocation,
 });

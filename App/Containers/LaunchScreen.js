@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
 
-import {Scale} from '../Transforms';
+import {Scale} from '../Utils';
 import Logo from '../Images/svg/Logo.svg';
 
 // Styles

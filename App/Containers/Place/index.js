@@ -21,7 +21,7 @@ import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale, GetUserCoordinate} from '../../Transforms';
+import {Scale, GetUserCoordinate} from '../../Utils';
 
 import CustomImage from '../../Components/CustomImage';
 import Post from '../../Components/Post/Post';
@@ -35,75 +35,16 @@ export class PlaceScreen extends Component {
     super(props);
     this.state = {
       item: props.navigation.getParam('item', null),
-      userPosition: null,
-      isLoadPosition: false,
     };
   }
 
   componentDidMount() {
-    this.getUserPosition();
-  }
-
-  async getUserPosition() {
-    this.setState({isLoadPosition: true});
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        Geolocation.getCurrentPosition(
-          position => {
-            console.tron.log({position});
-            this.setState({
-              userPosition: position.coords,
-              isLoadPosition: false,
-            });
-          },
-          error => {
-            console.tron.error({error});
-            DropDownHolder.alert(
-              'error',
-              I18n.t('errorDefault'),
-              error.message || I18n.t('tryAgain'),
-            );
-            this.setState({isLoadPosition: false});
-          },
-        );
-      } else {
-        console.tron.error({error: 'permission'});
-        DropDownHolder.alert('error', I18n.t('permissionDenied'), undefined);
-        this.setState({isLoadPosition: false});
-      }
-    } catch (error) {
-      console.tron.error({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
-      this.setState({isLoadPosition: false});
-    }
-    /**
-     * TODO
-     * dunno why this isn't worked
-     */
-    // try {
-    //   const coords = await GetUserCoordinate();
-    //   console.tron.log({userPosition: coords});
-    //   this.setState({userPosition: coords});
-    // } catch (error) {
-    //   console.tron.error({error});
-    //   DropDownHolder.alert(
-    //     'error',
-    //     I18n.t('errorDefault'),
-    //     error.message || I18n.t('tryAgain'),
-    //   );
-    // }
+    // this.getUserPosition();
   }
 
   render() {
-    const {navigation, currentUser} = this.props;
-    const {item, userPosition, isLoadPosition} = this.state;
+    const {navigation, currentUser, userLocation} = this.props;
+    const {item} = this.state;
 
     const owner = item.updatedBy || item.createdBy;
 
@@ -221,19 +162,14 @@ export class PlaceScreen extends Component {
                   size={Metrics.icons.tiny}
                   color={Colors.baseText}
                 />
-                {isLoadPosition ? (
-                  <Loader size={'small'} />
-                ) : (
-                  <Text
-                    style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                    {item.location && userPosition
-                      ? `${convertDistance(
-                          getDistance(userPosition, item.location),
-                          'km',
-                        )} km`
-                      : item.distance || '-'}
-                  </Text>
-                )}
+                <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
+                  {item.location && userLocation
+                    ? `${convertDistance(
+                        getDistance(userLocation, item.location),
+                        'km',
+                      )} km`
+                    : item.distance || '-'}
+                </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
                 {'4 min'}
@@ -296,6 +232,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   currentUser: state.session.user,
+  userLocation: state.session.userLocation,
   getPopularPlaces: state.place.getPopularPlaces,
   getRecommendedPlaces: state.place.getRecommendedPlaces,
 });

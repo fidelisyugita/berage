@@ -1,5 +1,5 @@
 import {Colors, Fonts, Metrics} from '../Themes';
-import {Scale} from '../Transforms';
+import {Scale} from '../Utils';
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android

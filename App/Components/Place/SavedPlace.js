@@ -5,12 +5,12 @@ import {getDistance, convertDistance} from 'geolib';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale} from '../../Utils';
 
 import ThumbnailImages from '../ThumbnailImages';
 
 const SavedPlace = props => {
-  const {children, item, onPress, userPosition} = props;
+  const {children, item, onPress, userLocation} = props;
 
   return (
     <View style={[AppStyles.section]}>
@@ -34,9 +34,9 @@ const SavedPlace = props => {
             <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
             <Text style={Fonts.style.small}>{item.categories.join(', ')}</Text>
             <Text style={Fonts.style.small}>
-              {item.location && userPosition
+              {item.location && userLocation
                 ? `${convertDistance(
-                    getDistance(userPosition, item.location),
+                    getDistance(userLocation, item.location),
                     'km',
                   )} km`
                 : item.distance || '-'}
@@ -51,12 +51,12 @@ const SavedPlace = props => {
 SavedPlace.propTypes = {
   item: PropTypes.object.isRequired,
   onPress: PropTypes.func.isRequired,
-  userPosition: PropTypes.object,
+  userLocation: PropTypes.object,
 };
 
 SavedPlace.defaultProps = {
   style: {},
-  userPosition: null,
+  userLocation: null,
 };
 
 export default SavedPlace;

@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale} from '../../Utils';
 
 import SavedPlace from '../../Components/Place/SavedPlace';
 import HeaderTitle from '../../Components/HeaderTitle';

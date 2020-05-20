@@ -20,7 +20,7 @@ import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale} from '../../Utils';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';

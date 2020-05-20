@@ -13,7 +13,7 @@ import Swiper from 'react-native-swiper';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Transforms';
+import {Scale} from '../../Utils';
 
 import Room from '../../Components/Chat/Room';
 import HeaderTitle from '../../Components/HeaderTitle';
