@@ -10,7 +10,7 @@ const metrics = {
   section: Scale(25),
   baseMargin: Scale(10),
   doubleBaseMargin: Scale(20),
-  smallMargin: Scale(5),
+  smallMargin: Scale(4),
   tinyMargin: Scale(2),
   doubleSection: Scale(50),
   horizontalLineHeight: 1,

@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
+  SectionList,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -41,21 +42,27 @@ export class MyPlacesScreen extends Component {
   render() {
     const {navigation, currentUser} = this.props;
     const {isLoading} = this.state;
+    const sections = [
+      {
+        title: I18n.t('saved'),
+        data: items.filter(item => item.isLiked),
+      },
+    ];
 
     return (
-      <ScrollView>
-      <CustomHeader onBack={() => navigation.pop()} />
-        <FlatList
-          data={items.filter(item => item.isLiked)}
-          keyExtractor={(item, idx) => `saved-${idx}`}
-          renderItem={({item}) => (
-            <SavedPlace
-              item={item}
-              onPress={() => navigation.navigate('PlaceScreen', {item})}
-            />
-          )}
-        />
-      </ScrollView>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item, idx) => item + idx}
+        renderSectionHeader={({section: {title}}) => (
+          <CustomHeader onBack={() => navigation.pop()} />
+        )}
+        renderItem={({item}) => (
+          <SavedPlace
+            item={item}
+            onPress={() => navigation.navigate('PlaceScreen', {item})}
+          />
+        )}
+      />
     );
   }
 }

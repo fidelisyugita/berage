@@ -214,8 +214,8 @@ const ApplicationStyles = {
     borderTopWidth: Scale(0.7),
   },
   btnIcon: {
-    padding: Metrics.marginHorizontal,
-    // margin: Metrics.baseMargin,
+    padding: Metrics.smallMargin,
+    margin: Metrics.baseMargin,
     zIndex: 1,
   },
 };

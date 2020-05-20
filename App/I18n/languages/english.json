@@ -38,15 +38,23 @@
   "add": "Add",
   "save": "Save",
 
-  "savedDesc": "Your messages will appear here.",
-  "chatDesc": "Your messages will appear here.",
-  "profileDesc": "Login to enjoy more features.",
+  "savedDetail": "Your messages will appear here.",
+  "chatDetail": "Your messages will appear here.",
+  "profileDetail": "Login to enjoy more features.",
 
   "placeName": "Place name",
-  "placeDesc": "Place description",
   "placeCategories": "Place categories",
+  "placeStatus": "Place status",
+  "placeDescription": "Place description",
+  "setPlaceCoordinate": "Set your place coordinate",
 
   "successDefault": "Success",
   "errorDefault": "Error while processing request",
   "tryAgain": "Plase try again later",
+
+  "fieldsRequired": "All fields are required",
+
+  "permissionDenied": "Permission denied",
+
+
 }

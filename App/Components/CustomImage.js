@@ -26,10 +26,10 @@ CustomImage.propTypes = {
 CustomImage.defaultProps = {
   style: {
     height: Metrics.images.xl,
-    width: Metrics.images.xl,
+    width: '100%',
   },
   imageStyle: {
-    borderRadius: Metrics.buttonRadius,
+    borderRadius: 0,
   },
 };
 

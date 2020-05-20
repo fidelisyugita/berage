@@ -10,7 +10,7 @@ export default (
   const b = moment();
 
   const diffInDays = b.diff(a, 'days');
-  console.tron.log({diffInDays});
+  // console.tron.log({diffInDays});
 
   // if (diffInDays === 0) {
   //   return I18n.t('today');

@@ -20,6 +20,7 @@ import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 
 import CustomImage from '../../Components/CustomImage';
+import ModalLoader from '../../Components/Modal/ModalLoader';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
@@ -53,9 +54,11 @@ export class ProfileScreen extends Component {
 
   render() {
     const {navigation, currentUser} = this.props;
+    const {isLoading} = this.state;
 
     return (
       <ScrollView>
+        <ModalLoader visible={isLoading} imageSource={Images.loader} />
         <View
           style={[
             AppStyles.section,
@@ -89,7 +92,7 @@ export class ProfileScreen extends Component {
             </Text>
             <TouchableOpacity onPress={this.onLoginPress}>
               <Text style={[Fonts.style.medium, Fonts.style.linkColor]}>
-                {I18n.t('viewProfile')}
+                {currentUser ? I18n.t('viewProfile') : I18n.t('login')}
               </Text>
             </TouchableOpacity>
           </View>

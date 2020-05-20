@@ -10,10 +10,12 @@ import {
   RefreshControl,
   SectionList,
   TouchableOpacity,
+  PermissionsAndroid,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Swiper from 'react-native-swiper';
+import Geolocation from 'react-native-geolocation-service';
 
 import PlaceActions from '../../Redux/PlaceRedux';
 
@@ -25,6 +27,7 @@ import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import Place from '../../Components/Place/Place';
+import {DropDownHolder} from '../../Components/DropDownHolder';
 
 import {images, items} from '../Dummy';
 
@@ -34,11 +37,71 @@ export class ExploreScreen extends Component {
     this.state = {
       isLoading: false,
       refreshing: false,
+      userPosition: null,
+      isLoadPosition: false,
     };
   }
 
   componentDidMount() {
     this.loadData();
+    this.getUserPosition();
+  }
+
+  async getUserPosition() {
+    this.setState({isLoadPosition: true});
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition(
+          position => {
+            console.tron.log({position});
+            this.setState({
+              userPosition: position.coords,
+              isLoadPosition: false,
+            });
+          },
+          error => {
+            console.tron.error({error});
+            DropDownHolder.alert(
+              'error',
+              I18n.t('errorDefault'),
+              error.message || I18n.t('tryAgain'),
+            );
+            this.setState({isLoadPosition: false});
+          },
+        );
+      } else {
+        console.tron.error({error: 'permission'});
+        DropDownHolder.alert('error', I18n.t('permissionDenied'), undefined);
+        this.setState({isLoadPosition: false});
+      }
+    } catch (error) {
+      console.tron.error({error});
+      DropDownHolder.alert(
+        'error',
+        I18n.t('errorDefault'),
+        error.message || I18n.t('tryAgain'),
+      );
+      this.setState({isLoadPosition: false});
+    }
+    /**
+     * TODO
+     * dunno why this isn't worked
+     */
+    // try {
+    //   const coords = await GetUserCoordinate();
+    //   console.tron.log({userPosition: coords});
+    //   this.setState({userPosition: coords});
+    // } catch (error) {
+    //   console.tron.error({error});
+    //   DropDownHolder.alert(
+    //     'error',
+    //     I18n.t('errorDefault'),
+    //     error.message || I18n.t('tryAgain'),
+    //   );
+    // }
   }
 
   loadData() {
@@ -87,7 +150,7 @@ export class ExploreScreen extends Component {
 
   render() {
     const {navigation, getPopularPlaces, getRecommendedPlaces} = this.props;
-    const {refreshing} = this.state;
+    const {refreshing, isLoadPosition, userPosition} = this.state;
     const sections = [
       {
         title: I18n.t('popular'),
@@ -119,6 +182,7 @@ export class ExploreScreen extends Component {
               flexDirection: 'row',
               alignItems: 'center',
               paddingHorizontal: Metrics.marginHorizontal,
+              ...AppStyles.shadow,
             }}>
             <Icon
               name="magnifier"
@@ -179,6 +243,7 @@ export class ExploreScreen extends Component {
           renderItem={({item}) => (
             <Place
               item={item}
+              userPosition={userPosition}
               onPress={() => navigation.navigate('PlaceScreen', {item})}
             />
           )}

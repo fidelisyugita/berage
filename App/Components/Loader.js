@@ -20,7 +20,7 @@ const Loader = props => {
 };
 
 Loader.propTypes = {
-  style: PropTypes.object,
+  style: PropTypes.any,
   size: PropTypes.string,
   color: PropTypes.string,
 };
