@@ -35,7 +35,7 @@ export default class ChatScreen extends Component {
         sections={sections}
         keyExtractor={(item, idx) => item + idx}
         renderSectionHeader={({section: {title}}) => (
-          <HeaderTitle title={title} shadow={true} />
+          <HeaderTitle title={title} shadow />
         )}
         renderItem={({item}) => (
           <Room item={item} onPress={() => console.tron.log('pressed')} />

@@ -74,7 +74,7 @@ export class PlaceScreen extends Component {
                 color={Colors.silver}
               />
             </TouchableHighlight>
-            {owner && owner.id === currentUser.id ? (
+            {owner && currentUser && owner.id === currentUser.id ? (
               <TouchableHighlight
                 onPress={() => navigation.navigate('AddPlaceScreen', {item})}
                 style={{

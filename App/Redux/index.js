@@ -13,6 +13,7 @@ export const reducers = combineReducers({
   session: require('./SessionRedux').reducer,
   auth: require('./AuthRedux').reducer,
   place: require('./PlaceRedux').reducer,
+  favorite: require('./FavoriteRedux').reducer,
 });
 
 export default () => {

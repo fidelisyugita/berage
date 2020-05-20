@@ -10,6 +10,7 @@ import {GithubTypes} from '../Redux/GithubRedux';
 
 import {AuthTypes} from '../Redux/AuthRedux';
 import {PlaceTypes} from '../Redux/PlaceRedux';
+import {FavoriteTypes} from '../Redux/FavoriteRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -18,6 +19,12 @@ import {getUserAvatar} from './GithubSagas';
 
 import {loginWithGoogle, logout} from './AuthSagas';
 import {getPopularPlaces, getRecommendedPlaces, savePlace} from './PlaceSagas';
+import {
+  getFavorites,
+  getFavorite,
+  addFavorite,
+  removeFavorite,
+} from './FavoriteSagas';
 
 /* ------------- API ------------- */
 
@@ -45,5 +52,10 @@ export default function* root() {
       api,
     ),
     takeLatest(PlaceTypes.SAVE_PLACE_REQUEST, savePlace, api),
+
+    takeLatest(FavoriteTypes.GET_FAVORITES_REQUEST, getFavorites, api),
+    takeLatest(FavoriteTypes.GET_FAVORITE_REQUEST, getFavorite, api),
+    takeLatest(FavoriteTypes.ADD_FAVORITE_REQUEST, addFavorite, api),
+    takeLatest(FavoriteTypes.REMOVE_FAVORITE_REQUEST, removeFavorite, api),
   ]);
 }

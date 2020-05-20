@@ -13,6 +13,7 @@ const ModalLoader = props => {
     visible,
     onClose,
     imageSource,
+    imageStyle,
     title,
     message,
   } = props;
@@ -44,6 +45,7 @@ ModalLoader.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
   imageSource: PropTypes.any.isRequired,
+  imageStyle: PropTypes.any,
   title: PropTypes.string,
   message: PropTypes.string,
 };
@@ -55,6 +57,10 @@ ModalLoader.defaultProps = {
   },
   visible: false,
   imageSource: Images.loader,
+  imageStyle: {
+    width: Metrics.images.xl,
+    height: Metrics.images.xl,
+  },
 };
 
 export default ModalLoader;

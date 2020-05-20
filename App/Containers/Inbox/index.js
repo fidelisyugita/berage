@@ -35,7 +35,7 @@ export default class InboxScreen extends Component {
         sections={sections}
         keyExtractor={(item, idx) => item + idx}
         renderSectionHeader={({section: {title}}) => (
-          <HeaderTitle title={title} shadow={true} />
+          <HeaderTitle title={title} shadow />
         )}
         renderItem={({item}) => (
           <RenderInbox

@@ -7,32 +7,32 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import CustomImage from './CustomImage';
 
 const EmptyState = props => {
-  const {children, containerStyle, imageSource, title, message} = props;
+  const {
+    children,
+    containerStyle,
+    imageSource,
+    imageStyle,
+    title,
+    message,
+  } = props;
 
   return (
     <View style={[AppStyles.alignCenter, containerStyle]}>
-      <CustomImage
-        source={imageSource}
-        style={{
-          width: Metrics.images.xl,
-          height: Metrics.images.xl,
-        }}
-      />
-      {title && message && (
+      {(title || message) && (
         <View
           style={[
             AppStyles.containerBottom,
             AppStyles.section,
             AppStyles.alignCenter,
           ]}>
-          <Text style={[Fonts.style.xxxl, Fonts.style.alignCenter]}>
-            {title}
-          </Text>
-          <Text style={[Fonts.style.large, Fonts.style.alignCenter]}>
+          <Text style={[Fonts.style.xxxl, Fonts.style.alignLeft]}>{title}</Text>
+          <Text style={[Fonts.style.large, Fonts.style.alignLeft]}>
             {message}
           </Text>
         </View>
       )}
+      <CustomImage source={imageSource} style={imageStyle} />
+      {children}
     </View>
   );
 };
@@ -40,6 +40,7 @@ const EmptyState = props => {
 EmptyState.propTypes = {
   containerStyle: PropTypes.any,
   imageSource: PropTypes.any.isRequired,
+  imageStyle: PropTypes.any,
   title: PropTypes.string,
   message: PropTypes.string,
 };
@@ -49,6 +50,10 @@ EmptyState.defaultProps = {
     backgroundColor: Colors.background,
   },
   imageSource: Images.loader,
+  imageStyle: {
+    width: Metrics.images.xl,
+    height: Metrics.images.xl,
+  },
 };
 
 export default EmptyState;

@@ -30,6 +30,12 @@ const style = {
   alignCenter: {
     textAlign: 'center',
   },
+  alignLeft: {
+    textAlign: 'left',
+  },
+  alignRight: {
+    textAlign: 'right',
+  },
   linkColor: {
     color: Colors.link,
   },

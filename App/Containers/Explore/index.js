@@ -37,7 +37,6 @@ export class ExploreScreen extends Component {
     this.state = {
       isLoading: false,
       refreshing: false,
-      isLoadPosition: false,
     };
   }
 

@@ -38,8 +38,9 @@
   "add": "Add",
   "save": "Save",
 
-  "savedDetail": "Your messages will appear here.",
-  "chatDetail": "Your messages will appear here.",
+  "savedDetail": "Collect your favorite places by tapping the heart icon.",
+  "chatDetail": "Your chats will appear here.",
+  "inboxDetail": "Your messages will appear here.",
   "profileDetail": "Login to enjoy more features.",
 
   "placeName": "Place name",
