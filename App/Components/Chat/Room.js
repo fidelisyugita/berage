@@ -27,7 +27,7 @@ const Room = props => {
             AppStyles.avatarMedium,
             AppStyles.borderCircle,
           ]}
-          imageBorderRadius={Metrics.circleRadius}
+          imageStyle={AppStyles.borderCircle}
         />
         <View
           style={[

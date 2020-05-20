@@ -84,7 +84,7 @@ export class ProfileScreen extends Component {
                   AppStyles.borderCircle,
                   AppStyles.border3,
                 ]}
-                imageBorderRadius={Metrics.circleRadius}
+                imageStyle={AppStyles.borderCircle}
               />
             ) : (
               <IconUserDefault

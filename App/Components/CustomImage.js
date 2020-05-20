@@ -12,32 +12,25 @@ import I18n from '../I18n';
 import {Scale} from '../Transforms';
 
 const CustomImage = props => {
-  const {children, source, style, imageStyle, imageBorderRadius} = props;
+  const {children, source, style, imageStyle} = props;
 
-  return (
-    <Image
-      source={source}
-      style={style}
-      imageStyle={[
-        imageStyle,
-        {
-          borderRadius: imageBorderRadius,
-        },
-      ]}
-    />
-  );
+  return <Image source={source} style={style} imageStyle={imageStyle} />;
 };
 
 CustomImage.propTypes = {
-  source: PropTypes.object.isRequired,
-  style: PropTypes.object.isRequired,
-  imageStyle: PropTypes.object,
-  imageBorderRadius: PropTypes.number,
+  source: PropTypes.any.isRequired,
+  style: PropTypes.any.isRequired,
+  imageStyle: PropTypes.any,
 };
 
 CustomImage.defaultProps = {
-  style: {},
-  imageStyle: {},
+  style: {
+    height: Metrics.images.xl,
+    width: Metrics.images.xl,
+  },
+  imageStyle: {
+    borderRadius: Metrics.buttonRadius,
+  },
 };
 
 export default CustomImage;

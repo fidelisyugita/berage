@@ -28,7 +28,7 @@ const Inbox = props => {
               AppStyles.avatarMedium,
               AppStyles.borderCircle,
             ]}
-            imageBorderRadius={Metrics.circleRadius}
+            imageStyle={AppStyles.borderCircle}
           />
           <View style={[AppStyles.baseMarginLeft, AppStyles.flex1]}>
             <View style={[AppStyles.row]}>
@@ -56,7 +56,7 @@ const Inbox = props => {
               height: Metrics.images.large,
               width: '100%',
             }}
-            imageBorderRadius={Metrics.imageRadius}
+            imageStyle={AppStyles.borderImage}
           />
         </View>
       </View>

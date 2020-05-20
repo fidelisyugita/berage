@@ -38,8 +38,8 @@ const EmptyState = props => {
 };
 
 EmptyState.propTypes = {
-  containerStyle: PropTypes.object,
-  imageSource: PropTypes.object.isRequired,
+  containerStyle: PropTypes.any,
+  imageSource: PropTypes.any.isRequired,
   title: PropTypes.string,
   message: PropTypes.string,
 };

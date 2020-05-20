@@ -159,11 +159,13 @@ export class ExploreScreen extends Component {
               <CustomImage
                 key={image}
                 source={{uri: image}}
-                style={{
-                  ...AppStyles.border3,
-                  width: '100%',
-                  height: Metrics.images.xl,
-                }}
+                style={[
+                  AppStyles.border3,
+                  {
+                    width: '100%',
+                    height: Metrics.images.xl,
+                  },
+                ]}
               />
               // </View>
             ))}

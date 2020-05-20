@@ -128,7 +128,7 @@ export class AddPlaceScreen extends Component {
               height: Metrics.images.xl,
               width: '100%',
             }}
-            imageBorderRadius={Metrics.imageRadius}
+            imageStyle={AppStyles.borderImage}
           />
         ))}
         <TouchableHighlight

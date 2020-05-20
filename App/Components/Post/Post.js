@@ -28,7 +28,7 @@ const Place = props => {
             AppStyles.borderCircle,
             AppStyles.border3,
           ]}
-          imageBorderRadius={Metrics.circleRadius}
+          imageStyle={AppStyles.borderCircle}
         />
         <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
           <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>

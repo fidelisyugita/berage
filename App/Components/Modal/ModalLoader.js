@@ -42,8 +42,8 @@ const ModalLoader = props => {
 ModalLoader.propTypes = {
   containerStyle: PropTypes.object,
   visible: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  imageSource: PropTypes.object.isRequired,
+  onClose: PropTypes.func,
+  imageSource: PropTypes.any.isRequired,
   title: PropTypes.string,
   message: PropTypes.string,
 };
