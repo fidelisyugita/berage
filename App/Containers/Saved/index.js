@@ -43,14 +43,17 @@ export class SavedScreen extends Component {
   }
 
   loadData() {
-    const {getFavoritesRequest} = this.props;
+    const {getFavoritesRequest, favorites} = this.props;
+    const {refreshing} = this.state;
 
-    this.setState({isLoading: true, refreshing: false});
+    if (favorites.length < 1 || refreshing) {
+      this.setState({isLoading: true, refreshing: false});
 
-    getFavoritesRequest(null, this.getFavoritesRequestCallback);
+      getFavoritesRequest(null, this.getFavoritesCallback);
+    }
   }
 
-  getFavoritesRequestCallback = result => {
+  getFavoritesCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
@@ -73,12 +76,17 @@ export class SavedScreen extends Component {
   };
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.componentDidMount();
+    this.setState({refreshing: true}, () => this.componentDidMount());
   };
 
   render() {
-    const {navigation, currentUser, userLocation, getFavorites} = this.props;
+    const {
+      navigation,
+      currentUser,
+      userLocation,
+      getFavorites,
+      favorites,
+    } = this.props;
     const {isLoading, refreshing} = this.state;
 
     return (
@@ -86,13 +94,10 @@ export class SavedScreen extends Component {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader
-          visible={isLoading || getFavorites.fetching}
-          imageSource={Images.loader}
-        />
+        <ModalLoader visible={isLoading || getFavorites.fetching} />
         <HeaderTitle title={I18n.t('saved')} shadow />
         <FlatList
-          data={getFavorites.payload || []}
+          data={favorites}
           keyExtractor={(item, idx) => item + idx}
           renderItem={({item}) => (
             <SavedPlace
@@ -128,6 +133,7 @@ const mapStateToProps = state => ({
   currentUser: state.session.user,
   userLocation: state.session.userLocation,
   getFavorites: state.favorite.getFavorites,
+  favorites: state.favorite.favorites,
 });
 
 const mapDispatchToProps = dispatch => ({

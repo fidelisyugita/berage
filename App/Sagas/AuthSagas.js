@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import {call, put} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -42,10 +43,10 @@ export function* loginWithGoogle(api, action) {
 
     yield put(SessionActions.saveUser(user));
     yield put(AuthActions.loginWithGoogleSuccess({ok: true}));
-    action.callback({ok: true});
+    if (action.callback) action.callback({ok: true});
   } catch (error) {
     yield put(AuthActions.loginWithGoogleFailure(error));
-    action.callback({ok: false});
+    if (action.callback) action.callback({ok: false});
   }
 }
 

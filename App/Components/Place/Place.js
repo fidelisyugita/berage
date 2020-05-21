@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, Text, View} from 'react-native';
-import {getDistance, convertDistance} from 'geolib';
+import {getDistance} from 'geolib';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Utils';
+import {Scale, ConvertDistance} from '../../Utils';
 
 import CustomImage from '../CustomImage';
 
@@ -31,9 +31,9 @@ const Place = props => {
         <Text style={Fonts.style.medium}>{item.status || '-'}</Text>
         <Text style={Fonts.style.medium}>
           {item.location && userLocation
-            ? `${convertDistance(
+            ? `${ConvertDistance(
                 getDistance(userLocation, item.location),
-                'km',
+                1000,
               )} km`
             : item.distance || '-'}
         </Text>

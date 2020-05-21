@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableHighlight, Text, View} from 'react-native';
-import {getDistance, convertDistance} from 'geolib';
+import {getDistance} from 'geolib';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Utils';
+import {Scale, ConvertDistance} from '../../Utils';
 
 import ThumbnailImages from '../ThumbnailImages';
 
@@ -26,7 +26,14 @@ const SavedPlace = props => {
         <View>
           <ThumbnailImages
             images={item.images}
-            image1Style={{borderTopLeftRadius: Metrics.imageRadius}}
+            image1Style={
+              item.images.length < 3
+                ? {
+                    borderTopLeftRadius: Metrics.imageRadius,
+                    borderTopRightRadius: Metrics.imageRadius,
+                  }
+                : {borderTopLeftRadius: Metrics.imageRadius}
+            }
             image2Style={{borderTopRightRadius: Metrics.imageRadius}}
           />
 
@@ -35,9 +42,9 @@ const SavedPlace = props => {
             <Text style={Fonts.style.small}>{item.categories.join(', ')}</Text>
             <Text style={Fonts.style.small}>
               {item.location && userLocation
-                ? `${convertDistance(
+                ? `${ConvertDistance(
                     getDistance(userLocation, item.location),
-                    'km',
+                    1000,
                   )} km`
                 : item.distance || '-'}
             </Text>

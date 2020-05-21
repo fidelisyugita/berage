@@ -12,10 +12,6 @@ const {Types, Creators} = createActions({
   getFavoritesSuccess: ['payload'],
   getFavoritesFailure: ['error'],
 
-  getFavoriteRequest: ['data', 'callback'],
-  getFavoriteSuccess: ['payload'],
-  getFavoriteFailure: ['error'],
-
   addFavoriteRequest: ['data', 'callback'],
   addFavoriteSuccess: ['payload'],
   addFavoriteFailure: ['error'],
@@ -38,8 +34,8 @@ export const DEFAULT_STATE = {
 };
 
 export const INITIAL_STATE = Immutable({
+  favorites: [],
   getFavorites: DEFAULT_STATE,
-  getFavorite: DEFAULT_STATE,
   addFavorite: DEFAULT_STATE,
   removeFavorite: DEFAULT_STATE,
 });
@@ -58,6 +54,7 @@ export const getFavoritesSuccess = (state, {payload}) => {
   return state.merge({
     ...state,
     getFavorites: {fetching: false, error: null, payload, data: null},
+    favorites: payload,
   });
 };
 export const getFavoritesFailure = (state, {error}) => {
@@ -73,33 +70,6 @@ export const getFavoritesFailure = (state, {error}) => {
   });
 };
 
-export const getFavoriteRequest = (state, {data}) => {
-  return state.merge({
-    ...state,
-    getFavorite: {...state.getFavorite, fetching: true, data},
-  });
-};
-export const getFavoriteSuccess = (state, {payload}) => {
-  // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
-
-  return state.merge({
-    ...state,
-    getFavorite: {fetching: false, error: null, payload, data: null},
-  });
-};
-export const getFavoriteFailure = (state, {error}) => {
-  DropDownHolder.alert(
-    'error',
-    I18n.t('errorDefault'),
-    error.message || I18n.t('tryAgain'),
-  );
-
-  return state.merge({
-    ...state,
-    getFavorite: {fetching: false, error, payload: null},
-  });
-};
-
 export const addFavoriteRequest = (state, {data}) => {
   return state.merge({
     ...state,
@@ -112,6 +82,7 @@ export const addFavoriteSuccess = (state, {payload}) => {
   return state.merge({
     ...state,
     addFavorite: {fetching: false, error: null, payload, data: null},
+    favorites: [...state.favorites, state.addFavorite.data],
   });
 };
 export const addFavoriteFailure = (state, {error}) => {
@@ -136,9 +107,21 @@ export const removeFavoriteRequest = (state, {data}) => {
 export const removeFavoriteSuccess = (state, {payload}) => {
   DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
 
+  let tempFavorites = [...state.favorites];
+  const removedFavoriteIndex = tempFavorites.findIndex(
+    fav => fav.id === payload.placeId,
+  );
+  console.tron.log({tempFavorites});
+  console.tron.log({removedFavoriteIndex});
+  if (removedFavoriteIndex > -1) {
+    tempFavorites.splice(removedFavoriteIndex, 1);
+    console.tron.log({tempFavorites});
+  }
+
   return state.merge({
     ...state,
     removeFavorite: {fetching: false, error: null, payload, data: null},
+    favorites: tempFavorites,
   });
 };
 export const removeFavoriteFailure = (state, {error}) => {
@@ -160,10 +143,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_FAVORITES_REQUEST]: getFavoritesRequest,
   [Types.GET_FAVORITES_SUCCESS]: getFavoritesSuccess,
   [Types.GET_FAVORITES_FAILURE]: getFavoritesFailure,
-
-  [Types.GET_FAVORITE_REQUEST]: getFavoriteRequest,
-  [Types.GET_FAVORITE_SUCCESS]: getFavoriteSuccess,
-  [Types.GET_FAVORITE_FAILURE]: getFavoriteFailure,
 
   [Types.ADD_FAVORITE_REQUEST]: addFavoriteRequest,
   [Types.ADD_FAVORITE_SUCCESS]: addFavoriteSuccess,

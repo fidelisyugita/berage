@@ -1,6 +1,8 @@
-import {call, put} from 'redux-saga/effects';
+/* eslint-disable curly */
+import {call, put, select} from 'redux-saga/effects';
 
 import FavoriteActions from '../Redux/FavoriteRedux';
+import SessionActions, {SessionSelectors} from '../Redux/SessionRedux';
 
 import {httpsCallable} from './Utils';
 import {
@@ -10,6 +12,8 @@ import {
   REMOVE_FAVORITE,
 } from './Consts';
 
+const {getUser} = SessionSelectors;
+
 export function* getFavorites(api, action) {
   try {
     const response = yield httpsCallable(GET_FAVORITES, action.data);
@@ -18,33 +22,15 @@ export function* getFavorites(api, action) {
 
     if (response.data.ok) {
       yield put(FavoriteActions.getFavoritesSuccess(response.data.payload));
-      action.callback({ok: true});
+      if (action.callback) action.callback({ok: true});
+      yield put(SessionActions.setFavorite(response.data.payload));
     } else {
       yield put(FavoriteActions.getFavoritesFailure(response.data.error));
-      action.callback({ok: false});
+      if (action.callback) action.callback({ok: false});
     }
   } catch (error) {
     yield put(FavoriteActions.getFavoritesFailure(error));
-    action.callback({ok: false});
-  }
-}
-
-export function* getFavorite(api, action) {
-  try {
-    const response = yield httpsCallable(GET_FAVORITE_BY_ID, action.data);
-
-    console.tron.log({getFavorite: response});
-
-    if (response.data.ok) {
-      yield put(FavoriteActions.getFavoriteSuccess(response.data.payload));
-      action.callback({ok: true});
-    } else {
-      yield put(FavoriteActions.getFavoriteFailure(response.data.error));
-      action.callback({ok: false});
-    }
-  } catch (error) {
-    yield put(FavoriteActions.getFavoriteFailure(error));
-    action.callback({ok: false});
+    if (action.callback) action.callback({ok: false});
   }
 }
 
@@ -56,14 +42,15 @@ export function* addFavorite(api, action) {
 
     if (response.data.ok) {
       yield put(FavoriteActions.addFavoriteSuccess(response.data.payload));
-      action.callback({ok: true});
+      if (action.callback) action.callback({ok: true});
+      yield put(SessionActions.addFavorite(response.data.payload));
     } else {
       yield put(FavoriteActions.addFavoriteFailure(response.data.error));
-      action.callback({ok: false});
+      if (action.callback) action.callback({ok: false});
     }
   } catch (error) {
     yield put(FavoriteActions.addFavoriteFailure(error));
-    action.callback({ok: false});
+    if (action.callback) action.callback({ok: false});
   }
 }
 
@@ -75,13 +62,14 @@ export function* removeFavorite(api, action) {
 
     if (response.data.ok) {
       yield put(FavoriteActions.removeFavoriteSuccess(response.data.payload));
-      action.callback({ok: true});
+      if (action.callback) action.callback({ok: true});
+      yield put(SessionActions.removeFavorite(response.data.payload));
     } else {
       yield put(FavoriteActions.removeFavoriteFailure(response.data.error));
-      action.callback({ok: false});
+      if (action.callback) action.callback({ok: false});
     }
   } catch (error) {
     yield put(FavoriteActions.removeFavoriteFailure(error));
-    action.callback({ok: false});
+    if (action.callback) action.callback({ok: false});
   }
 }
