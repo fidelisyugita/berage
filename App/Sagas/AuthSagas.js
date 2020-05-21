@@ -5,6 +5,7 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 
 import AuthActions from '../Redux/AuthRedux';
 import SessionActions from '../Redux/SessionRedux';
+import FavoriteActions from '../Redux/FavoriteRedux';
 
 export function* loginWithGoogle(api, action) {
   try {
@@ -52,11 +53,13 @@ export function* loginWithGoogle(api, action) {
 
 export function* logout(api, action) {
   try {
+    yield GoogleSignin.signOut();
     const firebaseUserCredential = yield auth().signOut();
     console.tron.log({firebaseUserCredential});
 
     yield put(SessionActions.removeUser());
     yield put(AuthActions.logoutSuccess({ok: true}));
+    yield put(FavoriteActions.removeFavorites());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));
   }

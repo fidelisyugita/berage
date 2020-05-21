@@ -19,6 +19,8 @@ const {Types, Creators} = createActions({
   removeFavoriteRequest: ['data', 'callback'],
   removeFavoriteSuccess: ['payload'],
   removeFavoriteFailure: ['error'],
+
+  removeFavorites: null,
 });
 
 export const FavoriteTypes = Types;
@@ -41,6 +43,10 @@ export const INITIAL_STATE = Immutable({
 });
 
 /* ------------- Reducers ------------- */
+
+export const removeFavorites = state => {
+  return state.merge({...state, favorites: []});
+};
 
 export const getFavoritesRequest = (state, {data}) => {
   return state.merge({
@@ -140,6 +146,8 @@ export const removeFavoriteFailure = (state, {error}) => {
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
+  [Types.REMOVE_FAVORITES]: removeFavorites,
+
   [Types.GET_FAVORITES_REQUEST]: getFavoritesRequest,
   [Types.GET_FAVORITES_SUCCESS]: getFavoritesSuccess,
   [Types.GET_FAVORITES_FAILURE]: getFavoritesFailure,

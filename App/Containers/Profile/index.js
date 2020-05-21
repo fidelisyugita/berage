@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 
 import AuthActions from '../../Redux/AuthRedux';
+import FavoriteActions from '../../Redux/FavoriteRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -43,6 +44,7 @@ export class ProfileScreen extends Component {
   googleLoginCallback = result => {
     if (result.ok) {
       console.tron.log({result});
+      this.props.getFavoritesRequest();
     }
     this.setState({isLoading: false});
   };
@@ -287,6 +289,8 @@ const mapDispatchToProps = dispatch => ({
   loginWithGoogleRequest: (data, callback) =>
     dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
   logoutRequest: () => dispatch(AuthActions.logoutRequest()),
+  getFavoritesRequest: (data, callback) =>
+    dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
 });
 
 export default connect(

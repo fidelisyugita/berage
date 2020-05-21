@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
@@ -51,12 +52,14 @@ export class ExploreScreen extends Component {
       getRecommendedPlacesRequest,
       getFavoritesRequest,
     } = this.props;
+    const {refreshing} = this.state;
+
+    if (!refreshing) getFavoritesRequest();
 
     this.setState({isLoading: true, refreshing: false});
 
     getPopularPlacesRequest(null, this.getPopularPlacesCallback);
     getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
-    getFavoritesRequest();
   }
 
   getPopularPlacesCallback = result => {
