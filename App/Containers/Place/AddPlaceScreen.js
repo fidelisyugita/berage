@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-did-mount-set-state */
 import React, {Component} from 'react';
@@ -155,16 +156,17 @@ export class AddPlaceScreen extends Component {
   };
 
   savePlaceCallback = result => {
+    this.setState({isLoading: false});
     if (result.ok) {
       console.tron.log({result});
+      this.props.navigation.pop();
+      if (this.state.placeId) this.props.navigation.pop();
     }
-    this.setState({isLoading: false});
-    this.props.navigation.pop();
   };
 
   renderImagePlaces() {
     const {imagePlaces} = this.state;
-    console.tron.log({imagePlaces});
+    // console.tron.log({imagePlaces});
 
     return (
       <View>

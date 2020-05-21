@@ -18,7 +18,12 @@ import {startup} from './StartupSagas';
 import {getUserAvatar} from './GithubSagas';
 
 import {loginWithGoogle, logout} from './AuthSagas';
-import {getPopularPlaces, getRecommendedPlaces, savePlace} from './PlaceSagas';
+import {
+  getPopularPlaces,
+  getRecommendedPlaces,
+  savePlace,
+  getUserPlaces,
+} from './PlaceSagas';
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
 
 /* ------------- API ------------- */
@@ -47,6 +52,7 @@ export default function* root() {
       api,
     ),
     takeLatest(PlaceTypes.SAVE_PLACE_REQUEST, savePlace, api),
+    takeLatest(PlaceTypes.GET_USER_PLACES_REQUEST, getUserPlaces, api),
 
     takeLatest(FavoriteTypes.GET_FAVORITES_REQUEST, getFavorites, api),
     takeLatest(FavoriteTypes.ADD_FAVORITE_REQUEST, addFavorite, api),

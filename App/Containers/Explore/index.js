@@ -51,10 +51,11 @@ export class ExploreScreen extends Component {
       getPopularPlacesRequest,
       getRecommendedPlacesRequest,
       getFavoritesRequest,
+      currentUser,
     } = this.props;
     const {refreshing} = this.state;
 
-    if (!refreshing) getFavoritesRequest();
+    if (currentUser && !refreshing) getFavoritesRequest();
 
     this.setState({isLoading: true, refreshing: false});
 

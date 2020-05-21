@@ -27,8 +27,6 @@ import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
 
-import {images, items} from '../Dummy';
-
 export class SavedScreen extends Component {
   constructor(props) {
     super(props);
@@ -71,6 +69,7 @@ export class SavedScreen extends Component {
   googleLoginCallback = result => {
     if (result.ok) {
       console.tron.log({result});
+      this.loadData();
     }
     this.setState({isLoading: false});
   };

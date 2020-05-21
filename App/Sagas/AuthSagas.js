@@ -6,6 +6,7 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import AuthActions from '../Redux/AuthRedux';
 import SessionActions from '../Redux/SessionRedux';
 import FavoriteActions from '../Redux/FavoriteRedux';
+import PlaceActions from '../Redux/PlaceRedux';
 
 export function* loginWithGoogle(api, action) {
   try {
@@ -59,7 +60,9 @@ export function* logout(api, action) {
 
     yield put(SessionActions.removeUser());
     yield put(AuthActions.logoutSuccess({ok: true}));
+    // check everything from user & remove
     yield put(FavoriteActions.removeFavorites());
+    yield put(PlaceActions.removeMyPlaces());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));
   }

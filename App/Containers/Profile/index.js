@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import React, {Component} from 'react';
 import {
   Text,
@@ -15,6 +16,7 @@ import Swiper from 'react-native-swiper';
 
 import AuthActions from '../../Redux/AuthRedux';
 import FavoriteActions from '../../Redux/FavoriteRedux';
+import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -33,6 +35,16 @@ export class ProfileScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData() {
+    const {getUserPlacesRequest, myPlaces, currentUser} = this.props;
+
+    if (currentUser && myPlaces.length < 1) getUserPlacesRequest();
+  }
+
   onLoginPress = () => {
     const {loginWithGoogleRequest} = this.props;
 
@@ -42,9 +54,11 @@ export class ProfileScreen extends Component {
   };
 
   googleLoginCallback = result => {
+    const {getFavoritesRequest, getUserPlacesRequest} = this.props;
     if (result.ok) {
       console.tron.log({result});
-      this.props.getFavoritesRequest();
+      getFavoritesRequest();
+      getUserPlacesRequest();
     }
     this.setState({isLoading: false});
   };
@@ -283,6 +297,7 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = state => ({
   currentUser: state.session.user,
+  myPlaces: state.place.myPlaces,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -291,6 +306,8 @@ const mapDispatchToProps = dispatch => ({
   logoutRequest: () => dispatch(AuthActions.logoutRequest()),
   getFavoritesRequest: (data, callback) =>
     dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
+  getUserPlacesRequest: (data, callback) =>
+    dispatch(PlaceActions.getUserPlacesRequest(data, callback)),
 });
 
 export default connect(

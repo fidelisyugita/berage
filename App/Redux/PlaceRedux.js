@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import {createReducer, createActions} from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
@@ -19,6 +20,12 @@ const {Types, Creators} = createActions({
   savePlaceRequest: ['data', 'callback'],
   savePlaceSuccess: ['payload'],
   savePlaceFailure: ['error'],
+
+  getUserPlacesRequest: ['data', 'callback'],
+  getUserPlacesSuccess: ['payload'],
+  getUserPlacesFailure: ['error'],
+
+  removeMyPlaces: null,
 });
 
 export const PlaceTypes = Types;
@@ -34,12 +41,18 @@ export const DEFAULT_STATE = {
 };
 
 export const INITIAL_STATE = Immutable({
+  myPlaces: [],
   getPopularPlaces: DEFAULT_STATE,
   getRecommendedPlaces: DEFAULT_STATE,
   savePlace: DEFAULT_STATE,
+  getUserPlaces: DEFAULT_STATE,
 });
 
 /* ------------- Reducers ------------- */
+
+export const removeMyPlaces = state => {
+  return state.merge({...state, myPlaces: []});
+};
 
 export const getPopularPlacesRequest = (state, {data}) => {
   return state.merge({
@@ -104,9 +117,21 @@ export const savePlaceRequest = (state, {data}) => {
 export const savePlaceSuccess = (state, {payload}) => {
   DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
 
+  let tempMyPlaces = [...state.myPlaces];
+  const sameDataIndex = tempMyPlaces.findIndex(
+    place => place.id === payload.id,
+  );
+  console.tron.log({tempMyPlaces});
+  console.tron.log({sameDataIndex});
+  if (sameDataIndex > -1) tempMyPlaces.splice(sameDataIndex, 1, {...payload});
+  else tempMyPlaces.push({...payload});
+
+  console.tron.log({tempMyPlaces});
+
   return state.merge({
     ...state,
     savePlace: {fetching: false, error: null, payload, data: null},
+    myPlaces: tempMyPlaces,
   });
 };
 export const savePlaceFailure = (state, {error}) => {
@@ -122,9 +147,39 @@ export const savePlaceFailure = (state, {error}) => {
   });
 };
 
+export const getUserPlacesRequest = (state, {data}) => {
+  return state.merge({
+    ...state,
+    getUserPlaces: {...state.getUserPlaces, fetching: true, data},
+  });
+};
+export const getUserPlacesSuccess = (state, {payload}) => {
+  // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+
+  return state.merge({
+    ...state,
+    getUserPlaces: {fetching: false, error: null, payload, data: null},
+    myPlaces: payload,
+  });
+};
+export const getUserPlacesFailure = (state, {error}) => {
+  DropDownHolder.alert(
+    'error',
+    I18n.t('errorDefault'),
+    error.message || I18n.t('tryAgain'),
+  );
+
+  return state.merge({
+    ...state,
+    getUserPlaces: {fetching: false, error, payload: null},
+  });
+};
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
+  [Types.REMOVE_MY_PLACES]: removeMyPlaces,
+
   [Types.GET_POPULAR_PLACES_REQUEST]: getPopularPlacesRequest,
   [Types.GET_POPULAR_PLACES_SUCCESS]: getPopularPlacesSuccess,
   [Types.GET_POPULAR_PLACES_FAILURE]: getPopularPlacesFailure,
@@ -136,4 +191,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SAVE_PLACE_REQUEST]: savePlaceRequest,
   [Types.SAVE_PLACE_SUCCESS]: savePlaceSuccess,
   [Types.SAVE_PLACE_FAILURE]: savePlaceFailure,
+
+  [Types.GET_USER_PLACES_REQUEST]: getUserPlacesRequest,
+  [Types.GET_USER_PLACES_SUCCESS]: getUserPlacesSuccess,
+  [Types.GET_USER_PLACES_FAILURE]: getUserPlacesFailure,
 });

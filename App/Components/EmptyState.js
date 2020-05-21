@@ -17,21 +17,17 @@ const EmptyState = props => {
   } = props;
 
   return (
-    <View style={[AppStyles.alignCenter, containerStyle]}>
+    <View style={[containerStyle]}>
       {(title || message) && (
-        <View
-          style={[
-            AppStyles.containerBottom,
-            AppStyles.section,
-            AppStyles.alignCenter,
-          ]}>
-          <Text style={[Fonts.style.xxxl, Fonts.style.alignLeft]}>{title}</Text>
-          <Text style={[Fonts.style.large, Fonts.style.alignLeft]}>
-            {message}
-          </Text>
+        <View style={[AppStyles.section]}>
+          <Text style={[Fonts.style.xxxl]}>{title}</Text>
+          <Text style={[Fonts.style.large]}>{message}</Text>
         </View>
       )}
-      <CustomImage source={imageSource} style={imageStyle} />
+      <CustomImage
+        source={imageSource}
+        style={[AppStyles.alignSelfCenter, imageStyle]}
+      />
       {children}
     </View>
   );
