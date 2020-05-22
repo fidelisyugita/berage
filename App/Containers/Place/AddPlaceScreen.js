@@ -82,6 +82,8 @@ export class AddPlaceScreen extends Component {
         placeStatus: item.status || STATUS_DATA[0],
         placeDescription: item.description || '',
         placeLocation: item.location || userLocation,
+        minPrice: item.minPrice || 0,
+        maxPrice: item.maxPrice || 0,
       });
     }
   }
