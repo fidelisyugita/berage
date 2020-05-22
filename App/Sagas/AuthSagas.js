@@ -20,12 +20,18 @@ export function* loginWithGoogle(api, action) {
     console.tron.log({
       currentUser,
     });
+    console.tron.log({
+      'GoogleSignin.getTokens': currentUser,
+    });
 
     // Create a Google credential with the token
     const googleCredential = yield auth.GoogleAuthProvider.credential(
       data.idToken,
       currentUser.accessToken,
     );
+    console.tron.log({
+      googleCredential,
+    });
 
     // Sign-in the user with the credential
     const firebaseUserCredential = yield auth().signInWithCredential(

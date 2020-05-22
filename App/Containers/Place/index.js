@@ -22,7 +22,12 @@ import FavoriteActions from '../../Redux/FavoriteRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale, GetUserCoordinate, ConvertDistance} from '../../Utils';
+import {
+  Scale,
+  GetUserCoordinate,
+  ConvertDistance,
+  DisplayMoney,
+} from '../../Utils';
 
 import CustomImage from '../../Components/CustomImage';
 import Post from '../../Components/Post/Post';
@@ -234,7 +239,9 @@ export class PlaceScreen extends Component {
                 />
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {item.averagePrice || '-'}
+                {`${DisplayMoney(item.minPrice || 0)}-${DisplayMoney(
+                  item.maxPrice || 0,
+                )}`}
               </Text>
             </View>
           </View>

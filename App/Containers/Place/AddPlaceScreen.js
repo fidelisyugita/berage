@@ -43,7 +43,7 @@ const CATEGORIES_DATA = [
   'Nearby City',
 ];
 
-const STATUS_DATA = ['Open', 'Close'];
+const STATUS_DATA = ['Open', 'Closed'];
 
 const MAX_CATEGORY = 5;
 
