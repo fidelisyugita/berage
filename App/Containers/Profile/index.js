@@ -198,7 +198,7 @@ export class ProfileScreen extends Component {
             </View>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={() => navigation.navigate('AddPlaceScreen')}
+            onPress={() => console.tron.log('pressed')}
             underlayColor={Colors.highlightUnderlay}
             style={AppStyles.section}>
             <View
@@ -230,7 +230,7 @@ export class ProfileScreen extends Component {
             {I18n.t('legal')}
           </Text>
           <TouchableHighlight
-            onPress={() => console.tron.log('pressed')}
+            onPress={() => navigation.navigate('TermsOfServiceScreen')}
             underlayColor={Colors.highlightUnderlay}
             style={AppStyles.section}>
             <View
@@ -251,7 +251,7 @@ export class ProfileScreen extends Component {
             </View>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={() => navigation.navigate('AddPlaceScreen')}
+            onPress={() => navigation.navigate('PrivacyPolicyScreen')}
             underlayColor={Colors.highlightUnderlay}
             style={AppStyles.section}>
             <View
