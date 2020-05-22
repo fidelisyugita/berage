@@ -22,10 +22,10 @@ const metrics = {
   circleRadius: 50,
   icons: {
     tiny: Scale(20),
-    small: Scale(24),
-    medium: Scale(28),
-    large: Scale(32),
-    xl: Scale(36),
+    small: Scale(25),
+    medium: Scale(30),
+    large: Scale(35),
+    xl: Scale(40),
   },
   images: {
     tiny: Scale(80),

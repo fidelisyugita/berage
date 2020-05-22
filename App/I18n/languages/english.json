@@ -50,6 +50,16 @@
   "placeDescription": "Place description",
   "setPlaceCoordinate": "Set your place coordinate",
 
+  "name": "Name",
+  "categories": "Categories",
+  "status": "Status",
+  "description": "Description",
+
+  "max": "Max",
+  "price": "Price",
+
+  "priceDetail": "Price in Rp (from - to)",
+
   "successDefault": "Success",
   "errorDefault": "Error while processing request",
   "tryAgain": "Plase try again later",

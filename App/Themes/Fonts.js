@@ -24,6 +24,9 @@ const style = {
   alignBottom: {
     textAlignVertical: 'bottom',
   },
+  alignVerticalCenter: {
+    textAlignVertical: 'center',
+  },
   alignJustify: {
     textAlign: 'justify',
   },
