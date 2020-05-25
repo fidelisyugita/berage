@@ -92,6 +92,9 @@ const ApplicationStyles = {
   baseMarginLeft: {
     marginLeft: Metrics.baseMargin,
   },
+  smallMarginRight: {
+    marginRight: Metrics.smallMargin,
+  },
   smallMarginLeft: {
     marginLeft: Metrics.smallMargin,
   },

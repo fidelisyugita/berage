@@ -9,6 +9,8 @@ import MyPlacesScreen from '../Containers/Place/MyPlacesScreen';
 import PrivacyPolicyScreen from '../Containers/Profile/PrivacyPolicyScreen';
 import TermsOfServiceScreen from '../Containers/Profile/TermsOfServiceScreen';
 
+import ChatScreen from '../Containers/Chat/ChatScreen';
+
 import styles from './Styles/NavigationStyles';
 
 // Manifest of possible screens
@@ -22,6 +24,8 @@ const MainNav = createStackNavigator(
 
     PrivacyPolicyScreen: {screen: PrivacyPolicyScreen},
     TermsOfServiceScreen: {screen: TermsOfServiceScreen},
+
+    ChatScreen: {screen: ChatScreen},
   },
   {
     // Default config for all screens

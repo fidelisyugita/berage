@@ -8,7 +8,7 @@ import I18n from '../I18n';
 
 import ExploreScreen from '../Containers/Explore';
 import SavedScreen from '../Containers/Saved';
-import ChatScreen from '../Containers/Chat';
+import RoomChatScreen from '../Containers/Chat';
 import InboxScreen from '../Containers/Inbox';
 import ProfileScreen from '../Containers/Profile';
 import {Scale} from '../Utils';
@@ -34,7 +34,7 @@ const BottomNav = createBottomTabNavigator(
       }),
     },
     Chat: {
-      screen: ChatScreen,
+      screen: RoomChatScreen,
       navigationOptions: navigation => ({
         title: I18n.t('chat'),
         tabBarIcon: ({focused, tintColor}) => (

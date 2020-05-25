@@ -6,7 +6,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 
 const CustomHeader = props => {
-  const {children, containerStyle, title, onBack, renderRight} = props;
+  const {
+    children,
+    containerStyle,
+    title,
+    onBack,
+    renderRight,
+    renderTitle,
+  } = props;
 
   return (
     <View style={[AppStyles.row, AppStyles.alignCenter, containerStyle]}>
@@ -20,10 +27,14 @@ const CustomHeader = props => {
         />
       </TouchableOpacity>
       <View style={[AppStyles.alignCenter]}>
-        <Text style={[Fonts.style.xxl]}>{title}</Text>
+        {renderTitle ? (
+          renderTitle()
+        ) : (
+          <Text style={[Fonts.style.xxl]}>{title}</Text>
+        )}
       </View>
       <View style={[AppStyles.flex1, AppStyles.alignEnd, AppStyles.section]}>
-        {renderRight}
+        {renderRight && renderRight()}
       </View>
     </View>
   );
@@ -33,7 +44,8 @@ CustomHeader.propTypes = {
   containerStyle: PropTypes.object,
   title: PropTypes.string,
   onBack: PropTypes.func.isRequired,
-  renderRight: PropTypes.object,
+  renderRight: PropTypes.func,
+  renderTitle: PropTypes.func,
 };
 
 CustomHeader.defaultProps = {

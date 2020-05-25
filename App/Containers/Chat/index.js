@@ -38,7 +38,10 @@ export default class ChatScreen extends Component {
           <HeaderTitle title={title} shadow />
         )}
         renderItem={({item}) => (
-          <Room item={item} onPress={() => console.tron.log('pressed')} />
+          <Room
+            item={item}
+            onPress={() => navigation.navigate('ChatScreen', {user: item})}
+          />
         )}
       />
     );

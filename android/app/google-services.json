@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "223688047141-047s6q91kapl2de06404eu4gtth6bu8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fidelisyugita.berage",
+            "certificate_hash": "1a905f07ed309ce9b01e45faace449f9ef8dc96a"
+          }
+        },
+        {
           "client_id": "223688047141-ttpfs00t3dsn1eb0pjcdq90e55jhvfe9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,35 +30,6 @@
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
-        {
-          "client_id": "223688047141-2qk481hjedeo2to0n9ond3vrf71tr4f7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBJNUvEeyxRL64_ylr3pVXg3cpIR1Byc5E"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "223688047141-2qk481hjedeo2to0n9ond3vrf71tr4f7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:223688047141:android:46c29449e592919db91dcc",
-        "android_client_info": {
-          "package_name": "com.huzakerna.berage"
-        }
-      },
-      "oauth_client": [
         {
           "client_id": "223688047141-2qk481hjedeo2to0n9ond3vrf71tr4f7.apps.googleusercontent.com",
           "client_type": 3
