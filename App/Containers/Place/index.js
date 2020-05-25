@@ -239,9 +239,7 @@ export class PlaceScreen extends Component {
                 />
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {`${DisplayMoney(item.minPrice || 0)}-${DisplayMoney(
-                  item.maxPrice || 0,
-                )}`}
+                {DisplayMoney(item.minPrice)}-{DisplayMoney(item.maxPrice)}
               </Text>
             </View>
           </View>

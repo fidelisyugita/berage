@@ -6,7 +6,7 @@ const DECIMAL_RADIX = 10;
 const K_FORMAT = 1000;
 
 export default (value = 0) => {
-  const result = parseInt(value, DECIMAL_RADIX) / K_FORMAT;
+  const result = value ? parseInt(value, DECIMAL_RADIX) / K_FORMAT : 0;
 
   return result + 'k';
 };

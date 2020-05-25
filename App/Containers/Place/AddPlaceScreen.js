@@ -20,6 +20,7 @@ import storage from '@react-native-firebase/storage';
 import Geolocation from 'react-native-geolocation-service';
 
 import PlaceActions from '../../Redux/PlaceRedux';
+import SessionActions from '../../Redux/SessionRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -242,6 +243,7 @@ export class AddPlaceScreen extends Component {
       const coords = await GetUserCoordinate();
       console.tron.log({getUserPosition: coords});
       this.setState({placeLocation: coords});
+      this.props.saveUserLocation(coords);
     } catch (error) {
       console.tron.error({error});
       DropDownHolder.alert(
@@ -255,13 +257,12 @@ export class AddPlaceScreen extends Component {
   addCategories(item) {
     let tempCategories = [...this.state.placeCategories];
 
-    if (tempCategories.length === MAX_CATEGORY) return;
-
     const indexItem = tempCategories.indexOf(item);
     console.tron.log({indexItem});
 
-    if (indexItem < 0) tempCategories.push(item);
-    else tempCategories.splice(indexItem, 1);
+    if (indexItem < 0) {
+      if (tempCategories.length < MAX_CATEGORY) tempCategories.push(item);
+    } else tempCategories.splice(indexItem, 1);
     console.tron.log({tempCategories});
 
     this.setState({placeCategories: tempCategories});
@@ -486,6 +487,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   savePlaceRequest: (data, callback) =>
     dispatch(PlaceActions.savePlaceRequest(data, callback)),
+  saveUserLocation: data => dispatch(SessionActions.saveUserLocation(data)),
 });
 
 export default connect(

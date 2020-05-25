@@ -19,7 +19,7 @@ export default () => {
               console.tron.log({error});
               reject(error);
             },
-            {forceRequestLocation: true},
+            {forceRequestLocation: true, maximumAge: 10000},
           );
         } else reject({message: I18n.t('permissionDenied')});
       })

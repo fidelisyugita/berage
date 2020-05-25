@@ -1,22 +1,18 @@
 import {put, select} from 'redux-saga/effects';
-import GithubActions, {GithubSelectors} from '../Redux/GithubRedux';
-import {is} from 'ramda';
-import {PermissionsAndroid} from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
 
 import {GoogleSignin} from '@react-native-community/google-signin';
 import Secrets from 'react-native-config';
 import functions from '@react-native-firebase/functions';
+import auth from '@react-native-firebase/auth';
 
-import SessionActions from '../Redux/SessionRedux';
+import SessionActions, {SessionSelectors} from '../Redux/SessionRedux';
 
 import I18n from '../I18n';
 import {GetUserCoordinate} from '../Utils';
 
 import {DropDownHolder} from '../Components/DropDownHolder';
 
-// exported to make available for tests
-export const selectAvatar = GithubSelectors.selectAvatar;
+const {getUser} = SessionSelectors;
 
 // process STARTUP actions
 export function* startup(action) {
@@ -37,17 +33,15 @@ export function* startup(action) {
     );
   }
 
+  const currentUser = yield select(getUser);
+  console.tron.log({currentUser});
+  if (!currentUser) {
+    // const userCredential = yield auth().signInAnonymously();
+    // console.tron.log({userCredential});
+  }
+
   if (__DEV__ && console.tron) {
     // functions().useFunctionsEmulator('http://localhost:5001');
-
-    // straight-up string logging
-    console.tron.log("Hello, I'm an example of how to log via Reactotron.");
-
-    // logging an object for better clarity
-    console.tron.log({
-      message: 'pass objects for better logging',
-      someGeneratorFunction: selectAvatar,
-    });
 
     // fully customized!
     const subObject = {a: 1, b: [1, 2, 3], c: true};
@@ -60,7 +54,7 @@ export function* startup(action) {
         subObject,
         someInlineFunction: () => true,
         someGeneratorFunction: startup,
-        someNormalFunction: selectAvatar,
+        // someNormalFunction: selectAvatar,
       },
     });
   }
