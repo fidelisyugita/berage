@@ -41,17 +41,17 @@ export class ChatRoomScreen extends Component {
   componentDidMount() {
     const {currentUser} = this.props;
     const {rooms} = this.state;
+    const tempRooms = [...rooms];
 
-    console.tron.log({currentUser});
     if (currentUser) {
-      FirebaseChat.shared.onRooms(room =>
-        this.setState(
-          previousState => ({
-            rooms: [...previousState.rooms, room],
-          }),
-          () => console.tron.log({rooms}),
-        ),
-      );
+      FirebaseChat.shared.onRooms(room => {
+        // const roomIndex = tempRooms.findIndex(
+        //   chatRoom => chatRoom._id === room._id,
+        // );
+        // if (roomIndex > -1) tempRooms.splice(roomIndex, 1, room);
+        // else tempRooms.push(room);
+        this.setState({rooms: [...rooms, room]});
+      });
     }
   }
 
@@ -97,9 +97,8 @@ export class ChatRoomScreen extends Component {
             item={{
               user: {
                 _id: '6k9ZGxcPoEevJtpqOgEIO7oFmJu2',
-                displayName: 'Fidelis Yugita',
-                email: 'fb46us@gmail.com',
-                photoURL:
+                name: 'Fidelis Yugita',
+                avatar:
                   'https://lh3.googleusercontent.com/a-/AOh14GgBJeSYfmuu_qlD_KfS42dlI_YT71fP-LktWXrwsA',
               },
             }}
@@ -107,9 +106,8 @@ export class ChatRoomScreen extends Component {
               navigation.navigate('ChatScreen', {
                 user: {
                   _id: '6k9ZGxcPoEevJtpqOgEIO7oFmJu2',
-                  displayName: 'Fidelis Yugita',
-                  email: 'fb46us@gmail.com',
-                  photoURL:
+                  name: 'Fidelis Yugita',
+                  avatar:
                     'https://lh3.googleusercontent.com/a-/AOh14GgBJeSYfmuu_qlD_KfS42dlI_YT71fP-LktWXrwsA',
                 },
               })

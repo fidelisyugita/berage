@@ -64,6 +64,7 @@ export class ChatScreen extends Component {
   render() {
     const {navigation, currentUser} = this.props;
     const {isLoading, messages, targetUser} = this.state;
+    console.tron.log({render: targetUser});
 
     return (
       <View style={[AppStyles.flex1]}>
@@ -74,7 +75,7 @@ export class ChatScreen extends Component {
           renderTitle={() => (
             <View style={[AppStyles.row, AppStyles.alignCenter]}>
               <CustomImage
-                source={{uri: (targetUser && targetUser.photoURL) || null}}
+                source={{uri: (targetUser && targetUser.avatar) || null}}
                 style={[
                   AppStyles.avatarSmall,
                   AppStyles.borderCircle,
@@ -85,7 +86,7 @@ export class ChatScreen extends Component {
               <Text
                 numberOfLines={1}
                 style={{...Fonts.style.large3, maxWidth: Scale(180)}}>
-                {(targetUser && targetUser.displayName) || '-'}
+                {(targetUser && targetUser.name) || '-'}
               </Text>
             </View>
           )}
@@ -95,9 +96,8 @@ export class ChatScreen extends Component {
           onSend={firebaseChat.send}
           user={{
             _id: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
+            name: currentUser.displayName,
+            avatar: currentUser.photoURL,
           }}
         />
       </View>

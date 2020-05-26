@@ -15,7 +15,7 @@ import CustomImage from '../CustomImage';
 const Room = props => {
   const {children, item, onPress} = props;
   const {user} = item;
-  console.tron.log({item});
+  // console.tron.log({item});
 
   return (
     <TouchableHighlight
@@ -24,7 +24,7 @@ const Room = props => {
       style={[AppStyles.section]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
         <CustomImage
-          source={{uri: (user && user.photoURL) || null}}
+          source={{uri: (user && user.avatar) || null}}
           style={[
             AppStyles.border3,
             AppStyles.avatarMedium,
@@ -42,7 +42,7 @@ const Room = props => {
           ]}>
           <View style={[AppStyles.justifyEvenly, AppStyles.flex1]}>
             <Text numberOfLines={1} style={Fonts.style.medium3}>
-              {(user && user.displayName) || '-'}
+              {(user && user.name) || '-'}
             </Text>
             <Text numberOfLines={1} style={Fonts.style.medium}>
               {item.text || '-'}

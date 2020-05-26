@@ -32,7 +32,7 @@ class FirebaseChat {
   }
 
   parse = snapshot => {
-    console.tron.log({snapshot});
+    console.tron.log({'parse snapshot': snapshot.val()});
     const {timestamp: numberStamp, text, user} = snapshot.val();
     const {key: _id} = snapshot;
     const createdAt = new Date(numberStamp);
@@ -51,10 +51,17 @@ class FirebaseChat {
       .limitToLast(20)
       .on('child_added', snapshot => callback(this.parse(snapshot)));
 
-  onRooms = callback =>
-    this.refRooms
-      .limitToLast(20)
-      .on('child_added', snapshot => callback(this.parse(snapshot)));
+  onRooms = callback => {
+    // this.refRooms
+    //   .limitToLast(20)
+    //   .on('child_added', snapshot => callback(this.parse(snapshot)));
+
+    this.refRooms.limitToLast(20).on('value', snapshot => {
+      snapshot.forEach(childSnapshot => {
+        callback(this.parse(childSnapshot));
+      });
+    });
+  };
 
   get timestamp() {
     return database.ServerValue.TIMESTAMP;
@@ -74,12 +81,16 @@ class FirebaseChat {
   };
 
   append = message => {
+    console.tron.log({message});
     const {targetUser} = this.state;
 
     this.ref.push(message);
     this.targetRef.push(message);
 
-    this.refRooms.update({...message, user: targetUser});
+    this.refRooms.update({
+      ...message,
+      user: targetUser,
+    });
     this.targetRefRooms.update(message);
   };
 
