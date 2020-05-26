@@ -45,12 +45,12 @@ export class ChatRoomScreen extends Component {
 
     if (currentUser) {
       FirebaseChat.shared.onRooms(room => {
-        // const roomIndex = tempRooms.findIndex(
-        //   chatRoom => chatRoom._id === room._id,
-        // );
-        // if (roomIndex > -1) tempRooms.splice(roomIndex, 1, room);
-        // else tempRooms.push(room);
-        this.setState({rooms: [...rooms, room]});
+        const roomIndex = tempRooms.findIndex(
+          chatRoom => chatRoom._id === room._id,
+        );
+        if (roomIndex > -1) tempRooms.splice(roomIndex, 1, room);
+        else tempRooms.push(room);
+        this.setState({rooms: tempRooms});
       });
     }
   }
@@ -78,6 +78,7 @@ export class ChatRoomScreen extends Component {
   };
 
   onRefresh = () => {
+    FirebaseChat.shared.off();
     this.setState({rooms: []}, () => this.componentDidMount());
   };
 
