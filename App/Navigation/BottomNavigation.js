@@ -11,7 +11,7 @@ import SavedScreen from '../Containers/Saved';
 import RoomChatScreen from '../Containers/Chat';
 import InboxScreen from '../Containers/Inbox';
 import ProfileScreen from '../Containers/Profile';
-import {Scale} from '../Utils';
+import {Scale} from '../Transforms';
 
 const BottomNav = createBottomTabNavigator(
   {

@@ -9,7 +9,7 @@ const Image = createImageProgress(FastImage);
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import I18n from '../I18n';
-import {Scale} from '../Utils';
+import {Scale} from '../Transforms';
 
 const CustomImage = props => {
   const {children, source, style, imageStyle} = props;

@@ -18,7 +18,7 @@ import AuthActions from '../../Redux/AuthRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale} from '../../Utils';
+import {Scale} from '../../Transforms';
 
 import SavedPlace from '../../Components/Place/SavedPlace';
 import HeaderTitle from '../../Components/HeaderTitle';

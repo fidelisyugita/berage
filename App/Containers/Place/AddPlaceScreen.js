@@ -24,7 +24,8 @@ import SessionActions from '../../Redux/SessionRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale, GetUserCoordinate} from '../../Utils';
+import {Scale} from '../../Transforms';
+import {GetUserCoordinate} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';

@@ -5,7 +5,8 @@ import {getDistance} from 'geolib';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {Scale, ConvertDistance} from '../../Utils';
+import {Scale} from '../../Transforms';
+import {ConvertDistance} from '../../Lib';
 
 import CustomImage from '../CustomImage';
 

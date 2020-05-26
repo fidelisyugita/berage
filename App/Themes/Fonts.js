@@ -1,5 +1,5 @@
 import {Colors} from '../Themes';
-import {Scale} from '../Utils';
+import {Scale} from '../Transforms';
 
 const type = {
   regular: 'Graphik-Regular',

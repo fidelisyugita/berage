@@ -8,7 +8,7 @@ import auth from '@react-native-firebase/auth';
 import SessionActions, {SessionSelectors} from '../Redux/SessionRedux';
 
 import I18n from '../I18n';
-import {GetUserCoordinate} from '../Utils';
+import {GetUserCoordinate} from '../Lib';
 
 import {DropDownHolder} from '../Components/DropDownHolder';
 

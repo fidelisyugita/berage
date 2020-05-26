@@ -22,12 +22,8 @@ import FavoriteActions from '../../Redux/FavoriteRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
-import {
-  Scale,
-  GetUserCoordinate,
-  ConvertDistance,
-  DisplayMoney,
-} from '../../Utils';
+import {Scale, DisplayMoney} from '../../Transforms';
+import {ConvertDistance} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Post from '../../Components/Post/Post';

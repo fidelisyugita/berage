@@ -6,7 +6,8 @@ import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
 import SessionActions from '../Redux/SessionRedux';
 
 import I18n from '../I18n';
-import {Scale, GetUserCoordinate} from '../Utils';
+import {Scale} from '../Transforms';
+import {GetUserCoordinate} from '../Lib';
 
 import Logo from '../Images/svg/Logo.svg';
 
