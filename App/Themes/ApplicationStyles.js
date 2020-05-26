@@ -61,6 +61,10 @@ const ApplicationStyles = {
   borderCircle: {
     borderRadius: Metrics.circleRadius,
   },
+  avatarSmall: {
+    width: Metrics.avatars.small,
+    height: Metrics.avatars.small,
+  },
   avatarMedium: {
     width: Metrics.avatars.medium,
     height: Metrics.avatars.medium,

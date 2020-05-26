@@ -19,7 +19,6 @@ import Swiper from 'react-native-swiper';
 import Geolocation from 'react-native-geolocation-service';
 
 import PlaceActions from '../../Redux/PlaceRedux';
-import FavoriteActions from '../../Redux/FavoriteRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -48,14 +47,11 @@ export class ExploreScreen extends Component {
 
   loadData() {
     const {
+      currentUser,
       getPopularPlacesRequest,
       getRecommendedPlacesRequest,
-      getFavoritesRequest,
-      currentUser,
     } = this.props;
     const {refreshing} = this.state;
-
-    if (currentUser && !refreshing) getFavoritesRequest();
 
     this.setState({isLoading: true, refreshing: false});
 
@@ -222,8 +218,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(PlaceActions.getPopularPlacesRequest(data, callback)),
   getRecommendedPlacesRequest: (data, callback) =>
     dispatch(PlaceActions.getRecommendedPlacesRequest(data, callback)),
-  getFavoritesRequest: (data, callback) =>
-    dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
 });
 
 export default connect(

@@ -1484,6 +1484,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-7.0.0.tgz#2923610bf5075d93e7c7a5165b9410808bb932af"
   integrity sha512-EduilKWw90wZfl6ISsIPtdBKvhEYTEacaSHGdLjpfINERaTKF/IyX4thzAAjrof7MZev/UM5XUN1CoGsINgW/w==
 
+"@react-native-firebase/database@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-7.1.0.tgz#1927a69fcb51749b45f3018a7839f178a2a40d91"
+  integrity sha512-tNboUfYq4qjDYeBQpwrNoxHpRHrXbgxkTsanJ3XF1fr8tY8Ycp6IkZUthRaLCc/JRFxkjAJhGGfOQW5PQ3Pdhg==
+
 "@react-native-firebase/functions@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-7.0.0.tgz#fa9557ee3f32b5c2e8956df5d28f2b6a2e349354"
@@ -11109,7 +11114,7 @@ react-native-lightbox@^0.8.1:
   dependencies:
     prop-types "^15.7.2"
 
-"react-native-parsed-text@github:EvanBacon/react-native-parsed-text":
+react-native-parsed-text@EvanBacon/react-native-parsed-text:
   version "0.0.22"
   resolved "https://codeload.github.com/EvanBacon/react-native-parsed-text/tar.gz/c909f64ee437796fd1b047edd73146fc89edb796"
   dependencies:

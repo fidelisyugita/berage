@@ -23,6 +23,7 @@ import AuthActions from '../../Redux/AuthRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
+import FirebaseChat from '../../Lib/FirebaseChat';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -34,53 +35,30 @@ import LoginButton from '../../Components/LoginButton';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
+let firebaseChat = new FirebaseChat();
+
 export class ChatScreen extends Component {
-  state = {
-    isLoading: false,
-    messages: false,
-    targetUser: this.props.navigation.getParam('user', null),
-  };
+  constructor(props) {
+    firebaseChat = new FirebaseChat(props.navigation.getParam('user', null));
+
+    super(props);
+    this.state = {
+      isLoading: false,
+      messages: [],
+      targetUser: props.navigation.getParam('user', null),
+    };
+  }
 
   componentDidMount() {
-    // this.loadData();
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: 'yuk Berage!',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-      ],
-    });
+    firebaseChat.on(message =>
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      })),
+    );
   }
 
-  loadData() {
-    const {getUserPlacesRequest, myPlaces} = this.props;
-    const {refreshing} = this.state;
-
-    if (myPlaces.length < 1 || refreshing) {
-      this.setState({isLoading: true, refreshing: false});
-
-      getUserPlacesRequest(null, this.getUserPlacesCallback);
-    }
-  }
-
-  getUserPlacesCallback = result => {
-    if (result.ok) {
-      console.tron.log({result});
-    }
-    this.setState({isLoading: false});
-  };
-
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
+  componentWillUnmount() {
+    firebaseChat.off();
   }
 
   render() {
@@ -92,12 +70,13 @@ export class ChatScreen extends Component {
         <ModalLoader visible={isLoading} />
         <CustomHeader
           onBack={() => navigation.pop()}
+          containerStyle={AppStyles.shadow}
           renderTitle={() => (
             <View style={[AppStyles.row, AppStyles.alignCenter]}>
               <CustomImage
-                source={{uri: (targetUser && targetUser.image) || null}}
+                source={{uri: (targetUser && targetUser.photoURL) || null}}
                 style={[
-                  AppStyles.avatarMedium,
+                  AppStyles.avatarSmall,
                   AppStyles.borderCircle,
                   AppStyles.smallMarginRight,
                 ]}
@@ -106,15 +85,20 @@ export class ChatScreen extends Component {
               <Text
                 numberOfLines={1}
                 style={{...Fonts.style.large3, maxWidth: Scale(180)}}>
-                {(targetUser && targetUser.name) || '-'}
+                {(targetUser && targetUser.displayName) || '-'}
               </Text>
             </View>
           )}
         />
         <GiftedChat
           messages={messages}
-          onSend={data => this.onSend(data)}
-          user={{...currentUser, _id: currentUser.uid}}
+          onSend={firebaseChat.send}
+          user={{
+            _id: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          }}
         />
       </View>
     );

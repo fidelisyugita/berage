@@ -17,9 +17,7 @@ const CustomHeader = props => {
 
   return (
     <View style={[AppStyles.row, AppStyles.alignCenter, containerStyle]}>
-      <TouchableOpacity
-        onPress={onBack}
-        style={[AppStyles.flex1, AppStyles.btnIcon]}>
+      <TouchableOpacity onPress={onBack} style={[AppStyles.btnIcon]}>
         <AntDesign
           name="arrowleft"
           size={Metrics.icons.tiny}

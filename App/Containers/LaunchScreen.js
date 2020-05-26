@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
 
 import SessionActions from '../Redux/SessionRedux';
+import FavoriteActions from '../Redux/FavoriteRedux';
 
 import I18n from '../I18n';
 import {Scale} from '../Transforms';
@@ -26,6 +27,12 @@ export class LaunchScreen extends Component {
 
   componentDidMount() {
     // this.getLocation();
+    this.loadData();
+  }
+
+  loadData() {
+    const {currentUser, getFavoritesRequest} = this.props;
+    if (currentUser) getFavoritesRequest();
   }
 
   async getLocation() {
@@ -73,6 +80,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   saveUserLocation: data => dispatch(SessionActions.saveUserLocation(data)),
+  getFavoritesRequest: (data, callback) =>
+    dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
 });
 
 export default connect(

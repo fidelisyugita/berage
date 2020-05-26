@@ -7,6 +7,7 @@ import AuthActions from '../Redux/AuthRedux';
 import SessionActions from '../Redux/SessionRedux';
 import FavoriteActions from '../Redux/FavoriteRedux';
 import PlaceActions from '../Redux/PlaceRedux';
+import ChatActions from '../Redux/ChatRedux';
 
 export function* loginWithGoogle(api, action) {
   try {
@@ -69,6 +70,7 @@ export function* logout(api, action) {
     // check everything from user & remove
     yield put(FavoriteActions.removeFavorites());
     yield put(PlaceActions.removeMyPlaces());
+    yield put(ChatActions.removeRooms());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));
   }
