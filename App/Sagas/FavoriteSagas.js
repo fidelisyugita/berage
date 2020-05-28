@@ -23,7 +23,7 @@ export function* getFavorites(api, action) {
     if (response.data.ok) {
       yield put(FavoriteActions.getFavoritesSuccess(response.data.payload));
       if (action.callback) action.callback({ok: true});
-      yield put(SessionActions.setFavorite(response.data.payload));
+      yield put(SessionActions.setFavoriteIds(response.data.payload));
     } else {
       yield put(FavoriteActions.getFavoritesFailure(response.data.error));
       if (action.callback) action.callback({ok: false});
@@ -43,7 +43,7 @@ export function* addFavorite(api, action) {
     if (response.data.ok) {
       yield put(FavoriteActions.addFavoriteSuccess(response.data.payload));
       if (action.callback) action.callback({ok: true});
-      yield put(SessionActions.addFavorite(response.data.payload));
+      yield put(SessionActions.addFavoriteId(response.data.payload));
     } else {
       yield put(FavoriteActions.addFavoriteFailure(response.data.error));
       if (action.callback) action.callback({ok: false});
@@ -63,7 +63,7 @@ export function* removeFavorite(api, action) {
     if (response.data.ok) {
       yield put(FavoriteActions.removeFavoriteSuccess(response.data.payload));
       if (action.callback) action.callback({ok: true});
-      yield put(SessionActions.removeFavorite(response.data.payload));
+      yield put(SessionActions.removeFavoriteId(response.data.payload));
     } else {
       yield put(FavoriteActions.removeFavoriteFailure(response.data.error));
       if (action.callback) action.callback({ok: false});

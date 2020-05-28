@@ -5,11 +5,13 @@ import Immutable from 'seamless-immutable';
 
 const {Types, Creators} = createActions({
   saveUser: ['data'],
-  removeUser: null,
+  logout: null,
   saveUserLocation: ['data'],
-  setFavorite: ['data'],
-  addFavorite: ['data'],
-  removeFavorite: ['data'],
+
+  setFavoriteIds: ['data'],
+  addFavoriteId: ['data'],
+  removeFavoriteId: ['data'],
+
   // removeOnboarding: null,
   // changeLanguage: ['data'],
 });
@@ -38,8 +40,8 @@ export const saveUser = (state, {data}) => {
   return state.merge({...state, user: data, favoriteIds: data.favorites || []});
 };
 
-export const removeUser = state => {
-  return state.merge({...state, user: null, favoriteIds: []});
+export const logout = state => {
+  return state.merge({...INITIAL_STATE});
 };
 
 export const saveUserLocation = (state, {data}) => {
@@ -47,24 +49,24 @@ export const saveUserLocation = (state, {data}) => {
   return state.merge({...state, userLocation: data});
 };
 
-export const setFavorite = (state, {data}) => {
-  console.tron.log({setFavorite: data});
+export const setFavoriteIds = (state, {data}) => {
+  console.tron.log({setFavoriteIds: data});
   return state.merge({
     ...state,
     favoriteIds: data.map(fav => fav.id),
   });
 };
 
-export const addFavorite = (state, {data}) => {
-  console.tron.log({addFavorite: data});
+export const addFavoriteId = (state, {data}) => {
+  console.tron.log({addFavoriteId: data});
   return state.merge({
     ...state,
     favoriteIds: [...state.favoriteIds, data.placeId],
   });
 };
 
-export const removeFavorite = (state, {data}) => {
-  console.tron.log({removeFavorite: data});
+export const removeFavoriteId = (state, {data}) => {
+  console.tron.log({removeFavoriteId: data});
   let tempIds = [...state.favoriteIds];
   const removedIndex = tempIds.indexOf(data.placeId);
   console.tron.log({tempIds});
@@ -80,9 +82,9 @@ export const removeFavorite = (state, {data}) => {
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SAVE_USER]: saveUser,
-  [Types.REMOVE_USER]: removeUser,
+  [Types.LOGOUT]: logout,
   [Types.SAVE_USER_LOCATION]: saveUserLocation,
-  [Types.SET_FAVORITE]: setFavorite,
-  [Types.ADD_FAVORITE]: addFavorite,
-  [Types.REMOVE_FAVORITE]: removeFavorite,
+  [Types.SET_FAVORITE_IDS]: setFavoriteIds,
+  [Types.ADD_FAVORITE_ID]: addFavoriteId,
+  [Types.REMOVE_FAVORITE_ID]: removeFavoriteId,
 });

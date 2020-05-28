@@ -65,7 +65,7 @@ export function* logout(api, action) {
     const firebaseUserCredential = yield auth().signOut();
     console.tron.log({firebaseUserCredential});
 
-    yield put(SessionActions.removeUser());
+    yield put(SessionActions.logout());
     yield put(AuthActions.logoutSuccess({ok: true}));
     // check everything from user & remove
     yield put(FavoriteActions.removeFavorites());

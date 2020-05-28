@@ -11,28 +11,27 @@ class FirebaseChat {
     };
   }
 
-  get ref() {
+  get messageRef() {
     const {currentUid, targetUid} = this.state;
     return database().ref(`messages/${currentUid}/${targetUid}`);
   }
 
-  get targetRef() {
+  get targetMessageRef() {
     const {currentUid, targetUid} = this.state;
     return database().ref(`messages/${targetUid}/${currentUid}`);
   }
 
-  get refRooms() {
+  get roomRef() {
     const {currentUid, targetUid} = this.state;
-    return database().ref(`messages/${currentUid}/rooms/${targetUid}`);
+    return database().ref(`rooms/${currentUid}/${targetUid}`);
   }
 
-  get targetRefRooms() {
+  get targetRoomRef() {
     const {currentUid, targetUid} = this.state;
-    return database().ref(`messages/${targetUid}/rooms/${currentUid}`);
+    return database().ref(`rooms/${targetUid}/${currentUid}`);
   }
 
   parse = snapshot => {
-    console.tron.log({'parse snapshot': snapshot.val()});
     const {timestamp: numberStamp, text, user} = snapshot.val();
     const {key: _id} = snapshot;
     const createdAt = new Date(numberStamp);
@@ -42,21 +41,22 @@ class FirebaseChat {
       text,
       user,
     };
-    console.tron.log({message});
+    console.tron.log({'parse snapshot': message});
     return message;
   };
 
-  on = callback =>
-    this.ref
+  onMessages = callback =>
+    this.messageRef
       .limitToLast(20)
       .on('child_added', snapshot => callback(this.parse(snapshot)));
 
   onRooms = callback => {
-    // this.refRooms
+    console.tron.log({callback});
+    // this.roomRef
     //   .limitToLast(20)
     //   .on('child_added', snapshot => callback(this.parse(snapshot)));
 
-    this.refRooms.limitToLast(20).on('value', snapshot => {
+    this.roomRef.limitToLast(20).on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         callback(this.parse(childSnapshot));
       });
@@ -75,7 +75,6 @@ class FirebaseChat {
         user,
         timestamp: this.timestamp,
       };
-      console.tron.log({message});
       this.append(message);
     }
   };
@@ -84,27 +83,29 @@ class FirebaseChat {
     console.tron.log({message});
     const {targetUser} = this.state;
 
-    this.ref.push(message);
-    this.targetRef.push(message);
+    this.messageRef.push(message);
+    this.targetMessageRef.push(message);
 
-    this.refRooms.update({
+    this.roomRef.update({
       ...message,
       user: targetUser,
     });
-    this.targetRefRooms.update(message);
+    this.targetRoomRef.update(message);
   };
 
   // close the connection to the Backend
   off() {
-    this.ref.off();
-    this.targetRef.off();
+    console.tron.log('!!!!!!!!OFF!!!!!!!!');
+    this.messageRef.off();
+    this.targetMessageRef.off();
 
-    this.refRooms.off();
-    this.targetRefRooms.off();
+    // this.roomRef.off();
+    this.targetRoomRef.off();
   }
 
   offRooms() {
-    this.refRooms.off();
+    console.tron.log('!!!!!!!!OFF-ROOMS!!!!!!!!');
+    this.roomRef.off();
   }
 }
 

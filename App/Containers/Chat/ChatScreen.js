@@ -50,7 +50,7 @@ export class ChatScreen extends Component {
   }
 
   componentDidMount() {
-    firebaseChat.on(message =>
+    firebaseChat.onMessages(message =>
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       })),
@@ -64,7 +64,6 @@ export class ChatScreen extends Component {
   render() {
     const {navigation, currentUser} = this.props;
     const {isLoading, messages, targetUser} = this.state;
-    console.tron.log({render: targetUser});
 
     return (
       <View style={[AppStyles.flex1]}>

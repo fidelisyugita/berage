@@ -78,7 +78,7 @@ export class ChatRoomScreen extends Component {
   };
 
   onRefresh = () => {
-    FirebaseChat.shared.off();
+    // FirebaseChat.shared.offRooms();
     this.setState({rooms: []}, () => this.componentDidMount());
   };
 
