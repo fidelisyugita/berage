@@ -14,6 +14,12 @@
   "viewEditProfile": "View and edit profile",
   "personalName": "Personal Name",
 
+  "admin": "Admin",
+  "setBanner": "Set Banner",
+  "setPopular": "Set Popular",
+  "setRecommended": "Set Recommended",
+  "sendNotif": "Send Notification",
+
   "hosting": "Hosting",
   "yourPlaces": "Your places",
   "listYourSpace": "List your space",
@@ -40,7 +46,7 @@
 
   "savedDetail": "Collect your favorite places by tapping the heart icon.",
   "chatDetail": "Your chats will appear here.",
-  "inboxDetail": "Your messages will appear here.",
+  "inboxDetail": "Your inboxes will appear here.",
   "profileDetail": "Login to enjoy more features.",
   "hostDetail": "Your places will appear here.",
 
@@ -59,6 +65,9 @@
   "price": "Price",
 
   "priceDetail": "Price in Rp (from - to)",
+
+  "title": "Title",
+  "url": "Url",
 
   "successDefault": "Success",
   "errorDefault": "Error while processing request",

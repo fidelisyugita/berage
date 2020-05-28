@@ -11,6 +11,8 @@ import {GithubTypes} from '../Redux/GithubRedux';
 import {AuthTypes} from '../Redux/AuthRedux';
 import {PlaceTypes} from '../Redux/PlaceRedux';
 import {FavoriteTypes} from '../Redux/FavoriteRedux';
+import {ChatTypes} from '../Redux/ChatRedux';
+import {InboxTypes} from '../Redux/InboxRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -25,6 +27,7 @@ import {
   getUserPlaces,
 } from './PlaceSagas';
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
+import {getInboxes, sendNotif} from './InboxSagas';
 
 /* ------------- API ------------- */
 
@@ -57,5 +60,8 @@ export default function* root() {
     takeLatest(FavoriteTypes.GET_FAVORITES_REQUEST, getFavorites, api),
     takeLatest(FavoriteTypes.ADD_FAVORITE_REQUEST, addFavorite, api),
     takeLatest(FavoriteTypes.REMOVE_FAVORITE_REQUEST, removeFavorite, api),
+
+    takeLatest(InboxTypes.GET_INBOXES_REQUEST, getInboxes, api),
+    takeLatest(InboxTypes.SEND_NOTIF_REQUEST, sendNotif, api),
   ]);
 }

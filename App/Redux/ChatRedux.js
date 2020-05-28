@@ -85,6 +85,7 @@ export const getChatSuccess = (state, {payload}) => {
   return state.merge({
     ...state,
     getChat: {fetching: false, error: null, payload, data: null},
+    messages: payload,
   });
 };
 export const getChatFailure = (state, {error}) => {

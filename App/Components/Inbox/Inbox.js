@@ -34,7 +34,7 @@ const Inbox = props => {
           <View style={[AppStyles.baseMarginLeft, AppStyles.flex1]}>
             <View style={[AppStyles.row]}>
               <Text style={[Fonts.style.medium3, AppStyles.flex1]}>
-                {item.name || '-'}
+                {item.title || '-'}
               </Text>
               <Text style={Fonts.style.small}>
                 {DateFormatter(item.updatedAt, null, 'MMMM D [at] h:mm A')}
@@ -43,7 +43,7 @@ const Inbox = props => {
             <Text
               numberOfLines={3}
               style={[Fonts.style.medium, Fonts.style.alignJustify]}>
-              {item.lastConversation}
+              {item.description || '-'}
             </Text>
           </View>
         </View>

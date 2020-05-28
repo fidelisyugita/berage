@@ -2,12 +2,17 @@
 import {call, put} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
+import messaging from '@react-native-firebase/messaging';
 
 import AuthActions from '../Redux/AuthRedux';
 import SessionActions from '../Redux/SessionRedux';
 import FavoriteActions from '../Redux/FavoriteRedux';
 import PlaceActions from '../Redux/PlaceRedux';
 import ChatActions from '../Redux/ChatRedux';
+import InboxActions from '../Redux/InboxRedux';
+
+import {httpsCallable} from './Utils';
+import {SAVE_USER} from './Consts';
 
 export function* loginWithGoogle(api, action) {
   try {
@@ -40,6 +45,15 @@ export function* loginWithGoogle(api, action) {
     );
     console.tron.log({firebaseUserCredential});
 
+    const fcmToken = yield messaging().getToken();
+    const response = yield httpsCallable(SAVE_USER, {fcmToken});
+    console.tron.log({saveUser: response});
+
+    /**
+     * TODO
+     * should get user data from api
+     * make sure its updated
+     */
     const user = {
       phoneNumber: firebaseUserCredential.user.phoneNumber,
       photoURL: firebaseUserCredential.user.photoURL,
@@ -48,7 +62,9 @@ export function* loginWithGoogle(api, action) {
       isAnonymous: firebaseUserCredential.user.isAnonymous,
       emailVerified: firebaseUserCredential.user.emailVerified,
       uid: firebaseUserCredential.user.uid,
+      fcmToken,
     };
+    console.tron.log({user});
 
     yield put(SessionActions.saveUser(user));
     yield put(AuthActions.loginWithGoogleSuccess({ok: true}));
@@ -71,6 +87,7 @@ export function* logout(api, action) {
     yield put(FavoriteActions.removeFavorites());
     yield put(PlaceActions.removeMyPlaces());
     yield put(ChatActions.removeRooms());
+    yield put(InboxActions.removeInboxes());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));
   }

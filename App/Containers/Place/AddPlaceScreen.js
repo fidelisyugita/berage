@@ -25,7 +25,7 @@ import SessionActions from '../../Redux/SessionRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
-import {GetUserCoordinate} from '../../Lib';
+import {GetUserCoordinate, UploadImage} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -94,38 +94,14 @@ export class AddPlaceScreen extends Component {
     let tempImages = [...this.state.imagePlaces];
 
     try {
-      const image = await ImagePicker.openPicker({
-        width: 720,
-        height: 480,
-        cropping: true,
-      });
-      console.tron.log({image});
-
-      /**
-       * TODO
-       * - make it better and move it
-       */
-      const refPath = `places/${image.modificationDate}.jpg`;
-      const reference = storage().ref(refPath);
-      const uploadResponse = await reference.putFile(image.path);
-      console.tron.log({uploadResponse});
-
-      /**
-       * TODO
-       * - make sure token doesn't bother image to show
-       */
-      const url = await storage()
-        .ref(refPath)
-        .getDownloadURL();
-
-      tempImages.push({...image, uri: url.split('&token')[0]});
+      const image = await UploadImage();
+      tempImages.push(image);
       console.tron.log({tempImages});
       this.setState({
         imagePlaces: tempImages,
       });
     } catch (error) {
       console.tron.log({error});
-      console.tron.log({error: error.message});
       DropDownHolder.alert(
         'error',
         I18n.t('errorDefault'),

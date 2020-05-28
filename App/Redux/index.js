@@ -15,6 +15,7 @@ export const reducers = combineReducers({
   place: require('./PlaceRedux').reducer,
   favorite: require('./FavoriteRedux').reducer,
   chat: require('./ChatRedux').reducer,
+  inbox: require('./InboxRedux').reducer,
 });
 
 export default () => {
