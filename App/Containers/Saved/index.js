@@ -41,10 +41,10 @@ export class SavedScreen extends Component {
   }
 
   loadData() {
-    const {getFavoritesRequest, favorites} = this.props;
+    const {currentUser, getFavoritesRequest, favorites} = this.props;
     const {refreshing} = this.state;
 
-    if (favorites.length < 1 || refreshing) {
+    if (currentUser && (favorites.length < 1 || refreshing)) {
       this.setState({isLoading: true, refreshing: false});
 
       getFavoritesRequest(null, this.getFavoritesCallback);
@@ -91,7 +91,7 @@ export class SavedScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
         <ModalLoader visible={isLoading || getFavorites.fetching} />
         <HeaderTitle title={I18n.t('saved')} shadow />

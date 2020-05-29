@@ -28,6 +28,8 @@ import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
 
+let firebaseChat;
+
 export class ChatRoomScreen extends Component {
   constructor(props) {
     super(props);
@@ -39,12 +41,17 @@ export class ChatRoomScreen extends Component {
   }
 
   componentDidMount() {
+    this.loadData();
+  }
+
+  loadData() {
     const {currentUser} = this.props;
     const {rooms} = this.state;
     const tempRooms = [...rooms];
 
     if (currentUser) {
-      FirebaseChat.shared.onRooms(room => {
+      if (!firebaseChat) firebaseChat = new FirebaseChat();
+      firebaseChat.onRooms(room => {
         const roomIndex = tempRooms.findIndex(
           chatRoom => chatRoom._id === room._id,
         );
@@ -58,7 +65,7 @@ export class ChatRoomScreen extends Component {
   componentWillUnmount() {
     const {currentUser} = this.props;
 
-    if (currentUser) FirebaseChat.shared.offRooms();
+    if (currentUser && firebaseChat) firebaseChat.offRooms();
   }
 
   onLoginPress = () => {
@@ -89,7 +96,7 @@ export class ChatRoomScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
         <ModalLoader visible={isLoading} />
         <HeaderTitle title={I18n.t('chat')} shadow />

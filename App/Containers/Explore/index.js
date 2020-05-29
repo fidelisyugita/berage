@@ -55,20 +55,12 @@ export class ExploreScreen extends Component {
     } = this.props;
     const {refreshing} = this.state;
 
-    if (
-      refreshing &&
-      getPopularPlaces.payload &&
-      getPopularPlaces.payload.length < 1
-    ) {
+    if (refreshing || !getPopularPlaces.payload) {
       this.setState({isLoading: true});
       getPopularPlacesRequest(null, this.getPopularPlacesCallback);
     }
 
-    if (
-      refreshing &&
-      getRecommendedPlaces.payload &&
-      getRecommendedPlaces.payload.length < 1
-    ) {
+    if (refreshing || !getRecommendedPlaces.payload) {
       this.setState({isLoading: true});
       getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
     }

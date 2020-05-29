@@ -43,10 +43,10 @@ export class InboxScreen extends Component {
   }
 
   loadData() {
-    const {getInboxesRequest, inboxes} = this.props;
+    const {currentUser, getInboxesRequest, inboxes} = this.props;
     const {refreshing} = this.state;
 
-    if (inboxes.length < 1 || refreshing) {
+    if (currentUser && (inboxes.length < 1 || refreshing)) {
       this.setState({isLoading: true, refreshing: false});
 
       getInboxesRequest(null, this.getinboxesCallback);
@@ -97,7 +97,7 @@ export class InboxScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
         <ModalLoader visible={isLoading || getInboxes.fetching} />
         <HeaderTitle title={I18n.t('inbox')} shadow />
