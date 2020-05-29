@@ -16,6 +16,7 @@ export const reducers = combineReducers({
   favorite: require('./FavoriteRedux').reducer,
   chat: require('./ChatRedux').reducer,
   inbox: require('./InboxRedux').reducer,
+  banner: require('./BannerRedux').reducer,
 });
 
 export default () => {

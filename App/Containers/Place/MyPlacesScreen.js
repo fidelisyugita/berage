@@ -47,10 +47,10 @@ export class MyPlacesScreen extends Component {
   }
 
   loadData() {
-    const {getUserPlacesRequest, myPlaces} = this.props;
+    const {currentUser, getUserPlacesRequest, myPlaces} = this.props;
     const {refreshing} = this.state;
 
-    if (myPlaces.length < 1 || refreshing) {
+    if (currentUser && (myPlaces.length < 1 || refreshing)) {
       this.setState({isLoading: true, refreshing: false});
 
       getUserPlacesRequest(null, this.getUserPlacesCallback);
@@ -97,7 +97,7 @@ export class MyPlacesScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
         <ModalLoader visible={isLoading || getUserPlaces.fetching} />
         <CustomHeader onBack={() => navigation.pop()} />

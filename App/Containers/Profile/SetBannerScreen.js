@@ -6,31 +6,35 @@ import {
   ScrollView,
   TextInput,
   FlatList,
+  TouchableOpacity,
+  TouchableHighlight,
   SectionList,
   RefreshControl,
-  Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Swiper from 'react-native-swiper';
+import ImagePicker from 'react-native-image-crop-picker';
 
-import InboxActions from '../../Redux/InboxRedux';
+import BannerActions from '../../Redux/BannerRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
 import {NavigateUrl} from '../../Lib';
 
-import RenderInbox from '../../Components/Inbox/Inbox';
-import HeaderTitle from '../../Components/HeaderTitle';
 import CustomImage from '../../Components/CustomImage';
+import Loader from '../../Components/Loader';
+import SavedPlace from '../../Components/Place/SavedPlace';
+import CustomHeader from '../../Components/CustomHeader';
 import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
+import RenderInbox from '../../Components/Inbox/Inbox';
 
-import {chats} from '../Dummy';
+import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
-export class InboxScreen extends Component {
+export class SetBannerScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,35 +48,19 @@ export class InboxScreen extends Component {
   }
 
   loadData() {
-    const {currentUser, getInboxesRequest, inboxes} = this.props;
+    const {currentUser, getBannersRequest, banners} = this.props;
     const {refreshing} = this.state;
 
-    if (currentUser && (inboxes.length < 1 || refreshing)) {
+    if (currentUser && (banners.length < 1 || refreshing)) {
       this.setState({isLoading: true, refreshing: false});
 
-      getInboxesRequest(null, this.getinboxesCallback);
+      getBannersRequest(null, this.getBannersCallback);
     }
   }
 
-  getinboxesCallback = result => {
+  getBannersCallback = result => {
     if (result.ok) {
       console.tron.log({result});
-    }
-    this.setState({isLoading: false});
-  };
-
-  onLoginPress = () => {
-    const {loginWithGoogleRequest} = this.props;
-
-    this.setState({isLoading: true});
-
-    loginWithGoogleRequest(null, this.googleLoginCallback);
-  };
-
-  googleLoginCallback = result => {
-    if (result.ok) {
-      console.tron.log({result});
-      this.loadData();
     }
     this.setState({isLoading: false});
   };
@@ -82,7 +70,13 @@ export class InboxScreen extends Component {
   };
 
   render() {
-    const {navigation, currentUser, getInboxes, inboxes} = this.props;
+    const {
+      navigation,
+      currentUser,
+      userLocation,
+      getBanners,
+      banners,
+    } = this.props;
     const {isLoading, refreshing} = this.state;
 
     return (
@@ -90,28 +84,24 @@ export class InboxScreen extends Component {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader visible={isLoading || getInboxes.fetching} />
-        <HeaderTitle title={I18n.t('inbox')} shadow />
+        <ModalLoader visible={isLoading || getBanners.fetching} />
+        <CustomHeader
+          onBack={() => navigation.pop()}
+          renderRight={() => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AddBannerScreen')}>
+              <Text
+                style={{...Fonts.style.large, padding: Metrics.smallMargin}}>
+                {I18n.t('add')}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
         <FlatList
-          data={inboxes}
+          data={banners}
           keyExtractor={(item, idx) => item + idx}
           renderItem={({item}) => (
             <RenderInbox item={item} onPress={() => NavigateUrl(item.url)} />
-          )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptyMessageData}
-              message={I18n.t('inboxDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}>
-              {!currentUser && <LoginButton onPress={this.onLoginPress} />}
-            </EmptyState>
           )}
         />
       </ScrollView>
@@ -123,16 +113,16 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = state => ({
   currentUser: state.session.user,
-  getInboxes: state.inbox.getInboxes,
-  inboxes: state.inbox.inboxes,
+  getBanners: state.banner.getBanners,
+  banners: state.banner.banners,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInboxesRequest: (data, callback) =>
-    dispatch(InboxActions.getInboxesRequest(data, callback)),
+  getBannersRequest: (data, callback) =>
+    dispatch(BannerActions.getBannersRequest(data, callback)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(InboxScreen);
+)(SetBannerScreen);

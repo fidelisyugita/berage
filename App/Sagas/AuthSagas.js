@@ -10,6 +10,7 @@ import FavoriteActions from '../Redux/FavoriteRedux';
 import PlaceActions from '../Redux/PlaceRedux';
 import ChatActions from '../Redux/ChatRedux';
 import InboxActions from '../Redux/InboxRedux';
+import BannerActions from '../Redux/BannerRedux';
 
 import {httpsCallable} from './Utils';
 import {SAVE_USER} from './Consts';
@@ -84,6 +85,7 @@ export function* logout(api, action) {
     yield put(PlaceActions.removeMyPlaces());
     yield put(ChatActions.removeRooms());
     yield put(InboxActions.removeInboxes());
+    // yield put(BannerActions.removeBanners());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));
   }

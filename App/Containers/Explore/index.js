@@ -11,6 +11,7 @@ import {
   RefreshControl,
   SectionList,
   TouchableOpacity,
+  TouchableHighlight,
   PermissionsAndroid,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -19,10 +20,12 @@ import Swiper from 'react-native-swiper';
 import Geolocation from 'react-native-geolocation-service';
 
 import PlaceActions from '../../Redux/PlaceRedux';
+import BannerActions from '../../Redux/BannerRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
+import {NavigateUrl} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -52,6 +55,8 @@ export class ExploreScreen extends Component {
       getRecommendedPlacesRequest,
       getPopularPlaces,
       getRecommendedPlaces,
+      getBannersRequest,
+      banners,
     } = this.props;
     const {refreshing} = this.state;
 
@@ -65,6 +70,11 @@ export class ExploreScreen extends Component {
       getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
     }
 
+    if (refreshing || banners.length < 1) {
+      this.setState({isLoading: true});
+      getBannersRequest(null, this.getBannersCallback);
+    }
+
     this.setState({refreshing: false});
   }
 
@@ -76,6 +86,13 @@ export class ExploreScreen extends Component {
   };
 
   getRecommendedPlacesCallback = result => {
+    if (result.ok) {
+      console.tron.log({result});
+    }
+    this.setState({isLoading: false});
+  };
+
+  getBannersCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
@@ -105,9 +122,11 @@ export class ExploreScreen extends Component {
   render() {
     const {
       navigation,
+      userLocation,
       getPopularPlaces,
       getRecommendedPlaces,
-      userLocation,
+      getBanners,
+      banners,
     } = this.props;
     const {refreshing} = this.state;
     const sections = [
@@ -129,7 +148,11 @@ export class ExploreScreen extends Component {
           <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
         <ModalLoader
-          visible={getPopularPlaces.fetching && getRecommendedPlaces.fetching}
+          visible={
+            getPopularPlaces.fetching ||
+            getRecommendedPlaces.fetching ||
+            getBanners.fetching
+          }
           imageSource={Images.homeLoader}
         />
 
@@ -171,7 +194,7 @@ export class ExploreScreen extends Component {
             loop={true}
             showsButtons={false}
             showsPagination={true}>
-            {images.map(image => (
+            {banners.map(banner => (
               // <View
               //   key={image}
               //   style={
@@ -179,17 +202,19 @@ export class ExploreScreen extends Component {
               //       //   marginRight: Metrics.marginHorizontal,
               //     }
               //   }>
-              <CustomImage
-                key={image}
-                source={{uri: image}}
-                style={[
-                  AppStyles.border3,
-                  {
-                    width: '100%',
-                    height: Metrics.images.xl,
-                  },
-                ]}
-              />
+              <TouchableHighlight onPress={() => NavigateUrl(banner.url)}>
+                <CustomImage
+                  key={banner.image}
+                  source={{uri: banner.image}}
+                  style={[
+                    AppStyles.border3,
+                    {
+                      width: '100%',
+                      height: Metrics.images.xl,
+                    },
+                  ]}
+                />
+              </TouchableHighlight>
               // </View>
             ))}
           </Swiper>
@@ -220,6 +245,8 @@ const mapStateToProps = state => ({
   userLocation: state.session.userLocation,
   getPopularPlaces: state.place.getPopularPlaces,
   getRecommendedPlaces: state.place.getRecommendedPlaces,
+  getBanners: state.banner.getBanners,
+  banners: state.banner.banners,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -227,6 +254,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(PlaceActions.getPopularPlacesRequest(data, callback)),
   getRecommendedPlacesRequest: (data, callback) =>
     dispatch(PlaceActions.getRecommendedPlacesRequest(data, callback)),
+  getBannersRequest: (data, callback) =>
+    dispatch(BannerActions.getBannersRequest(data, callback)),
 });
 
 export default connect(

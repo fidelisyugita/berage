@@ -13,6 +13,7 @@ import {PlaceTypes} from '../Redux/PlaceRedux';
 import {FavoriteTypes} from '../Redux/FavoriteRedux';
 import {ChatTypes} from '../Redux/ChatRedux';
 import {InboxTypes} from '../Redux/InboxRedux';
+import {BannerTypes} from '../Redux/BannerRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -28,6 +29,7 @@ import {
 } from './PlaceSagas';
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
 import {getInboxes, sendNotif} from './InboxSagas';
+import {getBanners, addBanner, deleteBanner} from './BannerSagas';
 
 /* ------------- API ------------- */
 
@@ -63,5 +65,9 @@ export default function* root() {
 
     takeLatest(InboxTypes.GET_INBOXES_REQUEST, getInboxes, api),
     takeLatest(InboxTypes.SEND_NOTIF_REQUEST, sendNotif, api),
+
+    takeLatest(BannerTypes.GET_BANNERS_REQUEST, getBanners, api),
+    takeLatest(BannerTypes.ADD_BANNER_REQUEST, addBanner, api),
+    takeLatest(BannerTypes.DELETE_BANNER_REQUEST, deleteBanner, api),
   ]);
 }

@@ -6,6 +6,8 @@ import PlaceScreen from '../Containers/Place';
 import AddPlaceScreen from '../Containers/Place/AddPlaceScreen';
 import MyPlacesScreen from '../Containers/Place/MyPlacesScreen';
 
+import SetBannerScreen from '../Containers/Profile/SetBannerScreen';
+import AddBannerScreen from '../Containers/Profile/AddBannerScreen';
 import SendNotifScreen from '../Containers/Profile/SendNotifScreen';
 import PrivacyPolicyScreen from '../Containers/Profile/PrivacyPolicyScreen';
 import TermsOfServiceScreen from '../Containers/Profile/TermsOfServiceScreen';
@@ -23,6 +25,8 @@ const MainNav = createStackNavigator(
     AddPlaceScreen: {screen: AddPlaceScreen},
     MyPlacesScreen: {screen: MyPlacesScreen},
 
+    SetBannerScreen: {screen: SetBannerScreen},
+    AddBannerScreen: {screen: AddBannerScreen},
     SendNotifScreen: {screen: SendNotifScreen},
     PrivacyPolicyScreen: {screen: PrivacyPolicyScreen},
     TermsOfServiceScreen: {screen: TermsOfServiceScreen},

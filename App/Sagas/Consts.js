@@ -13,4 +13,8 @@ export const ADD_FAVORITE = 'favorite-add';
 export const REMOVE_FAVORITE = 'favorite-remove';
 
 export const GET_INBOXES = 'inbox-get';
-export const SEND_NOTIF = 'inbox-save';
+export const SEND_NOTIF = 'inbox-add';
+
+export const GET_BANNERS = 'banner-get';
+export const ADD_BANNER = 'banner-add';
+export const DELETE_BANNER = 'banner-delete';
