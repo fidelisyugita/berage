@@ -50,13 +50,30 @@ export class ExploreScreen extends Component {
       currentUser,
       getPopularPlacesRequest,
       getRecommendedPlacesRequest,
+      getPopularPlaces,
+      getRecommendedPlaces,
     } = this.props;
     const {refreshing} = this.state;
 
-    this.setState({isLoading: true, refreshing: false});
+    if (
+      refreshing &&
+      getPopularPlaces.payload &&
+      getPopularPlaces.payload.length < 1
+    ) {
+      this.setState({isLoading: true});
+      getPopularPlacesRequest(null, this.getPopularPlacesCallback);
+    }
 
-    getPopularPlacesRequest(null, this.getPopularPlacesCallback);
-    getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
+    if (
+      refreshing &&
+      getRecommendedPlaces.payload &&
+      getRecommendedPlaces.payload.length < 1
+    ) {
+      this.setState({isLoading: true});
+      getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
+    }
+
+    this.setState({refreshing: false});
   }
 
   getPopularPlacesCallback = result => {

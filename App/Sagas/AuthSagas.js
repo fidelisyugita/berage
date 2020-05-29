@@ -47,14 +47,8 @@ export function* loginWithGoogle(api, action) {
 
     const fcmToken = yield messaging().getToken();
     const response = yield httpsCallable(SAVE_USER, {fcmToken});
-    console.tron.log({saveUser: response});
 
-    /**
-     * TODO
-     * should get user data from api
-     * make sure its updated
-     */
-    const user = {
+    let user = {
       phoneNumber: firebaseUserCredential.user.phoneNumber,
       photoURL: firebaseUserCredential.user.photoURL,
       displayName: firebaseUserCredential.user.displayName,
@@ -64,6 +58,8 @@ export function* loginWithGoogle(api, action) {
       uid: firebaseUserCredential.user.uid,
       fcmToken,
     };
+
+    if (response.data.ok) user = {...user, ...response.data.payload};
     console.tron.log({user});
 
     yield put(SessionActions.saveUser(user));

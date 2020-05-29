@@ -79,7 +79,7 @@ export const sendNotifRequest = (state, {data}) => {
   });
 };
 export const sendNotifSuccess = (state, {payload}) => {
-  // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
 
   return state.merge({
     ...state,

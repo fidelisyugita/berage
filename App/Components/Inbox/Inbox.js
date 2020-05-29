@@ -37,7 +37,7 @@ const Inbox = props => {
                 {item.title || '-'}
               </Text>
               <Text style={Fonts.style.small}>
-                {DateFormatter(item.updatedAt, null, 'MMMM D [at] h:mm A')}
+                {DateFormatter(item.updatedAt, 'MMMM D [at] h:mm A')}
               </Text>
             </View>
             <Text

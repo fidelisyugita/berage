@@ -34,7 +34,7 @@ const Place = props => {
         <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
           <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
           <Text style={Fonts.style.tiny}>
-            {DateFormatter(item.updatedAt, null, 'MMMM D [at] h:mm A')}
+            {DateFormatter(item.updatedAt, 'MMMM D [at] h:mm A')}
           </Text>
         </View>
       </View>

@@ -1,12 +1,18 @@
 import moment from 'moment';
 import I18n from '../I18n';
 
-export default (
-  date,
-  format = 'YYYY-MM-DD hh:mm:ss',
-  returnFormat = 'M/D/YY',
-) => {
-  const a = moment(date, format);
+const MILLISECOND = 1000;
+
+/**
+ * Returns a new readable date/time.
+ * @param dateInput could be timestamp or object date from firebase
+ */
+export default (dateInput, returnFormat = 'M/D/YY') => {
+  const tempDate =
+    dateInput && dateInput._seconds
+      ? new Date(dateInput._seconds * MILLISECOND)
+      : new Date(dateInput);
+  const a = moment(tempDate);
   const b = moment();
 
   const diffInDays = b.diff(a, 'days');

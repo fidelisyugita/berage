@@ -38,6 +38,7 @@ class FirebaseChat {
     const message = {
       _id,
       createdAt,
+      updatedAt: createdAt,
       text,
       user,
     };

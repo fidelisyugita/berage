@@ -50,7 +50,7 @@ const Room = props => {
           </View>
           <View style={AppStyles.baseMarginLeft}>
             <Text style={Fonts.style.small}>
-              {DateFormatter(item.createdAt, 'YYYY-MM-DDThh:mm:ss')}
+              {DateFormatter(item.updatedAt)}
             </Text>
           </View>
         </View>
