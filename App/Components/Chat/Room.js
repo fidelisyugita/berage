@@ -13,18 +13,21 @@ import {DateFormatter} from '../../Lib';
 import CustomImage from '../CustomImage';
 
 const Room = props => {
-  const {children, item, onPress} = props;
+  const {children, item, onPress, disabled} = props;
   const {user} = item;
+  const avatar = (user && user.avatar) || item.photoURL;
+  const name = (user && user.name) || item.displayName;
   // console.tron.log({item});
 
   return (
     <TouchableHighlight
+      disabled={disabled}
       onPress={onPress}
       underlayColor={Colors.highlightUnderlay}
       style={[AppStyles.section]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
         <CustomImage
-          source={{uri: (user && user.avatar) || null}}
+          source={{uri: avatar || null}}
           style={[
             AppStyles.border3,
             AppStyles.avatarMedium,
@@ -42,10 +45,11 @@ const Room = props => {
           ]}>
           <View style={[AppStyles.justifyEvenly, AppStyles.flex1]}>
             <Text numberOfLines={1} style={Fonts.style.medium3}>
-              {(user && user.name) || '-'}
+              {name || '-'}
             </Text>
             <Text numberOfLines={1} style={Fonts.style.medium}>
               {item.text || '-'}
+              {/* {`${I18n.t('joinAt')} ${DateFormatter(item.timestamp)}`} */}
             </Text>
           </View>
           <View style={AppStyles.baseMarginLeft}>
@@ -62,10 +66,12 @@ const Room = props => {
 Room.propTypes = {
   item: PropTypes.object.isRequired,
   onPress: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 Room.defaultProps = {
   style: {},
+  disabled: false,
 };
 
 export default Room;

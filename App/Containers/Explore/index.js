@@ -202,9 +202,10 @@ export class ExploreScreen extends Component {
               //       //   marginRight: Metrics.marginHorizontal,
               //     }
               //   }>
-              <TouchableHighlight onPress={() => NavigateUrl(banner.url)}>
+              <TouchableHighlight
+                key={banner.image}
+                onPress={() => NavigateUrl(banner.url)}>
                 <CustomImage
-                  key={banner.image}
                   source={{uri: banner.image}}
                   style={[
                     AppStyles.border3,

@@ -24,6 +24,7 @@ import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale, DisplayMoney} from '../../Transforms';
 import {ConvertDistance} from '../../Lib';
+import FirebasePlace from '../../Lib/FirebasePlace';
 
 import CustomImage from '../../Components/CustomImage';
 import Post from '../../Components/Post/Post';
@@ -33,17 +34,57 @@ import ModalLoader from '../../Components/Modal/ModalLoader';
 
 import {posts} from '../Dummy';
 
+let firebasePlace;
+
 export class PlaceScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
+      refreshing: false,
       item: props.navigation.getParam('item', null),
       isLiked: false,
+      onlineUsers: [],
     };
   }
 
   componentDidMount() {
     this.checkFavorite();
+    this.loadData();
+  }
+
+  componentWillUnmount() {
+    const {currentUser} = this.props;
+
+    if (firebasePlace) {
+      firebasePlace.offOnlineUsers();
+      firebasePlace = null;
+      this.setState({onlineUsers: []});
+    }
+  }
+
+  loadData() {
+    const {currentUser} = this.props;
+    const {item, onlineUsers} = this.state;
+    const tempUsers = [...onlineUsers];
+
+    console.tron.log({item});
+    console.tron.log({onlineUsers});
+    /**
+     * TODO
+     * need check & improve
+     * how to remove user that left the place
+     */
+    if (item && item.id) {
+      firebasePlace = new FirebasePlace(item.id, currentUser);
+      firebasePlace.onOnlineUsers(newUser => {
+        console.tron.log({newUser});
+        const userIndex = tempUsers.findIndex(user => user.uid === newUser.uid);
+        if (userIndex > -1) tempUsers.splice(userIndex, 1, newUser);
+        else tempUsers.push(newUser);
+        this.setState({onlineUsers: tempUsers});
+      });
+    }
   }
 
   checkFavorite() {
@@ -79,7 +120,7 @@ export class PlaceScreen extends Component {
 
   render() {
     const {navigation, currentUser, userLocation} = this.props;
-    const {item, isLiked, isLoading} = this.state;
+    const {item, isLiked, isLoading, onlineUsers} = this.state;
 
     const owner = item.updatedBy || item.createdBy;
 
@@ -241,18 +282,28 @@ export class PlaceScreen extends Component {
           </View>
         </View>
 
-        <View style={[AppStyles.baseMarginVertical]}>
-          <FlatList
-            data={posts}
-            keyExtractor={(item, idx) => `post-${idx}`}
-            renderItem={({item, idx}) => (
-              <Post
-                item={item}
-                // onPress={() => navigation.navigate('PlaceScreen', {item})}
-              />
-            )}
-          />
-        </View>
+        <TouchableHighlight
+          disabled={!currentUser}
+          underlayColor={Colors.highlightUnderlay}
+          onPress={() =>
+            navigation.navigate('OnlineUsersScreen', {item, onlineUsers})
+          }
+          style={styles.btnSave}>
+          <Text style={[Fonts.style.xl]}>
+            {`${I18n.t('online')}: ${onlineUsers.length}`}
+          </Text>
+        </TouchableHighlight>
+
+        <FlatList
+          data={posts}
+          keyExtractor={(item, idx) => `post-${idx}`}
+          renderItem={({item, idx}) => (
+            <Post
+              item={item}
+              // onPress={() => navigation.navigate('PlaceScreen', {item})}
+            />
+          )}
+        />
       </ScrollView>
     );
   }
@@ -263,6 +314,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.windowTint,
     borderRadius: Metrics.circleRadius,
     position: 'absolute',
+  },
+  btnSave: {
+    ...AppStyles.container,
+    ...AppStyles.containerBottom,
+    ...AppStyles.sectionMargin,
+    ...AppStyles.sectionVerticalBase,
+    ...AppStyles.alignCenter,
+    ...AppStyles.border7,
+    ...AppStyles.borderImage,
+    ...AppStyles.darkShadow,
   },
 });
 

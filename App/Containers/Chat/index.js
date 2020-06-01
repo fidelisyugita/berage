@@ -65,7 +65,10 @@ export class ChatRoomScreen extends Component {
   componentWillUnmount() {
     const {currentUser} = this.props;
 
-    if (currentUser && firebaseChat) firebaseChat.offRooms();
+    if (currentUser && firebaseChat) {
+      firebaseChat.offRooms();
+      firebaseChat = null;
+    }
   }
 
   onLoginPress = () => {
@@ -100,7 +103,7 @@ export class ChatRoomScreen extends Component {
         }>
         <ModalLoader visible={isLoading} />
         <HeaderTitle title={I18n.t('chat')} shadow />
-        {currentUser && rooms.length < 1 && (
+        {/* {currentUser && rooms.length < 1 && (
           <Room
             item={{
               user: {
@@ -121,7 +124,7 @@ export class ChatRoomScreen extends Component {
               })
             }
           />
-        )}
+        )} */}
         <FlatList
           data={rooms}
           keyExtractor={(item, idx) => item + idx}

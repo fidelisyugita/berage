@@ -44,7 +44,7 @@ export class AddBannerScreen extends Component {
 
   addImage = async () => {
     try {
-      const image = await UploadImage('inboxes');
+      const image = await UploadImage('banners');
       console.tron.log({image});
       this.setState({image});
     } catch (error) {

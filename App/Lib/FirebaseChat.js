@@ -6,7 +6,7 @@ class FirebaseChat {
     console.tron.log({targetUser});
     this.state = {
       targetUser: targetUser,
-      targetUid: (targetUser && targetUser._id) || '',
+      targetUid: targetUser ? targetUser._id || targetUser.uid : '',
       currentUid: (auth().currentUser && auth().currentUser.uid) || '',
     };
   }
@@ -89,7 +89,11 @@ class FirebaseChat {
 
     this.roomRef.update({
       ...message,
-      user: targetUser,
+      user: {
+        _id: targetUser._id || targetUser.uid,
+        avatar: targetUser.avatar || targetUser.photoURL,
+        name: targetUser.name || targetUser.displayName,
+      },
     });
     this.targetRoomRef.update(message);
   };

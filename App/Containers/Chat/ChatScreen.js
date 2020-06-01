@@ -35,7 +35,7 @@ import LoginButton from '../../Components/LoginButton';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
-let firebaseChat = new FirebaseChat();
+let firebaseChat;
 
 export class ChatScreen extends Component {
   constructor(props) {
@@ -64,6 +64,8 @@ export class ChatScreen extends Component {
   render() {
     const {navigation, currentUser} = this.props;
     const {isLoading, messages, targetUser} = this.state;
+    const avatar = (targetUser && targetUser.avatar) || targetUser.photoURL;
+    const name = (targetUser && targetUser.name) || targetUser.displayName;
 
     return (
       <View style={[AppStyles.flex1]}>
@@ -74,7 +76,7 @@ export class ChatScreen extends Component {
           renderTitle={() => (
             <View style={[AppStyles.row, AppStyles.alignCenter]}>
               <CustomImage
-                source={{uri: (targetUser && targetUser.avatar) || null}}
+                source={{uri: avatar || null}}
                 style={[
                   AppStyles.avatarSmall,
                   AppStyles.borderCircle,
@@ -85,7 +87,7 @@ export class ChatScreen extends Component {
               <Text
                 numberOfLines={1}
                 style={{...Fonts.style.large3, maxWidth: Scale(180)}}>
-                {(targetUser && targetUser.name) || '-'}
+                {name || '-'}
               </Text>
             </View>
           )}

@@ -5,6 +5,7 @@ import BottomNav from './BottomNavigation';
 import PlaceScreen from '../Containers/Place';
 import AddPlaceScreen from '../Containers/Place/AddPlaceScreen';
 import MyPlacesScreen from '../Containers/Place/MyPlacesScreen';
+import OnlineUsersScreen from '../Containers/Place/OnlineUsersScreen';
 
 import SetBannerScreen from '../Containers/Profile/SetBannerScreen';
 import AddBannerScreen from '../Containers/Profile/AddBannerScreen';
@@ -24,6 +25,7 @@ const MainNav = createStackNavigator(
     PlaceScreen: {screen: PlaceScreen},
     AddPlaceScreen: {screen: AddPlaceScreen},
     MyPlacesScreen: {screen: MyPlacesScreen},
+    OnlineUsersScreen: {screen: OnlineUsersScreen},
 
     SetBannerScreen: {screen: SetBannerScreen},
     AddBannerScreen: {screen: AddBannerScreen},

@@ -49,6 +49,7 @@
   "inboxDetail": "Your inboxes will appear here.",
   "profileDetail": "Login to enjoy more features.",
   "hostDetail": "Your places will appear here.",
+  "onlineDetail": "People will appear here.",
 
   "placeName": "Place name",
   "placeCategories": "Place categories",
@@ -77,6 +78,11 @@
 
   "permissionDenied": "Permission denied",
   "needLocationAccess": "Berage needs access to your location to provide more info",
+
+  "seePeople": "Meet people here",
+  "joinAt": "Join at",
+  "peopleAreOnline": "People are online",
+  "online": "Online",
 
 
 }
