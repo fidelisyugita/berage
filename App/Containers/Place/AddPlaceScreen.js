@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import Geolocation from 'react-native-geolocation-service';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 import PlaceActions from '../../Redux/PlaceRedux';
 import SessionActions from '../../Redux/SessionRedux';
@@ -267,6 +268,7 @@ export class AddPlaceScreen extends Component {
       minPrice,
       maxPrice,
     } = this.state;
+    console.tron.log({placeLocation});
 
     return (
       <ScrollView>
@@ -380,7 +382,7 @@ export class AddPlaceScreen extends Component {
             />
           </View>
 
-          {!placeLocation && (
+          {/* {!placeLocation && (
             <TouchableHighlight
               underlayColor={Colors.highlightUnderlay}
               onPress={this.getUserPosition}
@@ -403,7 +405,39 @@ export class AddPlaceScreen extends Component {
                 {placeLocation ? I18n.t('saved') : I18n.t('setPlaceCoordinate')}
               </Text>
             </TouchableHighlight>
-          )}
+          )} */}
+
+          <TextInput
+            editable={false}
+            placeholder={I18n.t('pinYourLocation')}
+            style={{...styles.inputText, borderColor: Colors.transparent}}
+          />
+          <MapView
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={{
+              ...AppStyles.flex1,
+              // ...AppStyles.sectionMargin,
+              height: Scale(300),
+            }}
+            region={{
+              latitude: (placeLocation && placeLocation.latitude) || -2.7482,
+              longitude: (placeLocation && placeLocation.longitude) || 107.6591,
+              latitudeDelta: 0.0055,
+              longitudeDelta: 0.00521,
+            }}>
+            <Marker
+              draggable
+              coordinate={{
+                latitude: (placeLocation && placeLocation.latitude) || -2.7482,
+                longitude:
+                  (placeLocation && placeLocation.longitude) || 107.6591,
+              }}
+              onDragEnd={e => {
+                console.tron.log({e});
+                this.setState({placeLocation: e.nativeEvent.coordinate});
+              }}
+            />
+          </MapView>
 
           {isLoading ? (
             <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
