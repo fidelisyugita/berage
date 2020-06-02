@@ -85,6 +85,9 @@
   "joinAt": "Join at",
   "peopleAreOnline": "People are online",
   "online": "Online",
-
+  
+  "alreadyHostTitle": "You've host before",
+  "alreadyHostMessage": "Wait for approval to host a new one",
+  
 
 }

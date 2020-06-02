@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -66,6 +67,14 @@ export class ProfileScreen extends Component {
   onLogoutPress = () => {
     const {logoutRequest} = this.props;
     logoutRequest();
+  };
+
+  onHostPress = () => {
+    const {navigation, currentUser} = this.props;
+
+    if (currentUser && currentUser.availableHostLeft)
+      navigation.navigate('AddPlaceScreen');
+    else Alert.alert(I18n.t('alreadyHostTitle'), I18n.t('alreadyHostMessage'));
   };
 
   render() {
@@ -244,7 +253,7 @@ export class ProfileScreen extends Component {
             </View>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={() => navigation.navigate('AddPlaceScreen')}
+            onPress={this.onHostPress}
             underlayColor={Colors.highlightUnderlay}
             style={AppStyles.section}>
             <View
