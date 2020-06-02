@@ -19,6 +19,7 @@ import {getDistance} from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 
 import FavoriteActions from '../../Redux/FavoriteRedux';
+import PlaceActions from '../../Redux/PlaceRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -118,15 +119,35 @@ export class PlaceScreen extends Component {
     else this.setState({isLoading: false});
   };
 
+  onSetPopular = () => {
+    const {item} = this.state;
+
+    if (item && item.id) this.props.setPopularRequest(item);
+  };
+
+  onSetRecommended = () => {
+    const {item} = this.state;
+
+    if (item && item.id) this.props.setRecommendedRequest(item);
+  };
+
   render() {
-    const {navigation, currentUser, userLocation} = this.props;
+    const {
+      navigation,
+      currentUser,
+      userLocation,
+      setPopular,
+      setRecommended,
+    } = this.props;
     const {item, isLiked, isLoading, onlineUsers} = this.state;
 
     const owner = item.updatedBy || item.createdBy;
 
     return (
       <ScrollView>
-        <ModalLoader visible={isLoading} />
+        <ModalLoader
+          visible={isLoading || setPopular.fetching || setRecommended.fetching}
+        />
         <View style={AppStyles.shadow}>
           <View>
             <TouchableHighlight
@@ -294,6 +315,24 @@ export class PlaceScreen extends Component {
           </Text>
         </TouchableHighlight>
 
+        {currentUser && currentUser.superUser && (
+          <View>
+            <TouchableHighlight
+              underlayColor={Colors.highlightUnderlay}
+              onPress={this.onSetPopular}
+              style={styles.btnSave}>
+              <Text style={[Fonts.style.xl]}>{I18n.t('setPopular')}</Text>
+            </TouchableHighlight>
+
+            <TouchableHighlight
+              underlayColor={Colors.highlightUnderlay}
+              onPress={this.onSetRecommended}
+              style={styles.btnSave}>
+              <Text style={[Fonts.style.xl]}>{I18n.t('setRecommended')}</Text>
+            </TouchableHighlight>
+          </View>
+        )}
+
         <FlatList
           data={posts}
           keyExtractor={(item, idx) => `post-${idx}`}
@@ -331,6 +370,8 @@ const mapStateToProps = state => ({
   currentUser: state.session.user,
   userLocation: state.session.userLocation,
   favoriteIds: state.session.favoriteIds,
+  setPopular: state.place.setPopular,
+  setRecommended: state.place.setRecommended,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -338,6 +379,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(FavoriteActions.addFavoriteRequest(data, callback)),
   removeFavoriteRequest: (data, callback) =>
     dispatch(FavoriteActions.removeFavoriteRequest(data, callback)),
+  setPopularRequest: (data, callback) =>
+    dispatch(PlaceActions.setPopularRequest(data, callback)),
+  setRecommendedRequest: (data, callback) =>
+    dispatch(PlaceActions.setRecommendedRequest(data, callback)),
 });
 
 export default connect(

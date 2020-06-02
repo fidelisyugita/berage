@@ -22,10 +22,13 @@ import {getUserAvatar} from './GithubSagas';
 
 import {loginWithGoogle, logout} from './AuthSagas';
 import {
+  getPlaces,
   getPopularPlaces,
   getRecommendedPlaces,
   savePlace,
   getUserPlaces,
+  setPopular,
+  setRecommended,
 } from './PlaceSagas';
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
 import {getInboxes, sendNotif} from './InboxSagas';
@@ -50,6 +53,7 @@ export default function* root() {
     takeLatest(AuthTypes.LOGIN_WITH_GOOGLE_REQUEST, loginWithGoogle, api),
     takeLatest(AuthTypes.LOGOUT_REQUEST, logout, api),
 
+    takeLatest(PlaceTypes.GET_PLACES_REQUEST, getPlaces, api),
     takeLatest(PlaceTypes.GET_POPULAR_PLACES_REQUEST, getPopularPlaces, api),
     takeLatest(
       PlaceTypes.GET_RECOMMENDED_PLACES_REQUEST,
@@ -58,6 +62,9 @@ export default function* root() {
     ),
     takeLatest(PlaceTypes.SAVE_PLACE_REQUEST, savePlace, api),
     takeLatest(PlaceTypes.GET_USER_PLACES_REQUEST, getUserPlaces, api),
+    takeLatest(PlaceTypes.GET_USER_PLACES_REQUEST, getUserPlaces, api),
+    takeLatest(PlaceTypes.SET_POPULAR_REQUEST, setPopular, api),
+    takeLatest(PlaceTypes.SET_RECOMMENDED_REQUEST, setRecommended, api),
 
     takeLatest(FavoriteTypes.GET_FAVORITES_REQUEST, getFavorites, api),
     takeLatest(FavoriteTypes.ADD_FAVORITE_REQUEST, addFavorite, api),

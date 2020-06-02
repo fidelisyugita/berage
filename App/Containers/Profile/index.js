@@ -123,104 +123,102 @@ export class ProfileScreen extends Component {
           </View>
         </View>
 
-        {currentUser &&
-          (currentUser.superUser ||
-            currentUser.email === 'fb46us@gmail.com') && (
-            <View style={[AppStyles.container]}>
-              <Text
+        {currentUser && currentUser.superUser && (
+          <View style={[AppStyles.container]}>
+            <Text
+              style={[
+                AppStyles.section,
+                Fonts.style.small,
+                Fonts.style.uppercase,
+              ]}>
+              {I18n.t('admin')}
+            </Text>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('SetBannerScreen')}
+              underlayColor={Colors.highlightUnderlay}
+              style={AppStyles.section}>
+              <View
                 style={[
-                  AppStyles.section,
-                  Fonts.style.small,
-                  Fonts.style.uppercase,
+                  AppStyles.row,
+                  AppStyles.sectionVerticalBase,
+                  AppStyles.borderBottom5,
+                  AppStyles.alignCenter,
                 ]}>
-                {I18n.t('admin')}
-              </Text>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('SetBannerScreen')}
-                underlayColor={Colors.highlightUnderlay}
-                style={AppStyles.section}>
-                <View
-                  style={[
-                    AppStyles.row,
-                    AppStyles.sectionVerticalBase,
-                    AppStyles.borderBottom5,
-                    AppStyles.alignCenter,
-                  ]}>
-                  <Text style={[Fonts.style.large2, AppStyles.flex1]}>
-                    {I18n.t('setBanner')}
-                  </Text>
-                  <Icon
-                    name="settings"
-                    size={Metrics.icons.tiny}
-                    color={Colors.baseText}
-                  />
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('setPopular')}
-                underlayColor={Colors.highlightUnderlay}
-                style={AppStyles.section}>
-                <View
-                  style={[
-                    AppStyles.row,
-                    AppStyles.sectionVerticalBase,
-                    AppStyles.borderBottom5,
-                    AppStyles.alignCenter,
-                  ]}>
-                  <Text style={[Fonts.style.large2, AppStyles.flex1]}>
-                    {I18n.t('setPopular')}
-                  </Text>
-                  <Icon
-                    name="settings"
-                    size={Metrics.icons.tiny}
-                    color={Colors.baseText}
-                  />
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('setRecommended')}
-                underlayColor={Colors.highlightUnderlay}
-                style={AppStyles.section}>
-                <View
-                  style={[
-                    AppStyles.row,
-                    AppStyles.sectionVerticalBase,
-                    AppStyles.borderBottom5,
-                    AppStyles.alignCenter,
-                  ]}>
-                  <Text style={[Fonts.style.large2, AppStyles.flex1]}>
-                    {I18n.t('setRecommended')}
-                  </Text>
-                  <Icon
-                    name="settings"
-                    size={Metrics.icons.tiny}
-                    color={Colors.baseText}
-                  />
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('SendNotifScreen')}
-                underlayColor={Colors.highlightUnderlay}
-                style={AppStyles.section}>
-                <View
-                  style={[
-                    AppStyles.row,
-                    AppStyles.sectionVerticalBase,
-                    AppStyles.borderBottom5,
-                    AppStyles.alignCenter,
-                  ]}>
-                  <Text style={[Fonts.style.large2, AppStyles.flex1]}>
-                    {I18n.t('sendNotif')}
-                  </Text>
-                  <Icon
-                    name="settings"
-                    size={Metrics.icons.tiny}
-                    color={Colors.baseText}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          )}
+                <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                  {I18n.t('setBanner')}
+                </Text>
+                <Icon
+                  name="settings"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('setPopular')}
+              underlayColor={Colors.highlightUnderlay}
+              style={AppStyles.section}>
+              <View
+                style={[
+                  AppStyles.row,
+                  AppStyles.sectionVerticalBase,
+                  AppStyles.borderBottom5,
+                  AppStyles.alignCenter,
+                ]}>
+                <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                  {I18n.t('setPopular')}
+                </Text>
+                <Icon
+                  name="settings"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('setRecommended')}
+              underlayColor={Colors.highlightUnderlay}
+              style={AppStyles.section}>
+              <View
+                style={[
+                  AppStyles.row,
+                  AppStyles.sectionVerticalBase,
+                  AppStyles.borderBottom5,
+                  AppStyles.alignCenter,
+                ]}>
+                <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                  {I18n.t('setRecommended')}
+                </Text>
+                <Icon
+                  name="settings"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('SendNotifScreen')}
+              underlayColor={Colors.highlightUnderlay}
+              style={AppStyles.section}>
+              <View
+                style={[
+                  AppStyles.row,
+                  AppStyles.sectionVerticalBase,
+                  AppStyles.borderBottom5,
+                  AppStyles.alignCenter,
+                ]}>
+                <Text style={[Fonts.style.large2, AppStyles.flex1]}>
+                  {I18n.t('sendNotif')}
+                </Text>
+                <Icon
+                  name="settings"
+                  size={Metrics.icons.tiny}
+                  color={Colors.baseText}
+                />
+              </View>
+            </TouchableHighlight>
+          </View>
+        )}
 
         <View style={[AppStyles.container]}>
           <Text

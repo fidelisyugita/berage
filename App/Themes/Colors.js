@@ -39,6 +39,7 @@ const colors = {
   highlightUnderlay: '#ddd',
   placeholder: '#E0D7E5',
   link: '#3b5998',
+  tempHomeLoader: '#eee',
 };
 
 export default colors;

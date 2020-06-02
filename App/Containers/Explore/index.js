@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PermissionsAndroid,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -157,29 +158,33 @@ export class ExploreScreen extends Component {
         />
 
         <View style={[AppStyles.container, AppStyles.section]}>
-          <View
-            style={{
-              backgroundColor: Colors.white,
-              borderRadius: Metrics.circleRadius,
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingHorizontal: Metrics.marginHorizontal,
-              ...AppStyles.shadow,
-            }}>
-            <Icon
-              name="magnifier"
-              size={Metrics.icons.tiny}
-              color={Colors.placeholder}
-            />
-            <TextInput
-              style={[
-                Fonts.style.medium,
-                AppStyles.smallMarginLeft,
-                AppStyles.flex1,
-              ]}
-              placeholder={I18n.t('searchPlaceholder')}
-            />
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('SearchPlaceScreen')}>
+            <View
+              style={{
+                backgroundColor: Colors.white,
+                borderRadius: Metrics.circleRadius,
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingHorizontal: Metrics.marginHorizontal,
+                ...AppStyles.shadow,
+              }}>
+              <Icon
+                name="magnifier"
+                size={Metrics.icons.tiny}
+                color={Colors.placeholder}
+              />
+              <TextInput
+                editable={false}
+                style={[
+                  Fonts.style.medium,
+                  AppStyles.smallMarginLeft,
+                  AppStyles.flex1,
+                ]}
+                placeholder={I18n.t('searchPlaceholder')}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
 
         <View
