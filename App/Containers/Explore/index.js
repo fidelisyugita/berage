@@ -36,6 +36,7 @@ import {DropDownHolder} from '../../Components/DropDownHolder';
 
 import {images, items} from '../Dummy';
 
+const MAX_DATA = 5;
 export class ExploreScreen extends Component {
   constructor(props) {
     super(props);
@@ -62,17 +63,17 @@ export class ExploreScreen extends Component {
     const {refreshing} = this.state;
 
     if (refreshing || !getPopularPlaces.payload) {
-      this.setState({isLoading: true});
-      getPopularPlacesRequest(null, this.getPopularPlacesCallback);
+      getPopularPlacesRequest({limit: MAX_DATA}, this.getPopularPlacesCallback);
     }
 
     if (refreshing || !getRecommendedPlaces.payload) {
-      this.setState({isLoading: true});
-      getRecommendedPlacesRequest(null, this.getRecommendedPlacesCallback);
+      getRecommendedPlacesRequest(
+        {limit: MAX_DATA},
+        this.getRecommendedPlacesCallback,
+      );
     }
 
     if (refreshing || banners.length < 1) {
-      this.setState({isLoading: true});
       getBannersRequest(null, this.getBannersCallback);
     }
 
@@ -83,21 +84,18 @@ export class ExploreScreen extends Component {
     if (result.ok) {
       console.tron.log({result});
     }
-    this.setState({isLoading: false});
   };
 
   getRecommendedPlacesCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
-    this.setState({isLoading: false});
   };
 
   getBannersCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
-    this.setState({isLoading: false});
   };
 
   onRefresh = () => {
@@ -133,20 +131,32 @@ export class ExploreScreen extends Component {
     const sections = [
       {
         title: I18n.t('popular'),
-        data: getPopularPlaces.payload || [],
-        onPress: () => console.tron.log({clicked: 'See all'}),
+        data:
+          (getPopularPlaces.payload &&
+            getPopularPlaces.payload.slice(0, MAX_DATA)) ||
+          [],
+        onPress: () =>
+          navigation.navigate('ListPlaceScreen', {isPopular: true}),
       },
       {
         title: I18n.t('recommended'),
-        data: getRecommendedPlaces.payload || [],
-        onPress: () => console.tron.log({clicked: 'See all'}),
+        data:
+          (getRecommendedPlaces.payload &&
+            getRecommendedPlaces.payload.slice(0, MAX_DATA)) ||
+          [],
+        onPress: () =>
+          navigation.navigate('ListPlaceScreen', {isPopular: false}),
       },
     ];
+
+    console.tron.log({getPopularPlaces});
+    console.tron.log({getRecommendedPlaces});
+    console.tron.log({getBanners});
 
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
         <ModalLoader
           visible={

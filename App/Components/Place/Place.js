@@ -12,6 +12,7 @@ import CustomImage from '../CustomImage';
 
 const Place = props => {
   const {children, item, onPress, userLocation} = props;
+  console.tron.log({item});
 
   return (
     <TouchableOpacity
@@ -45,7 +46,7 @@ const Place = props => {
 
 Place.propTypes = {
   item: PropTypes.object.isRequired,
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
   userLocation: PropTypes.object,
 };
 

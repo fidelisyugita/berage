@@ -72,9 +72,11 @@ export class ProfileScreen extends Component {
   onHostPress = () => {
     const {navigation, currentUser} = this.props;
 
-    if (currentUser && currentUser.availableHostLeft)
-      navigation.navigate('AddPlaceScreen');
-    else Alert.alert(I18n.t('alreadyHostTitle'), I18n.t('alreadyHostMessage'));
+    if (currentUser) {
+      if (currentUser.availableHostLeft) navigation.navigate('AddPlaceScreen');
+      else
+        Alert.alert(I18n.t('alreadyHostTitle'), I18n.t('alreadyHostMessage'));
+    } else Alert.alert(I18n.t('loginFirst'));
   };
 
   render() {

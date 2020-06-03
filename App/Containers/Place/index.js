@@ -10,6 +10,9 @@ import {
   FlatList,
   TouchableHighlight,
   PermissionsAndroid,
+  TouchableOpacity,
+  RefreshControl,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,11 +23,12 @@ import Geolocation from 'react-native-geolocation-service';
 
 import FavoriteActions from '../../Redux/FavoriteRedux';
 import PlaceActions from '../../Redux/PlaceRedux';
+import PostActions from '../../Redux/PostRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale, DisplayMoney} from '../../Transforms';
-import {ConvertDistance} from '../../Lib';
+import {ConvertDistance, UploadImage} from '../../Lib';
 import FirebasePlace from '../../Lib/FirebasePlace';
 
 import CustomImage from '../../Components/CustomImage';
@@ -33,9 +37,12 @@ import {DropDownHolder} from '../../Components/DropDownHolder';
 import Loader from '../../Components/Loader';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 
-import {posts} from '../Dummy';
+import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
+
+// import {posts} from '../Dummy';
 
 let firebasePlace;
+const MAX_LENGTH = 280;
 
 export class PlaceScreen extends Component {
   constructor(props) {
@@ -46,6 +53,8 @@ export class PlaceScreen extends Component {
       item: props.navigation.getParam('item', null),
       isLiked: false,
       onlineUsers: [],
+      textToPost: '',
+      imageToPost: null,
     };
   }
 
@@ -65,8 +74,8 @@ export class PlaceScreen extends Component {
   }
 
   loadData() {
-    const {currentUser} = this.props;
-    const {item, onlineUsers} = this.state;
+    const {currentUser, getPostsRequest, rootPosts} = this.props;
+    const {item, onlineUsers, refreshing} = this.state;
     const tempUsers = [...onlineUsers];
 
     console.tron.log({item});
@@ -77,14 +86,21 @@ export class PlaceScreen extends Component {
      * how to remove user that left the place
      */
     if (item && item.id) {
-      firebasePlace = new FirebasePlace(item.id, currentUser);
-      firebasePlace.onOnlineUsers(newUser => {
-        console.tron.log({newUser});
-        const userIndex = tempUsers.findIndex(user => user.uid === newUser.uid);
-        if (userIndex > -1) tempUsers.splice(userIndex, 1, newUser);
-        else tempUsers.push(newUser);
-        this.setState({onlineUsers: tempUsers});
-      });
+      if (!refreshing) {
+        firebasePlace = new FirebasePlace(item.id, currentUser);
+        firebasePlace.onOnlineUsers(newUser => {
+          console.tron.log({newUser});
+          const userIndex = tempUsers.findIndex(
+            user => user.uid === newUser.uid,
+          );
+          if (userIndex > -1) tempUsers.splice(userIndex, 1, newUser);
+          else tempUsers.push(newUser);
+          this.setState({onlineUsers: tempUsers});
+        });
+      }
+
+      if (refreshing || !rootPosts[item.id] || rootPosts[item.id].length < 1)
+        getPostsRequest({placeId: item.id});
     }
   }
 
@@ -131,6 +147,59 @@ export class PlaceScreen extends Component {
     if (item && item.id) this.props.setRecommendedRequest(item);
   };
 
+  addImage = async () => {
+    const {item} = this.state;
+
+    try {
+      const image = await UploadImage(
+        `posts/${(item && item.id) || 'random'}`,
+        480,
+        480,
+      );
+      console.tron.log({image});
+      this.setState({imageToPost: image});
+    } catch (error) {
+      console.tron.log({error});
+      DropDownHolder.alert(
+        'error',
+        I18n.t('errorDefault'),
+        error.message || I18n.t('tryAgain'),
+      );
+    }
+  };
+
+  onSubmitPress = () => {
+    const {item, textToPost, imageToPost} = this.state;
+    const {addPostRequest} = this.props;
+
+    this.setState({isLoading: true});
+
+    const data = {
+      placeId: item.id,
+      text: textToPost,
+      image: (imageToPost && imageToPost.uri) || null,
+    };
+
+    console.tron.log({data});
+
+    addPostRequest(data, this.addPostCallback);
+  };
+
+  addPostCallback = result => {
+    this.setState({isLoading: false, textToPost: '', imageToPost: null});
+    console.tron.log({result});
+  };
+
+  onRefresh = () => {
+    this.setState({refreshing: true}, () => this.loadData());
+  };
+
+  onPostPress = () => {
+    const {navigation, currentUser} = this.props;
+
+    if (!currentUser) Alert.alert(I18n.t('loginFirst'));
+  };
+
   render() {
     const {
       navigation,
@@ -138,15 +207,37 @@ export class PlaceScreen extends Component {
       userLocation,
       setPopular,
       setRecommended,
+      rootPosts,
+      getPosts,
+      addPost,
+      likePost,
+      dislikePost,
     } = this.props;
-    const {item, isLiked, isLoading, onlineUsers} = this.state;
+    const {
+      item,
+      isLiked,
+      isLoading,
+      onlineUsers,
+      textToPost,
+      imageToPost,
+    } = this.state;
 
     const owner = item.updatedBy || item.createdBy;
+    const posts = rootPosts[item.id];
 
     return (
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+        }>
         <ModalLoader
-          visible={isLoading || setPopular.fetching || setRecommended.fetching}
+          visible={
+            isLoading ||
+            setPopular.fetching ||
+            setRecommended.fetching ||
+            addPost.fetching ||
+            getPosts.fetching
+          }
         />
         <View style={AppStyles.shadow}>
           <View>
@@ -209,6 +300,7 @@ export class PlaceScreen extends Component {
               showsPagination={true}>
               {item.images.map(image => (
                 <CustomImage
+                  key={image}
                   source={{uri: image}}
                   style={{
                     ...AppStyles.border5,
@@ -250,7 +342,7 @@ export class PlaceScreen extends Component {
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {'only few seats left' || '-'}
+                {'-'}
               </Text>
             </View>
             <View style={AppStyles.flex1}>
@@ -270,7 +362,7 @@ export class PlaceScreen extends Component {
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {'4 min'}
+                {'-'}
               </Text>
             </View>
             <View style={AppStyles.flex1}>
@@ -303,38 +395,150 @@ export class PlaceScreen extends Component {
           </View>
         </View>
 
-        <TouchableHighlight
-          disabled={!currentUser}
-          underlayColor={Colors.highlightUnderlay}
-          onPress={() =>
-            navigation.navigate('OnlineUsersScreen', {item, onlineUsers})
-          }
-          style={styles.btnSave}>
-          <Text style={[Fonts.style.xl]}>
-            {`${I18n.t('online')}: ${onlineUsers.length}`}
-          </Text>
-        </TouchableHighlight>
+        <View style={styles.containerOnline}>
+          <View style={styles.sectionOnline}>
+            <Text style={[Fonts.style.xl]}>
+              {`${I18n.t('peopleAreOnline')}: ${onlineUsers.length}`}
+            </Text>
+            <TouchableHighlight
+              disabled={!currentUser}
+              underlayColor={Colors.highlightUnderlay}
+              onPress={() =>
+                navigation.navigate('OnlineUsersScreen', {item, onlineUsers})
+              }
+              style={[
+                AppStyles.section,
+                AppStyles.sectionVerticalSmall,
+                AppStyles.shadow,
+                AppStyles.borderImage,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.xl]}>{I18n.t('join')}</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
 
         {currentUser && currentUser.superUser && (
-          <View>
-            <TouchableHighlight
-              underlayColor={Colors.highlightUnderlay}
-              onPress={this.onSetPopular}
-              style={styles.btnSave}>
-              <Text style={[Fonts.style.xl]}>{I18n.t('setPopular')}</Text>
-            </TouchableHighlight>
+          <View style={styles.containerOnline}>
+            <View style={{...styles.sectionOnline, flexDirection: 'column'}}>
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSetPopular}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.large]}>{I18n.t('setPopular')}</Text>
+              </TouchableHighlight>
 
-            <TouchableHighlight
-              underlayColor={Colors.highlightUnderlay}
-              onPress={this.onSetRecommended}
-              style={styles.btnSave}>
-              <Text style={[Fonts.style.xl]}>{I18n.t('setRecommended')}</Text>
-            </TouchableHighlight>
+              <View style={{height: Metrics.baseMargin}} />
+
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSetRecommended}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.large]}>
+                  {I18n.t('setRecommended')}
+                </Text>
+              </TouchableHighlight>
+
+              <View style={{height: Metrics.baseMargin}} />
+
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                // onPress={this.onSetRecommended}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.large]}>{I18n.t('verify')}</Text>
+              </TouchableHighlight>
+            </View>
           </View>
         )}
 
+        {/* {currentUser && ( */}
+        <View
+          style={[
+            AppStyles.container,
+            AppStyles.section,
+            AppStyles.sectionVerticalBase,
+            AppStyles.shadow,
+          ]}>
+          <View style={[AppStyles.row]}>
+            {currentUser && currentUser.photoURL ? (
+              <CustomImage
+                source={{uri: currentUser.photoURL}}
+                style={[
+                  AppStyles.avatarMedium,
+                  AppStyles.borderCircle,
+                  AppStyles.border3,
+                ]}
+                imageStyle={AppStyles.borderCircle}
+              />
+            ) : (
+              <IconUserDefault
+                width={Metrics.avatars.medium}
+                height={Metrics.avatars.medium}
+              />
+            )}
+            <View style={[AppStyles.flex1, AppStyles.baseMarginLeft]}>
+              <TextInput
+                // onFocus={!currentUser ? this.onPostPress : () => {}}
+                editable={currentUser != null}
+                value={textToPost}
+                placeholder={
+                  currentUser != null
+                    ? I18n.t('tellUsPlaceholder')
+                    : I18n.t('loginFirstPlaceholder')
+                }
+                multiline={true}
+                maxLength={MAX_LENGTH}
+                onChangeText={text => this.setState({textToPost: text})}
+                style={[Fonts.style.large, AppStyles.flex1]}
+              />
+              {imageToPost && (
+                <CustomImage
+                  source={{uri: imageToPost.path || imageToPost.uri}}
+                  style={{
+                    ...AppStyles.borderImage,
+                    ...AppStyles.border5,
+                    ...AppStyles.baseMarginBottom,
+                    height: Metrics.screenWidth - Scale(90),
+                    width: Metrics.screenWidth - Scale(90),
+                  }}
+                  imageStyle={AppStyles.borderImage}
+                />
+              )}
+              <View
+                style={[
+                  AppStyles.row,
+                  AppStyles.alignCenter,
+                  AppStyles.justifyBetween,
+                ]}>
+                <TouchableOpacity
+                  disabled={imageToPost || !currentUser}
+                  onPress={this.addImage}>
+                  <AntDesign
+                    name="picture"
+                    size={Metrics.icons.medium}
+                    color={Colors.baseText}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.onSubmitPress}
+                  disabled={textToPost.length < 1}
+                  style={[
+                    AppStyles.section,
+                    AppStyles.sectionVerticalBase,
+                    AppStyles.borderCircle,
+                    AppStyles.darkShadow,
+                  ]}>
+                  <Text style={[Fonts.style.medium]}>{I18n.t('berage')}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+        {/* )} */}
+
         <FlatList
-          data={posts}
+          style={[AppStyles.container]}
+          data={posts || []}
           keyExtractor={(item, idx) => `post-${idx}`}
           renderItem={({item, idx}) => (
             <Post
@@ -355,14 +559,29 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   btnSave: {
-    ...AppStyles.container,
-    ...AppStyles.containerBottom,
-    ...AppStyles.sectionMargin,
+    ...AppStyles.flex1,
+    // ...AppStyles.section,
     ...AppStyles.sectionVerticalBase,
     ...AppStyles.alignCenter,
     ...AppStyles.border7,
     ...AppStyles.borderImage,
-    ...AppStyles.darkShadow,
+    ...AppStyles.shadow,
+    width: '100%',
+  },
+  containerOnline: {
+    ...AppStyles.container,
+    ...AppStyles.section,
+    ...AppStyles.sectionVerticalBase,
+    ...AppStyles.shadow,
+  },
+  sectionOnline: {
+    ...AppStyles.row,
+    ...AppStyles.justifyBetween,
+    ...AppStyles.section,
+    ...AppStyles.sectionVerticalBase,
+    ...AppStyles.borderImage,
+    ...AppStyles.alignCenter,
+    backgroundColor: Colors.tempHomeLoader,
   },
 });
 
@@ -372,6 +591,11 @@ const mapStateToProps = state => ({
   favoriteIds: state.session.favoriteIds,
   setPopular: state.place.setPopular,
   setRecommended: state.place.setRecommended,
+  rootPosts: state.post.rootPosts,
+  getPosts: state.post.getPosts,
+  addPost: state.post.addPost,
+  likePost: state.post.likePost,
+  dislikePost: state.post.dislikePost,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -383,6 +607,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(PlaceActions.setPopularRequest(data, callback)),
   setRecommendedRequest: (data, callback) =>
     dispatch(PlaceActions.setRecommendedRequest(data, callback)),
+  getPostsRequest: (data, callback) =>
+    dispatch(PostActions.getPostsRequest(data, callback)),
+  addPostRequest: (data, callback) =>
+    dispatch(PostActions.addPostRequest(data, callback)),
+  likePostRequest: (data, callback) =>
+    dispatch(PostActions.likePostRequest(data, callback)),
+  dislikePostRequest: (data, callback) =>
+    dispatch(PostActions.dislikePostRequest(data, callback)),
 });
 
 export default connect(

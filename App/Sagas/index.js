@@ -14,6 +14,7 @@ import {FavoriteTypes} from '../Redux/FavoriteRedux';
 import {ChatTypes} from '../Redux/ChatRedux';
 import {InboxTypes} from '../Redux/InboxRedux';
 import {BannerTypes} from '../Redux/BannerRedux';
+import {PostTypes} from '../Redux/PostRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -33,6 +34,7 @@ import {
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
 import {getInboxes, sendNotif} from './InboxSagas';
 import {getBanners, addBanner, deleteBanner} from './BannerSagas';
+import {getPosts, addPost, likePost, dislikePost} from './PostSagas';
 
 /* ------------- API ------------- */
 
@@ -76,5 +78,10 @@ export default function* root() {
     takeLatest(BannerTypes.GET_BANNERS_REQUEST, getBanners, api),
     takeLatest(BannerTypes.ADD_BANNER_REQUEST, addBanner, api),
     takeLatest(BannerTypes.DELETE_BANNER_REQUEST, deleteBanner, api),
+
+    takeLatest(PostTypes.GET_POSTS_REQUEST, getPosts, api),
+    takeLatest(PostTypes.ADD_POST_REQUEST, addPost, api),
+    takeLatest(PostTypes.LIKE_POST_REQUEST, likePost, api),
+    takeLatest(PostTypes.DISLIKE_POST_REQUEST, dislikePost, api),
   ]);
 }

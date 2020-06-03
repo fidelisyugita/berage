@@ -1,0 +1,94 @@
+{
+  "explore": "Explore",
+  "saved": "Saved",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "profile": "Profile",
+
+  "searchPlaceholder": "Find food, places, or services..",
+  "popular": "Popular",
+  "recommended": "Recommended",
+  "seeAll": "See All",
+
+  "viewProfile": "View profile",
+  "viewEditProfile": "View and edit profile",
+  "personalName": "Personal Name",
+
+  "admin": "Admin",
+  "setBanner": "Set Banner",
+  "setPopular": "Set Popular",
+  "setRecommended": "Set Recommended",
+  "sendNotif": "Send Notification",
+
+  "hosting": "Hosting",
+  "yourPlaces": "Your places",
+  "listYourSpace": "List your space",
+
+  "support": "Support",
+  "help": "Help",
+  "feedback": "Feedback",
+
+  "legal": "Legal",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+
+  "login": "Login",
+  "logout": "Logout",
+
+  "yesterday": "Yesterday",
+
+  "share": "Share",
+  "comment": "Comment",
+
+  "submit": "Submit",
+  "add": "Add",
+  "save": "Save",
+
+  "savedDetail": "Collect your favorite places by tapping the heart icon.",
+  "chatDetail": "Your chats will appear here.",
+  "inboxDetail": "Your inboxes will appear here.",
+  "profileDetail": "Login to enjoy more features.",
+  "hostDetail": "Your places will appear here.",
+  "onlineDetail": "People will appear here.",
+
+  "placeName": "Place name",
+  "placeCategories": "Place categories",
+  "placeStatus": "Place status",
+  "placeDescription": "Place description",
+  "setPlaceCoordinate": "Set your place coordinate",
+
+  "name": "Name",
+  "categories": "Categories",
+  "status": "Status",
+  "description": "Description",
+
+  "max": "Max",
+  "price": "Price",
+
+  "priceDetail": "Price in Rp (from - to)",
+
+  "pinYourLocation": "Pin your location",
+
+  "title": "Title",
+  "url": "Url",
+
+  "successDefault": "Success",
+  "errorDefault": "Error while processing request",
+  "tryAgain": "Plase try again later",
+
+  "fieldsRequired": "All fields are required",
+
+  "permissionDenied": "Permission denied",
+  "needLocationAccess": "Berage needs access to your location to provide more info",
+
+  "seePeople": "Meet people here",
+  "joinAt": "Join at",
+  "peopleAreOnline": "People are online",
+  "online": "Online",
+  
+  "alreadyHostTitle": "You've host before",
+  "alreadyHostMessage": "Wait for approval to host a new one",
+  
+  "searchNotFound": "Search not found",
+
+}

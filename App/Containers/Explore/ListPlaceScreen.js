@@ -33,77 +33,67 @@ import ModalLoader from '../../Components/Modal/ModalLoader';
 import Place from '../../Components/Place/Place';
 import {DropDownHolder} from '../../Components/DropDownHolder';
 import EmptyState from '../../Components/EmptyState';
+import CustomHeader from '../../Components/CustomHeader';
 
 import {images, items} from '../Dummy';
 
-export class SearchPlaceScreen extends Component {
+const DATA_PER_PAGE = 10;
+
+export class ListPlaceScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       refreshing: false,
-      searchText: '',
-      firstOpen: true,
+      isPopular: props.navigation.getParam('isPopular', false),
+      offset: 0,
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.loadData();
+  }
 
-  onSearch = () => {
-    const {getPlacesRequest} = this.props;
-    const {searchText} = this.state;
+  loadData() {
+    const {getPopularPlacesRequest, getRecommendedPlacesRequest} = this.props;
+    const {isPopular, offset} = this.state;
 
-    this.setState({firstOpen: false});
+    if (isPopular) getPopularPlacesRequest({limit: DATA_PER_PAGE, offset});
+    else getRecommendedPlacesRequest({limit: DATA_PER_PAGE, offset});
+  }
 
-    getPlacesRequest({searchText});
+  loadMore = () => {
+    const {places} = this.props;
+    const {offset} = this.state;
+
+    if (places.length >= DATA_PER_PAGE * (offset + 1))
+      this.setState({offset: offset + 1}, () => this.loadData());
   };
 
   render() {
-    const {navigation, userLocation, getPlaces, places} = this.props;
-    const {refreshing, searchText, firstOpen} = this.state;
+    const {
+      navigation,
+      userLocation,
+      getPopularPlaces,
+      getRecommendedPlaces,
+      places,
+    } = this.props;
+    const {refreshing} = this.state;
 
     return (
       <ScrollView>
         <ModalLoader
-          visible={getPlaces.fetching}
+          visible={getPopularPlaces.fetching || getRecommendedPlaces.fetching}
           imageSource={Images.homeLoader}
         />
-
-        <View style={[AppStyles.container, AppStyles.section]}>
-          <View
-            style={{
-              backgroundColor: Colors.white,
-              borderRadius: Metrics.circleRadius,
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingHorizontal: Metrics.marginHorizontal,
-              ...AppStyles.shadow,
-            }}>
-            <TouchableOpacity onPress={() => navigation.pop()}>
-              <Icon
-                name="arrow-left"
-                size={Metrics.icons.tiny}
-                color={Colors.placeholder}
-              />
-            </TouchableOpacity>
-            <TextInput
-              style={[
-                Fonts.style.medium,
-                AppStyles.smallMarginLeft,
-                AppStyles.flex1,
-              ]}
-              value={searchText}
-              onChangeText={text => this.setState({searchText: text})}
-              onEndEditing={this.onSearch}
-              placeholder={I18n.t('searchPlaceholder')}
-            />
-          </View>
-        </View>
+        <CustomHeader onBack={() => navigation.pop()} />
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <FlatList
             data={places || []}
             keyExtractor={(item, idx) => item + idx}
+            // onEndReached={this.loadMore}
+            // onEndReachedThreshold={0.4}
             renderItem={({item}) => (
               <Place
                 item={item}
@@ -114,7 +104,7 @@ export class SearchPlaceScreen extends Component {
             ListEmptyComponent={() => (
               <EmptyState
                 imageSource={Images.homeLoader}
-                message={firstOpen ? null : I18n.t('searchNotFound')}
+                message={I18n.t('searchNotFound')}
                 containerStyle={{
                   backgroundColor: Colors.tempHomeLoader,
                   height: Metrics.screenHeight,
@@ -137,16 +127,19 @@ const styles = StyleSheet.create({});
 const mapStateToProps = state => ({
   currentUser: state.session.user,
   userLocation: state.session.userLocation,
-  getPlaces: state.place.getPlaces,
+  getPopularPlaces: state.place.getPopularPlaces,
+  getRecommendedPlaces: state.place.getRecommendedPlaces,
   places: state.place.places,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPlacesRequest: (data, callback) =>
-    dispatch(PlaceActions.getPlacesRequest(data, callback)),
+  getPopularPlacesRequest: (data, callback) =>
+    dispatch(PlaceActions.getPopularPlacesRequest(data, callback)),
+  getRecommendedPlacesRequest: (data, callback) =>
+    dispatch(PlaceActions.getRecommendedPlacesRequest(data, callback)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SearchPlaceScreen);
+)(ListPlaceScreen);

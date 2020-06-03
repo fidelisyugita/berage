@@ -16,6 +16,7 @@ import TermsOfServiceScreen from '../Containers/Profile/TermsOfServiceScreen';
 import ChatScreen from '../Containers/Chat/ChatScreen';
 
 import SearchPlaceScreen from '../Containers/Explore/SearchPlaceScreen';
+import ListPlaceScreen from '../Containers/Explore/ListPlaceScreen';
 
 import styles from './Styles/NavigationStyles';
 
@@ -38,6 +39,7 @@ const MainNav = createStackNavigator(
     ChatScreen: {screen: ChatScreen},
 
     SearchPlaceScreen: {screen: SearchPlaceScreen},
+    ListPlaceScreen: {screen: ListPlaceScreen},
   },
   {
     // Default config for all screens

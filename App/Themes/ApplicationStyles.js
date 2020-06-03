@@ -20,6 +20,9 @@ const ApplicationStyles = {
   containerBottom: {
     marginBottom: Metrics.marginVertical,
   },
+  containerBottomSmall: {
+    marginBottom: Metrics.smallMargin,
+  },
   section: {
     paddingHorizontal: Metrics.marginHorizontal,
   },
@@ -89,6 +92,9 @@ const ApplicationStyles = {
   },
   baseMarginBottom: {
     marginBottom: Metrics.baseMargin,
+  },
+  tinyMarginBottom: {
+    marginBottom: Metrics.tinyMargin,
   },
   baseMarginRight: {
     marginRight: Metrics.baseMargin,

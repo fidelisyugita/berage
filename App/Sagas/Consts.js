@@ -21,3 +21,8 @@ export const SEND_NOTIF = 'inbox-add';
 export const GET_BANNERS = 'banner-get';
 export const ADD_BANNER = 'banner-add';
 export const DELETE_BANNER = 'banner-delete';
+
+export const GET_POSTS = 'post-get';
+export const ADD_POST = 'post-add';
+export const LIKE_POST = 'post-like';
+export const DISLIKE_POST = 'post-dislike';

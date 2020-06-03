@@ -5,14 +5,14 @@
   "inbox": "Inbox",
   "profile": "Profile",
 
-  "searchPlaceholder": "Find food, places, or services..",
+  "searchPlaceholder": "Tongkrongan kite..",
   "popular": "Popular",
   "recommended": "Recommended",
-  "seeAll": "See All",
+  "seeAll": "Liate nok lain",
 
-  "viewProfile": "View profile",
-  "viewEditProfile": "View and edit profile",
-  "personalName": "Personal Name",
+  "viewProfile": "Profil diri",
+  "viewEditProfile": "Profil diri",
+  "personalName": "Name ikak",
 
   "admin": "Admin",
   "setBanner": "Set Banner",
@@ -21,8 +21,8 @@
   "sendNotif": "Send Notification",
 
   "hosting": "Hosting",
-  "yourPlaces": "Your places",
-  "listYourSpace": "List your space",
+  "yourPlaces": "Tempat ikak",
+  "listYourSpace": "Tambah tempat",
 
   "support": "Support",
   "help": "Help",
@@ -35,60 +35,72 @@
   "login": "Login",
   "logout": "Logout",
 
-  "yesterday": "Yesterday",
+  "yesterday": "Kemari",
 
-  "share": "Share",
-  "comment": "Comment",
+  "share": "Bagie",
+  "comment": "Komen",
 
   "submit": "Submit",
-  "add": "Add",
-  "save": "Save",
+  "add": "Tambah",
+  "save": "Simpan",
 
-  "savedDetail": "Collect your favorite places by tapping the heart icon.",
-  "chatDetail": "Your chats will appear here.",
-  "inboxDetail": "Your inboxes will appear here.",
-  "profileDetail": "Login to enjoy more features.",
-  "hostDetail": "Your places will appear here.",
-  "onlineDetail": "People will appear here.",
+  "savedDetail": "Klik icon Love idang nyimpan disine.",
+  "chatDetail": "Ngelakar cube kan biak-biak.",
+  "inboxDetail": "Disine idang pesan/pemberitahuan.",
+  "profileDetail": "Login dulu biar dapat akses lebe.",
+  "hostDetail": "Disine tempat-tempat nok ikak host.",
+  "onlineDetail": "Biak-biak nok online ade disine mun join.",
 
-  "placeName": "Place name",
-  "placeCategories": "Place categories",
-  "placeStatus": "Place status",
-  "placeDescription": "Place description",
+  "placeName": "Name tempat",
+  "placeCategories": "Kategori",
+  "placeStatus": "Status",
+  "placeDescription": "Intro sikit",
   "setPlaceCoordinate": "Set your place coordinate",
 
-  "name": "Name",
-  "categories": "Categories",
+  "name": "Name tempat",
+  "categories": "Kategori",
   "status": "Status",
-  "description": "Description",
+  "description": "Intro sikit",
 
   "max": "Max",
-  "price": "Price",
+  "price": "Harge",
 
-  "priceDetail": "Price in Rp (from - to)",
+  "priceDetail": "Harge dalam Rp (from - to)",
 
-  "pinYourLocation": "Pin your location",
+  "pinYourLocation": "Tande'ek tempat ikak",
 
-  "title": "Title",
+  "title": "Judul",
   "url": "Url",
 
-  "successDefault": "Success",
-  "errorDefault": "Error while processing request",
-  "tryAgain": "Plase try again later",
+  "successDefault": "Berhasil",
+  "errorDefault": "Gagal mroses e",
+  "tryAgain": "Cube tes agi kini",
 
-  "fieldsRequired": "All fields are required",
+  "fieldsRequired": "Isi semue data e",
 
-  "permissionDenied": "Permission denied",
-  "needLocationAccess": "Berage needs access to your location to provide more info",
+  "permissionDenied": "Izin e gagal",
+  "needLocationAccess": "Berage ne perlu gps ikak biar akses ikak nyaman",
 
-  "seePeople": "Meet people here",
+  "seePeople": "Liat biak-biak",
   "joinAt": "Join at",
-  "peopleAreOnline": "People are online",
+  "peopleAreOnline": "Biak-biak online",
   "online": "Online",
+  "meetOthers": "Ngelakar yuk",
+  "meetPeopleHere": "Liat nok online",
+  "join": "Join",
   
-  "alreadyHostTitle": "You've host before",
-  "alreadyHostMessage": "Wait for approval to host a new one",
+  "alreadyHostTitle": "Lah isa ngehost",
+  "alreadyHostMessage": "Tunggu di approve ye biar dapat host agi",
   
-  "searchNotFound": "Search not found",
+  "searchNotFound": "Dak ketemu nok ikak cari",
+
+  "loginFirst": "Login dulu",
+
+  
+  "verify": "Verify",
+  
+  "tellUsPlaceholder": "Cube cerite, kite ngelakar?",
+  "loginFirstPlaceholder": "Login dulu, jadi nyaman cerite disine",
+  "berage": "Berage",
 
 }

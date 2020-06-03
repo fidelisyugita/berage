@@ -12,18 +12,19 @@ import CustomImage from '../../Components/CustomImage';
 
 const Place = props => {
   const {children, item, onPress} = props;
+  const {updatedBy} = item;
 
   return (
     <View
       style={[
-        AppStyles.smallMarginVertical,
+        AppStyles.tinyMarginBottom,
         AppStyles.section,
-        AppStyles.sectionVerticalSmall,
+        AppStyles.sectionVerticalBase,
         AppStyles.shadow,
       ]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
         <CustomImage
-          source={{uri: item.image}}
+          source={{uri: updatedBy.photoURL}}
           style={[
             AppStyles.avatarMedium,
             AppStyles.borderCircle,
@@ -32,7 +33,11 @@ const Place = props => {
           imageStyle={AppStyles.borderCircle}
         />
         <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
-          <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
+          <Text
+            numberOfLines={1}
+            style={[Fonts.style.medium3, AppStyles.flex1]}>
+            {updatedBy.displayName || '-'}
+          </Text>
           <Text style={Fonts.style.tiny}>
             {DateFormatter(item.updatedAt, 'MMMM D [at] h:mm A')}
           </Text>
@@ -45,6 +50,19 @@ const Place = props => {
           style={[Fonts.style.medium, Fonts.style.alignJustify]}>
           {item.text || '-'}
         </Text>
+        {item.image && (
+          <CustomImage
+            source={{uri: item.image}}
+            style={{
+              ...AppStyles.borderImage,
+              ...AppStyles.border5,
+              ...AppStyles.baseMarginVertical,
+              height: Metrics.screenWidth - Scale(30),
+              width: Metrics.screenWidth - Scale(30),
+            }}
+            imageStyle={AppStyles.borderImage}
+          />
+        )}
       </View>
 
       <View style={[AppStyles.sectionVerticalSmall, AppStyles.row]}>
@@ -55,7 +73,7 @@ const Place = props => {
               size={Metrics.icons.tiny}
               color={Colors.baseText}
             />
-            <Text style={[Fonts.style.small]}>{item.totalLike}</Text>
+            <Text style={[Fonts.style.small]}>{item.totalLike || 0}</Text>
           </View>
           <View style={[AppStyles.alignCenter, AppStyles.baseMarginLeft]}>
             <Icon
@@ -63,7 +81,7 @@ const Place = props => {
               size={Metrics.icons.tiny}
               color={Colors.baseText}
             />
-            <Text style={[Fonts.style.small]}>{item.totalDislike}</Text>
+            <Text style={[Fonts.style.small]}>{item.totalDislike || 0}</Text>
           </View>
           <View style={[AppStyles.alignCenter, AppStyles.baseMarginLeft]}>
             <Icon

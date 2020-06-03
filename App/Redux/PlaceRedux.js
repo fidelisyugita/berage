@@ -53,6 +53,7 @@ export const DEFAULT_STATE = {
 };
 
 export const INITIAL_STATE = Immutable({
+  places: [],
   myPlaces: [],
   getPlaces: DEFAULT_STATE,
   getPopularPlaces: DEFAULT_STATE,
@@ -77,10 +78,13 @@ export const getPlacesRequest = (state, {data}) => {
 };
 export const getPlacesSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {data} = state.getPlaces;
+  const offset = (data && data.offset) || 0;
 
   return state.merge({
     ...state,
     getPlaces: {fetching: false, error: null, payload, data: null},
+    places: offset > 0 ? [...state.places, ...payload] : [...payload],
   });
 };
 export const getPlacesFailure = (state, {error}) => {
@@ -104,10 +108,13 @@ export const getPopularPlacesRequest = (state, {data}) => {
 };
 export const getPopularPlacesSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {data} = state.getPopularPlaces;
+  const offset = (data && data.offset) || 0;
 
   return state.merge({
     ...state,
     getPopularPlaces: {fetching: false, error: null, payload, data: null},
+    places: offset > 0 ? [...state.places, ...payload] : [...payload],
   });
 };
 export const getPopularPlacesFailure = (state, {error}) => {
@@ -131,10 +138,13 @@ export const getRecommendedPlacesRequest = (state, {data}) => {
 };
 export const getRecommendedPlacesSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {data} = state.getRecommendedPlaces;
+  const offset = (data && data.offset) || 0;
 
   return state.merge({
     ...state,
     getRecommendedPlaces: {fetching: false, error: null, payload, data: null},
+    places: offset > 0 ? [...state.places, ...payload] : [...payload],
   });
 };
 export const getRecommendedPlacesFailure = (state, {error}) => {
@@ -229,7 +239,6 @@ export const setPopularSuccess = (state, {payload}) => {
   return state.merge({
     ...state,
     setPopular: {fetching: false, error: null, payload, data: null},
-    myPlaces: payload,
   });
 };
 export const setPopularFailure = (state, {error}) => {
@@ -257,7 +266,6 @@ export const setRecommendedSuccess = (state, {payload}) => {
   return state.merge({
     ...state,
     setRecommended: {fetching: false, error: null, payload, data: null},
-    myPlaces: payload,
   });
 };
 export const setRecommendedFailure = (state, {error}) => {

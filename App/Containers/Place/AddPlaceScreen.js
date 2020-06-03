@@ -49,6 +49,7 @@ const CATEGORIES_DATA = [
 const STATUS_DATA = ['Open', 'Closed'];
 
 const MAX_CATEGORY = 5;
+const MAX_IMAGES = 5;
 
 export class AddPlaceScreen extends Component {
   constructor(props) {
@@ -182,36 +183,37 @@ export class AddPlaceScreen extends Component {
             imageStyle={AppStyles.borderImage}
           />
         ))}
-        <TouchableHighlight
-          underlayColor={Colors.highlightUnderlay}
-          onPress={this.addImage}
-          style={[
-            AppStyles.containerBottom,
-            AppStyles.sectionVerticalBase,
-            AppStyles.alignCenter,
-            AppStyles.borderImage,
-            AppStyles.border7,
-            AppStyles.darkShadowSmall,
-          ]}>
-          <View>
-            {/* <IconUserDefault
-              width={Metrics.images.xl}
-              height={Metrics.images.xl - Metrics.doubleBaseMargin}
-            /> */}
-            <CustomImage source={Images.homeLoader} style={AppStyles.imageXl} />
-            <AntDesign
-              name="pluscircle"
-              size={Metrics.icons.xl}
-              color={Colors.border}
-              style={{
-                ...AppStyles.btnIcon,
-                position: 'absolute',
-                left: Scale(140),
-                top: Scale(140),
-              }}
-            />
-          </View>
-        </TouchableHighlight>
+        {imagePlaces.length < MAX_IMAGES && (
+          <TouchableHighlight
+            underlayColor={Colors.highlightUnderlay}
+            onPress={this.addImage}
+            style={[
+              AppStyles.containerBottom,
+              AppStyles.sectionVerticalBase,
+              AppStyles.alignCenter,
+              AppStyles.borderImage,
+              AppStyles.border7,
+              AppStyles.darkShadowSmall,
+            ]}>
+            <View>
+              <CustomImage
+                source={Images.homeLoader}
+                style={AppStyles.imageXl}
+              />
+              <AntDesign
+                name="pluscircle"
+                size={Metrics.icons.xl}
+                color={Colors.border}
+                style={{
+                  ...AppStyles.btnIcon,
+                  position: 'absolute',
+                  left: Scale(140),
+                  top: Scale(140),
+                }}
+              />
+            </View>
+          </TouchableHighlight>
+        )}
       </View>
     );
   }
