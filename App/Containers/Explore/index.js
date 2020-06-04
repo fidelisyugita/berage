@@ -73,9 +73,9 @@ export class ExploreScreen extends Component {
       );
     }
 
-    if (refreshing || banners.length < 1) {
-      getBannersRequest(null, this.getBannersCallback);
-    }
+    // if (refreshing || banners.length < 1) {
+    getBannersRequest(null, this.getBannersCallback);
+    // }
 
     this.setState({refreshing: false});
   }
@@ -162,7 +162,7 @@ export class ExploreScreen extends Component {
           visible={
             getPopularPlaces.fetching ||
             getRecommendedPlaces.fetching ||
-            getBanners.fetching
+            (getBanners.fetching && banners.length < 1)
           }
           imageSource={Images.homeLoader}
         />

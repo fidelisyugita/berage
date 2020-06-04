@@ -48,6 +48,7 @@ export function* loginWithGoogle(api, action) {
 
     const fcmToken = yield messaging().getToken();
     const response = yield httpsCallable(SAVE_USER, {fcmToken});
+    console.tron.log({response});
 
     let user = {
       phoneNumber: firebaseUserCredential.user.phoneNumber,
@@ -84,7 +85,7 @@ export function* logout(api, action) {
     yield put(FavoriteActions.removeFavorites());
     yield put(PlaceActions.removeMyPlaces());
     yield put(ChatActions.removeRooms());
-    yield put(InboxActions.removeInboxes());
+    // yield put(InboxActions.removeInboxes());
     // yield put(BannerActions.removeBanners());
   } catch (error) {
     yield put(AuthActions.logoutFailure(error));

@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 
 class FirebasePlace {
   constructor(placeId, currentUser) {
+    console.tron.log({placeId});
+    console.tron.log({currentUser});
     this.state = {
       placeId: placeId,
       currentUser: currentUser,
@@ -12,7 +14,6 @@ class FirebasePlace {
 
   get onlineUsersRef() {
     const {placeId} = this.state;
-    console.tron.log({placeId});
     return database().ref(`onlineUsers/${placeId}/`);
   }
 
@@ -45,6 +46,14 @@ class FirebasePlace {
       // .child(placeId)
       .child(currentUser.uid)
       .update({...currentUser, timestamp: this.timestamp});
+  };
+
+  leave = callback => {
+    const {currentUser, placeId} = this.state;
+    this.onlineUsersRef
+      // .child(placeId)
+      .child(currentUser.uid)
+      .remove(callback);
   };
 
   offOnlineUsers() {

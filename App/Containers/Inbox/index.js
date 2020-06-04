@@ -47,18 +47,18 @@ export class InboxScreen extends Component {
     const {currentUser, getInboxesRequest, inboxes} = this.props;
     const {refreshing} = this.state;
 
-    if (currentUser && (inboxes.length < 1 || refreshing)) {
-      this.setState({isLoading: true, refreshing: false});
+    // if (currentUser && (inboxes.length < 1 || refreshing)) {
+    this.setState({isLoading: true});
 
-      getInboxesRequest(null, this.getinboxesCallback);
-    }
+    getInboxesRequest(null, this.getinboxesCallback);
+    // }
   }
 
   getinboxesCallback = result => {
     if (result.ok) {
       console.tron.log({result});
     }
-    this.setState({isLoading: false});
+    this.setState({isLoading: false, refreshing: false});
   };
 
   onLoginPress = () => {
@@ -88,9 +88,9 @@ export class InboxScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader visible={isLoading || getInboxes.fetching} />
+        <ModalLoader visible={getInboxes.fetching && inboxes.length < 1} />
         <HeaderTitle title={I18n.t('inbox')} shadow />
         <FlatList
           data={inboxes}

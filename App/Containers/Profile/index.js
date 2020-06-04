@@ -25,6 +25,7 @@ import {Scale} from '../../Transforms';
 
 import CustomImage from '../../Components/CustomImage';
 import ModalLoader from '../../Components/Modal/ModalLoader';
+import {DropDownHolder} from '../../Components/DropDownHolder';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
@@ -73,10 +74,15 @@ export class ProfileScreen extends Component {
     const {navigation, currentUser} = this.props;
 
     if (currentUser) {
-      if (currentUser.availableHostLeft) navigation.navigate('AddPlaceScreen');
+      if (currentUser.availableHostLeft || currentUser.superUser)
+        navigation.navigate('AddPlaceScreen');
       else
-        Alert.alert(I18n.t('alreadyHostTitle'), I18n.t('alreadyHostMessage'));
-    } else Alert.alert(I18n.t('loginFirst'));
+        DropDownHolder.alert(
+          'warn',
+          I18n.t('alreadyHostTitle'),
+          I18n.t('alreadyHostMessage'),
+        );
+    } else DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
   };
 
   render() {

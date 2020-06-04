@@ -61,6 +61,10 @@ export class PlaceScreen extends Component {
   componentDidMount() {
     this.checkFavorite();
     this.loadData();
+    /**
+     * TODO
+     * add login
+     */
   }
 
   componentWillUnmount() {
@@ -100,9 +104,16 @@ export class PlaceScreen extends Component {
       }
 
       if (refreshing || !rootPosts[item.id] || rootPosts[item.id].length < 1)
-        getPostsRequest({placeId: item.id});
+        getPostsRequest({placeId: item.id}, this.getPostsCallback);
     }
   }
+
+  getPostsCallback = result => {
+    if (result.ok) {
+      console.tron.log({result});
+    }
+    this.setState({refreshing: false});
+  };
 
   checkFavorite() {
     const {favoriteIds} = this.props;
@@ -114,10 +125,12 @@ export class PlaceScreen extends Component {
   }
 
   addRemoveFavorite = () => {
-    const {addFavoriteRequest, removeFavoriteRequest} = this.props;
+    const {currentUser, addFavoriteRequest, removeFavoriteRequest} = this.props;
     const {item, isLiked} = this.state;
 
-    if (item && item.id) {
+    if (!currentUser)
+      DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
+    else if (item && item.id) {
       this.setState({isLoading: true});
 
       const data = {...item, placeId: item.id};
@@ -172,17 +185,21 @@ export class PlaceScreen extends Component {
     const {item, textToPost, imageToPost} = this.state;
     const {addPostRequest} = this.props;
 
-    this.setState({isLoading: true});
+    if (textToPost.length < 1) {
+      DropDownHolder.alert('warn', I18n.t('textIsEmpty'), undefined);
+    } else {
+      this.setState({isLoading: true});
 
-    const data = {
-      placeId: item.id,
-      text: textToPost,
-      image: (imageToPost && imageToPost.uri) || null,
-    };
+      const data = {
+        placeId: item.id,
+        text: textToPost,
+        image: (imageToPost && imageToPost.uri) || null,
+      };
 
-    console.tron.log({data});
+      console.tron.log({data});
 
-    addPostRequest(data, this.addPostCallback);
+      addPostRequest(data, this.addPostCallback);
+    }
   };
 
   addPostCallback = result => {
@@ -197,7 +214,8 @@ export class PlaceScreen extends Component {
   onPostPress = () => {
     const {navigation, currentUser} = this.props;
 
-    if (!currentUser) Alert.alert(I18n.t('loginFirst'));
+    if (!currentUser)
+      DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
   };
 
   render() {
@@ -214,6 +232,7 @@ export class PlaceScreen extends Component {
       dislikePost,
     } = this.props;
     const {
+      refreshing,
       item,
       isLiked,
       isLoading,
@@ -232,11 +251,7 @@ export class PlaceScreen extends Component {
         }>
         <ModalLoader
           visible={
-            isLoading ||
-            setPopular.fetching ||
-            setRecommended.fetching ||
-            addPost.fetching ||
-            getPosts.fetching
+            setPopular.fetching || setRecommended.fetching || addPost.fetching
           }
         />
         <View style={AppStyles.shadow}>
@@ -521,7 +536,7 @@ export class PlaceScreen extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={this.onSubmitPress}
-                  disabled={textToPost.length < 1}
+                  // disabled={textToPost.length < 1}
                   style={[
                     AppStyles.section,
                     AppStyles.sectionVerticalBase,
@@ -536,6 +551,7 @@ export class PlaceScreen extends Component {
         </View>
         {/* )} */}
 
+        {getPosts.fetching && <Loader style={[AppStyles.container]} />}
         <FlatList
           style={[AppStyles.container]}
           data={posts || []}
