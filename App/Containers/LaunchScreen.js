@@ -28,6 +28,8 @@ export class LaunchScreen extends Component {
   componentDidMount() {
     // this.getLocation();
     this.loadData();
+
+    setTimeout(() => this.props.navigation.navigate('Main'), 300);
   }
 
   loadData() {
@@ -66,7 +68,8 @@ export class LaunchScreen extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => this.props.navigation.navigate('Main')}>
+        // onPress={() => this.props.navigation.navigate('Main')}
+      >
         <Logo width={Scale(300)} height={Scale(50)} />
       </TouchableOpacity>
     );

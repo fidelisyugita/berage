@@ -218,6 +218,15 @@ export class PlaceScreen extends Component {
       DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
   };
 
+  onJoinPress = () => {
+    const {navigation, currentUser} = this.props;
+    const {item, onlineUsers} = this.state;
+
+    if (!currentUser)
+      DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
+    else navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
+  };
+
   render() {
     const {
       navigation,
@@ -418,9 +427,7 @@ export class PlaceScreen extends Component {
             <TouchableHighlight
               disabled={!currentUser}
               underlayColor={Colors.highlightUnderlay}
-              onPress={() =>
-                navigation.navigate('OnlineUsersScreen', {item, onlineUsers})
-              }
+              onPress={this.onJoinPress}
               style={[
                 AppStyles.section,
                 AppStyles.sectionVerticalSmall,
