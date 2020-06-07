@@ -17,8 +17,14 @@ class FirebasePlace {
     return database().ref(`onlineUsers/${placeId}/`);
   }
 
-  onOnlineUsers = callback => {
+  get placeRef() {
     const {placeId} = this.state;
+    return database().ref(`places/${placeId}/`);
+  }
+
+  onOnlineUsers = async callback => {
+    const {placeId, currentUser} = this.state;
+    // if (!currentUser) await auth().signInAnonymously();
 
     this.onlineUsersRef
       // .child(placeId)
@@ -28,6 +34,22 @@ class FirebasePlace {
           callback(childSnapshot.val());
         });
       });
+  };
+
+  onPlace = async callback => {
+    const {placeId, currentUser} = this.state;
+    // if (!currentUser) await auth().signInAnonymously();
+
+    this.placeRef
+      // .child(placeId)
+      .limitToLast(1)
+      .on('value', snapshot => callback(snapshot.val()));
+  };
+
+  change = slotLeft => {
+    this.placeRef.update({
+      slotLeft,
+    });
   };
 
   get timestamp() {
@@ -62,6 +84,19 @@ class FirebasePlace {
     const {placeId} = this.state;
 
     this.onlineUsersRef
+      // .child(placeId)
+      .off();
+  }
+
+  off() {
+    console.tron.log('!!!!!!!!OFF!!!!!!!!');
+
+    const {placeId} = this.state;
+
+    this.onlineUsersRef
+      // .child(placeId)
+      .off();
+    this.placeRef
       // .child(placeId)
       .off();
   }

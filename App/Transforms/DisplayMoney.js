@@ -6,7 +6,13 @@ const DECIMAL_RADIX = 10;
 const K_FORMAT = 1000;
 
 export default (value = 0) => {
-  const result = value ? parseInt(value, DECIMAL_RADIX) / K_FORMAT : 0;
+  let result = 0;
 
-  return result + 'k';
+  if (value) {
+    const parsedValue = parseInt(value, DECIMAL_RADIX);
+    if (parsedValue > K_FORMAT) result = `${parsedValue / K_FORMAT}k`;
+    else result = parsedValue;
+  }
+
+  return result;
 };

@@ -41,7 +41,7 @@ export const saveUser = (state, {data}) => {
 };
 
 export const logout = state => {
-  return state.merge({...INITIAL_STATE});
+  return state.merge({...INITIAL_STATE, userLocation: state.userLocation});
 };
 
 export const saveUserLocation = (state, {data}) => {

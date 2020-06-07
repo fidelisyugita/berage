@@ -80,6 +80,14 @@ const ApplicationStyles = {
     width: Metrics.avatars.xl,
     height: Metrics.avatars.xl,
   },
+  imageTiny: {
+    width: Metrics.images.tiny,
+    height: Metrics.images.tiny,
+  },
+  imageSmall: {
+    width: Metrics.images.small,
+    height: Metrics.images.small,
+  },
   imageXl: {
     width: Metrics.images.xl,
     height: Metrics.images.xl,

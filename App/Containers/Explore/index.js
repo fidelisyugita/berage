@@ -218,6 +218,7 @@ export class ExploreScreen extends Component {
               //     }
               //   }>
               <TouchableHighlight
+                style={AppStyles.shadow}
                 key={banner.image}
                 onPress={() => NavigateUrl(banner.url)}>
                 <CustomImage

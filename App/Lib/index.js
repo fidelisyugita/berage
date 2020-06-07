@@ -3,6 +3,7 @@ import GetUserCoordinate from './GetUserCoordinate';
 import ConvertDistance from './ConvertDistance';
 import UploadImage from './UploadImage';
 import NavigateUrl from './NavigateUrl';
+import EstimateDriveTime from './EstimateDriveTime';
 
 export {
   DateFormatter,
@@ -10,4 +11,5 @@ export {
   ConvertDistance,
   UploadImage,
   NavigateUrl,
+  EstimateDriveTime,
 };

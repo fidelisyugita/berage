@@ -9,6 +9,7 @@ import {
   FlatList,
   SectionList,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -27,6 +28,7 @@ import CustomHeader from '../../Components/CustomHeader';
 import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
+import CustomImage from '../../Components/CustomImage';
 
 let firebasePlace;
 
@@ -90,16 +92,32 @@ export class OnlineUsersScreen extends Component {
         <FlatList
           data={onlineUsers}
           keyExtractor={(item, idx) => item + idx}
+          numColumns={3}
           renderItem={({item}) => (
-            /**
-             * TODO
-             * create new component
-             */
-            <Room
-              item={item}
+            <TouchableOpacity
+              style={[
+                AppStyles.container,
+                AppStyles.section,
+                AppStyles.flex1,
+                AppStyles.alignCenter,
+              ]}
               disabled={item.uid === currentUser.uid}
-              onPress={() => navigation.navigate('ChatScreen', {user: item})}
-            />
+              onPress={() => navigation.navigate('ChatScreen', {user: item})}>
+              <CustomImage
+                source={{uri: item.photoURL || null}}
+                style={[
+                  AppStyles.border3,
+                  AppStyles.avatarXl,
+                  AppStyles.borderCircle,
+                ]}
+                imageStyle={AppStyles.borderCircle}
+              />
+              <Text
+                numberOfLines={2}
+                style={[Fonts.style.small3, Fonts.style.alignCenter]}>
+                {item.displayName || '-'}
+              </Text>
+            </TouchableOpacity>
           )}
           ListEmptyComponent={() => (
             <EmptyState

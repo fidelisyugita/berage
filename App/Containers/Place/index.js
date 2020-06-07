@@ -28,7 +28,7 @@ import PostActions from '../../Redux/PostRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale, DisplayMoney} from '../../Transforms';
-import {ConvertDistance, UploadImage} from '../../Lib';
+import {ConvertDistance, UploadImage, EstimateDriveTime} from '../../Lib';
 import FirebasePlace from '../../Lib/FirebasePlace';
 
 import CustomImage from '../../Components/CustomImage';
@@ -55,6 +55,7 @@ export class PlaceScreen extends Component {
       onlineUsers: [],
       textToPost: '',
       imageToPost: null,
+      slotLeft: 9,
     };
   }
 
@@ -71,7 +72,7 @@ export class PlaceScreen extends Component {
     const {currentUser} = this.props;
 
     if (firebasePlace) {
-      firebasePlace.offOnlineUsers();
+      firebasePlace.off();
       firebasePlace = null;
       this.setState({onlineUsers: []});
     }
@@ -100,6 +101,12 @@ export class PlaceScreen extends Component {
           if (userIndex > -1) tempUsers.splice(userIndex, 1, newUser);
           else tempUsers.push(newUser);
           this.setState({onlineUsers: tempUsers});
+        });
+
+        firebasePlace.onPlace(placeStatus => {
+          console.tron.log({placeStatus});
+          if (placeStatus && placeStatus.slotLeft)
+            this.setState({slotLeft: placeStatus.slotLeft});
         });
       }
 
@@ -227,6 +234,18 @@ export class PlaceScreen extends Component {
     else navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
   };
 
+  onSlotIncrease = () => {
+    const {slotLeft} = this.state;
+
+    firebasePlace.change(slotLeft + 1);
+  };
+
+  onSlotDecrease = () => {
+    const {slotLeft} = this.state;
+
+    if (slotLeft >= 0) firebasePlace.change(slotLeft - 1);
+  };
+
   render() {
     const {
       navigation,
@@ -248,10 +267,13 @@ export class PlaceScreen extends Component {
       onlineUsers,
       textToPost,
       imageToPost,
+      slotLeft,
     } = this.state;
 
     const owner = item.updatedBy || item.createdBy;
     const posts = rootPosts[item.id];
+
+    const status = slotLeft < 0 ? I18n.t('closed') : I18n.t('open');
 
     return (
       <ScrollView
@@ -260,7 +282,10 @@ export class PlaceScreen extends Component {
         }>
         <ModalLoader
           visible={
-            setPopular.fetching || setRecommended.fetching || addPost.fetching
+            setPopular.fetching ||
+            setRecommended.fetching ||
+            addPost.fetching ||
+            isLoading
           }
         />
         <View style={AppStyles.shadow}>
@@ -337,14 +362,17 @@ export class PlaceScreen extends Component {
           </View>
 
           <View style={[AppStyles.sectionMargin, AppStyles.borderBottom5]}>
-            <Text style={Fonts.style.medium3}>{item.name || '-'}</Text>
+            <Text style={Fonts.style.large3}>{item.name || '-'}</Text>
+            <Text style={[Fonts.style.small2, AppStyles.containerSmall]}>
+              {item.categories.join(', ')}
+            </Text>
             <Text
               style={[
                 Fonts.style.small,
                 AppStyles.containerSmall,
                 AppStyles.containerBottom,
               ]}>
-              {item.categories.join(', ')}
+              {item.description}
             </Text>
           </View>
           <View
@@ -354,20 +382,43 @@ export class PlaceScreen extends Component {
               AppStyles.row,
               AppStyles.borderBottom7,
             ]}>
-            <View style={[AppStyles.baseMarginRight, AppStyles.minWidth3]}>
-              <View style={AppStyles.row}>
-                <Fontisto
-                  name="clock"
-                  size={Metrics.icons.tiny}
-                  color={Colors.baseText}
-                />
-                <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                  {item.status || '-'}
+            <View
+              style={[
+                AppStyles.baseMarginRight,
+                AppStyles.minWidth3,
+                AppStyles.row,
+              ]}>
+              <View>
+                <View style={AppStyles.row}>
+                  <Fontisto
+                    name="clock"
+                    size={Metrics.icons.tiny}
+                    color={Colors.baseText}
+                  />
+                  <Text
+                    style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
+                    {status}
+                  </Text>
+                </View>
+                <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                  {`${I18n.t('available')}: ${slotLeft < 0 ? '-' : slotLeft}`}
                 </Text>
               </View>
-              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {'-'}
-              </Text>
+              {/**
+               * TODO
+               * styling
+               */
+              ((currentUser && currentUser.superUser) ||
+                (owner && currentUser && owner.uid === currentUser.uid)) && (
+                <View>
+                  <TouchableOpacity onPress={this.onSlotIncrease}>
+                    <Text>+</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.onSlotDecrease}>
+                    <Text>-</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
             <View style={AppStyles.flex1}>
               <View style={AppStyles.row}>
@@ -386,7 +437,14 @@ export class PlaceScreen extends Component {
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {'-'}
+                {item.location && userLocation
+                  ? `${EstimateDriveTime(
+                      ConvertDistance(
+                        getDistance(userLocation, item.location),
+                        1000,
+                      ),
+                    )} ${I18n.t('minute')}`
+                  : '-'}
               </Text>
             </View>
             <View style={AppStyles.flex1}>
@@ -422,10 +480,10 @@ export class PlaceScreen extends Component {
         <View style={styles.containerOnline}>
           <View style={styles.sectionOnline}>
             <Text style={[Fonts.style.xl]}>
-              {`${I18n.t('peopleAreOnline')}: ${onlineUsers.length}`}
+              {`${I18n.t('peopleAreOnline')}: ${onlineUsers.length || '?'}`}
             </Text>
             <TouchableHighlight
-              disabled={!currentUser}
+              // disabled={!currentUser}
               underlayColor={Colors.highlightUnderlay}
               onPress={this.onJoinPress}
               style={[

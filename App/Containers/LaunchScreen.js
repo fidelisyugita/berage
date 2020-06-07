@@ -29,7 +29,7 @@ export class LaunchScreen extends Component {
     // this.getLocation();
     this.loadData();
 
-    setTimeout(() => this.props.navigation.navigate('Main'), 300);
+    setTimeout(() => this.props.navigation.navigate('Main'), 100);
   }
 
   loadData() {
