@@ -28,7 +28,7 @@ export default async (
       .ref(refPath)
       .getDownloadURL();
 
-    return {...image, uri: url.split('&token')[0]};
+    return {...image, uri: url.split('&token')[0], refPath: refPath};
   } catch (error) {
     throw error;
   }

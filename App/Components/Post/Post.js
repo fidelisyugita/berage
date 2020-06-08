@@ -13,6 +13,7 @@ import CustomImage from '../../Components/CustomImage';
 const Place = props => {
   const {children, item, onPress} = props;
   const {updatedBy} = item;
+  const image = item.image && item.image.uri ? item.image.uri : item.image;
 
   return (
     <View
@@ -50,9 +51,9 @@ const Place = props => {
           style={[Fonts.style.medium, Fonts.style.alignJustify]}>
           {item.text || '-'}
         </Text>
-        {item.image && (
+        {image && (
           <CustomImage
-            source={{uri: item.image}}
+            source={{uri: image}}
             style={{
               ...AppStyles.borderImage,
               ...AppStyles.border5,

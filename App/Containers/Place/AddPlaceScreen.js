@@ -19,6 +19,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import PlaceActions from '../../Redux/PlaceRedux';
 import SessionActions from '../../Redux/SessionRedux';
@@ -26,7 +27,7 @@ import SessionActions from '../../Redux/SessionRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
-import {GetUserCoordinate, UploadImage} from '../../Lib';
+import {GetUserCoordinate, UploadImage, DeleteImage} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -99,9 +100,7 @@ export class AddPlaceScreen extends Component {
       const image = await UploadImage();
       tempImages.push(image);
       console.tron.log({tempImages});
-      this.setState({
-        imagePlaces: tempImages,
-      });
+      this.setState({imagePlaces: tempImages});
     } catch (error) {
       console.tron.log({error});
       DropDownHolder.alert(
@@ -111,6 +110,24 @@ export class AddPlaceScreen extends Component {
       );
     }
   };
+
+  async deleteImage(image) {
+    let tempImages = [...this.state.imagePlaces];
+    tempImages = tempImages.filter(img => img !== image);
+
+    try {
+      const response = await DeleteImage(image.refPath);
+      console.tron.log({response});
+      this.setState({imagePlaces: tempImages});
+    } catch (error) {
+      console.tron.log({error});
+      DropDownHolder.alert(
+        'error',
+        I18n.t('errorDefault'),
+        error.message || I18n.t('tryAgain'),
+      );
+    }
+  }
 
   onSavePress = () => {
     const {
@@ -142,7 +159,10 @@ export class AddPlaceScreen extends Component {
 
     this.setState({isLoading: true});
 
-    const images = imagePlaces.map(img => img.uri);
+    const images = imagePlaces.map(img => ({
+      uri: img.uri,
+      refPath: img.refPath,
+    }));
     const data = {
       id: placeId,
       images,
@@ -176,12 +196,28 @@ export class AddPlaceScreen extends Component {
     return (
       <View>
         {imagePlaces.map(img => (
-          <CustomImage
+          <View
             key={img.modificationDate}
-            source={{uri: img.path || img.uri}}
-            style={styles.inputImage}
-            imageStyle={AppStyles.borderImage}
-          />
+            style={[
+              AppStyles.containerBottom,
+              AppStyles.darkShadowSmall,
+              AppStyles.borderImage,
+            ]}>
+            <CustomImage
+              source={{uri: img.path || img.uri}}
+              style={styles.inputImage}
+              imageStyle={AppStyles.borderImage}
+            />
+            <TouchableOpacity
+              style={[AppStyles.btnIcon, AppStyles.positionAbsolute]}
+              onPress={() => this.deleteImage(img)}>
+              <MaterialIcons
+                name="cancel"
+                size={Metrics.icons.medium}
+                color={Colors.baseText}
+              />
+            </TouchableOpacity>
+          </View>
         ))}
         {imagePlaces.length < MAX_IMAGES && (
           <TouchableHighlight
@@ -459,10 +495,10 @@ export class AddPlaceScreen extends Component {
 
 const styles = StyleSheet.create({
   inputImage: {
-    ...AppStyles.containerBottom,
+    // ...AppStyles.containerBottom,
     ...AppStyles.borderImage,
     ...AppStyles.border5,
-    ...AppStyles.darkShadowSmall,
+    // ...AppStyles.darkShadowSmall,
     height: Metrics.images.xl,
     width: '100%',
   },

@@ -17,6 +17,7 @@ import {
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
 import {getDistance} from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
@@ -28,7 +29,12 @@ import PostActions from '../../Redux/PostRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale, DisplayMoney} from '../../Transforms';
-import {ConvertDistance, UploadImage, EstimateDriveTime} from '../../Lib';
+import {
+  ConvertDistance,
+  UploadImage,
+  EstimateDriveTime,
+  DeleteImage,
+} from '../../Lib';
 import FirebasePlace from '../../Lib/FirebasePlace';
 
 import CustomImage from '../../Components/CustomImage';
@@ -105,7 +111,7 @@ export class PlaceScreen extends Component {
 
         firebasePlace.onPlace(placeStatus => {
           console.tron.log({placeStatus});
-          if (placeStatus && placeStatus.slotLeft)
+          if (placeStatus && placeStatus.slotLeft !== null)
             this.setState({slotLeft: placeStatus.slotLeft});
         });
       }
@@ -188,6 +194,21 @@ export class PlaceScreen extends Component {
     }
   };
 
+  async deleteImage(image) {
+    try {
+      const response = await DeleteImage(image.refPath);
+      console.tron.log({response});
+      this.setState({imageToPost: null});
+    } catch (error) {
+      console.tron.log({error});
+      DropDownHolder.alert(
+        'error',
+        I18n.t('errorDefault'),
+        error.message || I18n.t('tryAgain'),
+      );
+    }
+  }
+
   onSubmitPress = () => {
     const {item, textToPost, imageToPost} = this.state;
     const {addPostRequest} = this.props;
@@ -200,7 +221,12 @@ export class PlaceScreen extends Component {
       const data = {
         placeId: item.id,
         text: textToPost,
-        image: (imageToPost && imageToPost.uri) || null,
+        image: imageToPost
+          ? {
+              uri: imageToPost.uri,
+              refPath: imageToPost.refPath,
+            }
+          : null,
       };
 
       console.tron.log({data});
@@ -350,7 +376,7 @@ export class PlaceScreen extends Component {
               {item.images.map(image => (
                 <CustomImage
                   key={image}
-                  source={{uri: image}}
+                  source={{uri: image.uri ? image.uri : image}}
                   style={{
                     ...AppStyles.border5,
                     width: '100%',
@@ -401,24 +427,9 @@ export class PlaceScreen extends Component {
                   </Text>
                 </View>
                 <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                  {`${I18n.t('available')}: ${slotLeft < 0 ? '-' : slotLeft}`}
+                  {`${I18n.t('available')}: ${slotLeft < 1 ? '?' : slotLeft}`}
                 </Text>
               </View>
-              {/**
-               * TODO
-               * styling
-               */
-              ((currentUser && currentUser.superUser) ||
-                (owner && currentUser && owner.uid === currentUser.uid)) && (
-                <View>
-                  <TouchableOpacity onPress={this.onSlotIncrease}>
-                    <Text>+</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.onSlotDecrease}>
-                    <Text>-</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
             </View>
             <View style={AppStyles.flex1}>
               <View style={AppStyles.row}>
@@ -476,6 +487,27 @@ export class PlaceScreen extends Component {
             </View>
           </View>
         </View>
+
+        {((currentUser && currentUser.superUser) ||
+          (owner && currentUser && owner.uid === currentUser.uid)) && (
+          <View style={styles.containerOnline}>
+            <View style={{...styles.sectionOnline}}>
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSlotIncrease}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.large]}>+</Text>
+              </TouchableHighlight>
+              <View style={{width: Metrics.baseMargin}} />
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSlotDecrease}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.large]}>-</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        )}
 
         <View style={styles.containerOnline}>
           <View style={styles.sectionOnline}>
@@ -572,17 +604,28 @@ export class PlaceScreen extends Component {
                 style={[Fonts.style.large, AppStyles.flex1]}
               />
               {imageToPost && (
-                <CustomImage
-                  source={{uri: imageToPost.path || imageToPost.uri}}
-                  style={{
-                    ...AppStyles.borderImage,
-                    ...AppStyles.border5,
-                    ...AppStyles.baseMarginBottom,
-                    height: Metrics.screenWidth - Scale(90),
-                    width: Metrics.screenWidth - Scale(90),
-                  }}
-                  imageStyle={AppStyles.borderImage}
-                />
+                <View>
+                  <CustomImage
+                    source={{uri: imageToPost.path || imageToPost.uri}}
+                    style={{
+                      ...AppStyles.borderImage,
+                      ...AppStyles.border5,
+                      ...AppStyles.baseMarginBottom,
+                      height: Metrics.screenWidth - Scale(90),
+                      width: Metrics.screenWidth - Scale(90),
+                    }}
+                    imageStyle={AppStyles.borderImage}
+                  />
+                  <TouchableOpacity
+                    style={[AppStyles.btnIcon, AppStyles.positionAbsolute]}
+                    onPress={() => this.deleteImage(imageToPost)}>
+                    <MaterialIcons
+                      name="cancel"
+                      size={Metrics.icons.medium}
+                      color={Colors.baseText}
+                    />
+                  </TouchableOpacity>
+                </View>
               )}
               <View
                 style={[

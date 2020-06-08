@@ -4,6 +4,7 @@ import ConvertDistance from './ConvertDistance';
 import UploadImage from './UploadImage';
 import NavigateUrl from './NavigateUrl';
 import EstimateDriveTime from './EstimateDriveTime';
+import DeleteImage from './DeleteImage';
 
 export {
   DateFormatter,
@@ -12,4 +13,5 @@ export {
   UploadImage,
   NavigateUrl,
   EstimateDriveTime,
+  DeleteImage,
 };

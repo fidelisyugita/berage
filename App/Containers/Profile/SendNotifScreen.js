@@ -74,7 +74,12 @@ export class SendNotifScreen extends Component {
     this.setState({isLoading: true});
 
     const data = {
-      image: image.uri,
+      image: image
+        ? {
+            uri: image.uri,
+            refPath: image.refPath,
+          }
+        : null,
       title,
       url: url.startsWith('http') ? url : `http://${url}`,
       description,

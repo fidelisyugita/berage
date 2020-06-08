@@ -239,6 +239,9 @@ const ApplicationStyles = {
     margin: Metrics.baseMargin,
     zIndex: 1,
   },
+  positionAbsolute: {
+    position: 'absolute',
+  },
 };
 
 export default ApplicationStyles;

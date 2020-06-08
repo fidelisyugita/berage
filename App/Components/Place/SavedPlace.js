@@ -26,7 +26,7 @@ const SavedPlace = props => {
         ]}>
         <View>
           <ThumbnailImages
-            images={item.images}
+            images={item.images.map(img => (img.uri ? img.uri : img))}
             image1Style={
               item.images.length < 3
                 ? {

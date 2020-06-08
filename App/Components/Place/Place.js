@@ -13,13 +13,17 @@ import CustomImage from '../CustomImage';
 const Place = props => {
   const {children, item, onPress, userLocation} = props;
   console.tron.log({item});
+  const image =
+    item.images && item.images.length > 0 && item.images[0].uri
+      ? item.images[0].uri
+      : item.images[0];
 
   return (
     <TouchableOpacity
       style={[AppStyles.sectionVerticalSmall, AppStyles.row]}
       onPress={onPress}>
       <CustomImage
-        source={{uri: item.image || item.images[0]}}
+        source={{uri: image}}
         style={{
           ...AppStyles.borderImage,
           ...AppStyles.border3,
