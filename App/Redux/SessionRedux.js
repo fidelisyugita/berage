@@ -12,6 +12,8 @@ const {Types, Creators} = createActions({
   addFavoriteId: ['data'],
   removeFavoriteId: ['data'],
 
+  saveConstants: ['data'],
+
   // removeOnboarding: null,
   // changeLanguage: ['data'],
 });
@@ -25,6 +27,7 @@ export const INITIAL_STATE = Immutable({
   user: null,
   userLocation: null,
   favoriteIds: [],
+  constants: null,
   // language: 'en',
 });
 
@@ -78,6 +81,10 @@ export const removeFavoriteId = (state, {data}) => {
   return state.merge({...state, favoriteIds: tempIds});
 };
 
+export const saveConstants = (state, {data}) => {
+  return state.merge({...state, constants: data});
+};
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -87,4 +94,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_FAVORITE_IDS]: setFavoriteIds,
   [Types.ADD_FAVORITE_ID]: addFavoriteId,
   [Types.REMOVE_FAVORITE_ID]: removeFavoriteId,
+  [Types.SAVE_CONSTANTS]: saveConstants,
 });

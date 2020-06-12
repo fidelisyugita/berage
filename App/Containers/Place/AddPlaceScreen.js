@@ -75,7 +75,7 @@ export class AddPlaceScreen extends Component {
     const {navigation, userLocation} = this.props;
 
     const item = navigation.getParam('item', null);
-    console.tron.log({item});
+    // console.tron.log({item});
     if (item) {
       this.setState({
         placeId: item.id || null,

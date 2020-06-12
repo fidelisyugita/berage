@@ -4,6 +4,7 @@ const images = {
   loader: require('../Images/gif/Loader.gif'),
   emptySavedData: require('../Images/gif/EmptySavedData.gif'),
   emptyMessageData: require('../Images/gif/EmptyMessageData.gif'),
+  maintenance: require('../Images/gif/Maintenance.gif'),
 };
 
 export default images;

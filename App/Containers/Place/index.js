@@ -89,7 +89,7 @@ export class PlaceScreen extends Component {
     const {item, onlineUsers, refreshing} = this.state;
     const tempUsers = [...onlineUsers];
 
-    console.tron.log({item});
+    // console.tron.log({item});
     console.tron.log({onlineUsers});
     /**
      * TODO

@@ -6,6 +6,7 @@ import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
 import SessionActions from '../Redux/SessionRedux';
 import FavoriteActions from '../Redux/FavoriteRedux';
 
+import {Colors, Fonts, Metrics, Images, AppStyles} from '../Themes';
 import I18n from '../I18n';
 import {Scale} from '../Transforms';
 import {GetUserCoordinate} from '../Lib';
@@ -13,55 +14,31 @@ import {GetUserCoordinate} from '../Lib';
 import Logo from '../Images/svg/Logo.svg';
 
 import {DropDownHolder} from '../Components/DropDownHolder';
+import EmptyState from '../Components/EmptyState';
 
 // Styles
 import styles from './Styles/LaunchScreenStyles';
 
-export class LaunchScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      denyCounter: 0,
-    };
-  }
-
-  componentDidMount() {
-    // this.getLocation();
-    this.loadData();
-
-    setTimeout(() => this.props.navigation.navigate('Main'), 500);
-  }
-
-  loadData() {
-    const {currentUser, getFavoritesRequest} = this.props;
-    if (currentUser) getFavoritesRequest();
-  }
-
-  async getLocation() {
-    const {saveUserLocation} = this.props;
-
-    try {
-      const coords = await GetUserCoordinate();
-      console.tron.log({getUserPosition: coords});
-      saveUserLocation(coords);
-    } catch (error) {
-      console.tron.error({error});
-      DropDownHolder.alert(
-        'error',
-        error.message || I18n.t('errorDefault'),
-        I18n.t('needLocationAccess'),
-      );
-    }
-  }
-
+export class MaintenanceScreen extends Component {
   render() {
     return (
-      <TouchableOpacity
+      <View
         style={styles.container}
         // onPress={() => this.props.navigation.navigate('Main')}
       >
-        <Logo width={Scale(300)} height={Scale(50)} />
-      </TouchableOpacity>
+        <EmptyState
+          imageSource={Images.maintenance}
+          message={I18n.t('maintenanceDetail')}
+          containerStyle={{
+            backgroundColor: Colors.white,
+            height: Metrics.screenHeight,
+          }}
+          imageStyle={{
+            width: Metrics.screenWidth,
+            height: Metrics.screenWidth,
+          }}
+        />
+      </View>
     );
   }
 }
@@ -80,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LaunchScreen);
+)(MaintenanceScreen);
