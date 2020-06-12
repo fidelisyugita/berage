@@ -38,12 +38,6 @@ export class LaunchScreen extends Component {
   }
 
   async getLocation() {
-    /**
-     * TODO
-     * this is temp solution
-     * need to make it better
-     */
-    const {denyCounter} = this.state;
     const {saveUserLocation} = this.props;
 
     try {
@@ -51,16 +45,12 @@ export class LaunchScreen extends Component {
       console.tron.log({getUserPosition: coords});
       saveUserLocation(coords);
     } catch (error) {
-      this.setState({denyCounter: denyCounter + 1});
       console.tron.error({error});
-      if (denyCounter < 3) {
-        DropDownHolder.alert(
-          'error',
-          error.message || I18n.t('errorDefault'),
-          I18n.t('needLocationAccess'),
-        );
-        this.getLocation();
-      }
+      DropDownHolder.alert(
+        'error',
+        error.message || I18n.t('errorDefault'),
+        I18n.t('needLocationAccess'),
+      );
     }
   }
 

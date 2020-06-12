@@ -48,11 +48,13 @@ export class ProfileScreen extends Component {
   }
 
   onLoginPress = () => {
-    const {loginWithGoogleRequest} = this.props;
+    const {loginWithGoogleRequest, currentUser} = this.props;
 
-    this.setState({isLoading: true});
+    if (!currentUser) {
+      this.setState({isLoading: true});
 
-    loginWithGoogleRequest(null, this.googleLoginCallback);
+      loginWithGoogleRequest(null, this.googleLoginCallback);
+    }
   };
 
   googleLoginCallback = result => {

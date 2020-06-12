@@ -37,24 +37,26 @@ import CustomHeader from '../../Components/CustomHeader';
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
 const CATEGORIES_DATA = [
-  'Food',
-  'Drink',
+  'Makanan',
+  'Minuman',
   'Live Music',
   'Barbershop',
-  'Workshop',
-  'Mechanic',
-  'Service',
-  'Nearby City',
+  'Bengkel',
+  'Keluarga',
+  'Jasa',
+  'Anak Muda',
 ];
 
-const STATUS_DATA = ['Open', 'Closed'];
+const STATUS_DATA = ['Buka', 'Tutup'];
 
 const MAX_CATEGORY = 5;
 const MAX_IMAGES = 5;
+const TIME_NOW = new Date().getTime();
 
 export class AddPlaceScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isLoading: false,
       placeId: null,
@@ -77,11 +79,7 @@ export class AddPlaceScreen extends Component {
     if (item) {
       this.setState({
         placeId: item.id || null,
-        imagePlaces:
-          item.images.map(img => {
-            console.tron.log({img});
-            return {uri: img};
-          }) || [],
+        imagePlaces: item.images || [],
         placeName: item.name || '',
         placeCategories: item.categories || [],
         placeStatus: item.status || STATUS_DATA[0],
@@ -93,14 +91,31 @@ export class AddPlaceScreen extends Component {
     }
   }
 
+  onBack = async () => {
+    const {placeId, hasChanged, imagePlaces} = this.state;
+    const {navigation, currentUser} = this.props;
+
+    if (hasChanged) {
+      if (placeId) {
+        this.onSavePress();
+      } else {
+        imagePlaces.forEach(img => {
+          DeleteImage(img.refPath);
+        });
+      }
+    }
+    navigation.pop();
+  };
+
   addImage = async () => {
+    const {currentUser} = this.props;
     let tempImages = [...this.state.imagePlaces];
 
     try {
-      const image = await UploadImage();
+      const image = await UploadImage(`places/${currentUser.uid}/${TIME_NOW}`);
       tempImages.push(image);
       console.tron.log({tempImages});
-      this.setState({imagePlaces: tempImages});
+      this.setState({imagePlaces: tempImages, hasChanged: true});
     } catch (error) {
       console.tron.log({error});
       DropDownHolder.alert(
@@ -118,7 +133,7 @@ export class AddPlaceScreen extends Component {
     try {
       const response = await DeleteImage(image.refPath);
       console.tron.log({response});
-      this.setState({imagePlaces: tempImages});
+      this.setState({imagePlaces: tempImages, hasChanged: true});
     } catch (error) {
       console.tron.log({error});
       DropDownHolder.alert(
@@ -181,11 +196,22 @@ export class AddPlaceScreen extends Component {
   };
 
   savePlaceCallback = result => {
+    const {navigation, currentUser, saveUser} = this.props;
+
     this.setState({isLoading: false});
     if (result.ok) {
       console.tron.log({result});
-      this.props.navigation.pop();
-      if (this.state.placeId) this.props.navigation.pop();
+      navigation.pop();
+      if (this.state.placeId) {
+        navigation.pop();
+      } else {
+        saveUser({
+          ...currentUser,
+          availableHostLeft: currentUser.availableHostLeft
+            ? currentUser.availableHostLeft - 1
+            : 0,
+        });
+      }
     }
   };
 
@@ -310,7 +336,7 @@ export class AddPlaceScreen extends Component {
 
     return (
       <ScrollView>
-        <CustomHeader onBack={() => navigation.pop()} />
+        <CustomHeader onBack={this.onBack} />
         <View style={[AppStyles.container, AppStyles.section]}>
           {this.renderImagePlaces()}
           <TextInput
@@ -356,7 +382,7 @@ export class AddPlaceScreen extends Component {
               </TouchableHighlight>
             )}
           />
-          <TextInput
+          {/* <TextInput
             editable={false}
             placeholder={I18n.t('status')}
             onChangeText={text => this.setState({placeStatus: text})}
@@ -380,7 +406,7 @@ export class AddPlaceScreen extends Component {
                 </Text>
               </TouchableHighlight>
             )}
-          />
+          /> */}
 
           <TextInput
             editable={false}
@@ -537,6 +563,7 @@ const mapDispatchToProps = dispatch => ({
   savePlaceRequest: (data, callback) =>
     dispatch(PlaceActions.savePlaceRequest(data, callback)),
   saveUserLocation: data => dispatch(SessionActions.saveUserLocation(data)),
+  saveUser: data => dispatch(SessionActions.saveUser(data)),
 });
 
 export default connect(
