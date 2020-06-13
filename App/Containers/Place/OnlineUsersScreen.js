@@ -51,8 +51,13 @@ export class OnlineUsersScreen extends Component {
     const {currentUser} = this.props;
 
     if (currentUser && firebasePlace) {
-      firebasePlace.offOnlineUsers();
-      firebasePlace = null;
+      /**
+       * TODO
+       * make sure it's okay
+       * or change it
+       */
+      // firebasePlace.offOnlineUsers();
+      // firebasePlace = null;
     }
   }
 

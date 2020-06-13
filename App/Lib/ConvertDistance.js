@@ -9,7 +9,7 @@ export default (value = 0, dividedBy = 1, decimalPoints = 2) => {
   const div = parseFloat(dividedBy);
   const dec = parseInt(decimalPoints, DECIMAL_RADIX);
 
-  if (isNaN(val) || isNaN(div) || isNaN(dec)) return 0;
+  if (isNaN(val) || isNaN(div) || isNaN(dec)) return '-';
 
   return (val / div).toFixed(dec);
 };

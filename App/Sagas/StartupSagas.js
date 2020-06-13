@@ -5,6 +5,7 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import Secrets from 'react-native-config';
 import functions from '@react-native-firebase/functions';
 import auth from '@react-native-firebase/auth';
+import {BackHandler} from 'react-native';
 
 import SessionActions, {SessionSelectors} from '../Redux/SessionRedux';
 
@@ -62,6 +63,7 @@ export function* startup(action) {
       error.message || I18n.t('errorDefault'),
       I18n.t('needLocationAccess'),
     );
+    setTimeout(() => BackHandler.exitApp(), 1000);
   }
 
   const currentUser = yield select(getUser);

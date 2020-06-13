@@ -59,24 +59,25 @@ class FirebasePlace {
   joinOnline = () => {
     const {currentUser, placeId} = this.state;
 
-    /**
-     * TODO
-     * find better method
-     */
-
     this.onlineUsersRef
       // .child(placeId)
       .child(currentUser.uid)
       .update({...currentUser, timestamp: this.timestamp});
+
+    setTimeout(() => this.leave(), 5 * 60 * 1000); //leave after 5mins
   };
 
-  leave = callback => {
+  leave() {
     const {currentUser, placeId} = this.state;
-    this.onlineUsersRef
-      // .child(placeId)
-      .child(currentUser.uid)
-      .remove(callback);
-  };
+
+    if (currentUser && currentUser.uid)
+      this.onlineUsersRef
+        // .child(placeId)
+        .child(currentUser.uid)
+        .remove();
+
+    this.offOnlineUsers();
+  }
 
   offOnlineUsers() {
     console.tron.log('!!!!!!!!OFF-ONLINE-USERS!!!!!!!!');

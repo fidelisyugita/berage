@@ -101,6 +101,7 @@
   
   "tellUsPlaceholder": "Cube cerite, kite ngelakar?",
   "loginFirstPlaceholder": "Login dulu, jadi nyaman cerite disine",
+  "toFarPlaceholder": "Jarak ikak kejaoan. Kesine dulu atau restart app e",
   "berage": "Berage",
   "textIsEmpty": "Mane kate-kate e?",
 
@@ -109,5 +110,7 @@
   
   "open": "Buka",
   "closed": "Tutup",
+  
+  "notInArea": "Jarak ikak kejaoan",
 
 }

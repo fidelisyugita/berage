@@ -61,7 +61,7 @@ export class PlaceScreen extends Component {
       onlineUsers: [],
       textToPost: '',
       imageToPost: null,
-      slotLeft: 9,
+      slotLeft: 0,
     };
   }
 
@@ -252,12 +252,22 @@ export class PlaceScreen extends Component {
   };
 
   onJoinPress = () => {
-    const {navigation, currentUser} = this.props;
+    const {navigation, currentUser, userLocation} = this.props;
     const {item, onlineUsers} = this.state;
 
-    if (!currentUser)
+    if (!currentUser) {
       DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
-    else navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
+    } else {
+      let distance = '-';
+      if (item.location && userLocation)
+        distance = ConvertDistance(
+          getDistance(userLocation, item.location),
+          1000,
+        );
+      if (parseFloat(distance) < 0.5) {
+        navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
+      } else DropDownHolder.alert('warn', I18n.t('notInArea'), undefined);
+    }
   };
 
   onSlotIncrease = () => {
@@ -300,6 +310,14 @@ export class PlaceScreen extends Component {
     const posts = rootPosts[item.id];
 
     const status = slotLeft < 0 ? I18n.t('closed') : I18n.t('open');
+
+    let distance = '-';
+
+    if (item.location && userLocation)
+      distance = ConvertDistance(
+        getDistance(userLocation, item.location),
+        1000,
+      );
 
     return (
       <ScrollView
@@ -439,22 +457,12 @@ export class PlaceScreen extends Component {
                   color={Colors.baseText}
                 />
                 <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                  {item.location && userLocation
-                    ? `${ConvertDistance(
-                        getDistance(userLocation, item.location),
-                        1000,
-                      )} km`
-                    : item.distance || '-'}
+                  {`${distance} km`}
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {item.location && userLocation
-                  ? `${EstimateDriveTime(
-                      ConvertDistance(
-                        getDistance(userLocation, item.location),
-                        1000,
-                      ),
-                    )} ${I18n.t('minute')}`
+                {distance !== '-'
+                  ? `${EstimateDriveTime(distance)} ${I18n.t('minute')}`
                   : '-'}
               </Text>
             </View>
@@ -563,7 +571,6 @@ export class PlaceScreen extends Component {
           </View>
         )}
 
-        {/* {currentUser && ( */}
         <View
           style={[
             AppStyles.container,
@@ -591,17 +598,23 @@ export class PlaceScreen extends Component {
             <View style={[AppStyles.flex1, AppStyles.baseMarginLeft]}>
               <TextInput
                 // onFocus={!currentUser ? this.onPostPress : () => {}}
-                editable={currentUser != null}
+                editable={currentUser != null && parseFloat(distance) < 0.5} //less than 500m
                 value={textToPost}
                 placeholder={
                   currentUser != null
-                    ? I18n.t('tellUsPlaceholder')
+                    ? parseFloat(distance) < 0.5
+                      ? I18n.t('tellUsPlaceholder')
+                      : I18n.t('toFarPlaceholder')
                     : I18n.t('loginFirstPlaceholder')
                 }
                 multiline={true}
                 maxLength={MAX_LENGTH}
                 onChangeText={text => this.setState({textToPost: text})}
-                style={[Fonts.style.large, AppStyles.flex1]}
+                style={[
+                  Fonts.style.large,
+                  AppStyles.flex1,
+                  AppStyles.smallPaddingTop,
+                ]}
               />
               {imageToPost && (
                 <View>
@@ -634,7 +647,9 @@ export class PlaceScreen extends Component {
                   AppStyles.justifyBetween,
                 ]}>
                 <TouchableOpacity
-                  disabled={imageToPost || !currentUser}
+                  disabled={
+                    imageToPost || !currentUser || parseFloat(distance) >= 0.5
+                  }
                   onPress={this.addImage}>
                   <AntDesign
                     name="picture"
@@ -657,7 +672,6 @@ export class PlaceScreen extends Component {
             </View>
           </View>
         </View>
-        {/* )} */}
 
         {getPosts.fetching && <Loader style={[AppStyles.container]} />}
         <FlatList

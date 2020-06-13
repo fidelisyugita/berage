@@ -92,6 +92,12 @@ const ApplicationStyles = {
     width: Metrics.images.xl,
     height: Metrics.images.xl,
   },
+  basePaddingTop: {
+    paddingTop: Metrics.baseMargin,
+  },
+  smallPaddingTop: {
+    paddingTop: Metrics.smallMargin,
+  },
   baseMarginVertical: {
     marginVertical: Metrics.baseMargin,
   },
