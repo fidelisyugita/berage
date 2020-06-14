@@ -14,6 +14,7 @@ import {
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
+import {getDistance} from 'geolib';
 
 import AuthActions from '../../Redux/AuthRedux';
 import FavoriteActions from '../../Redux/FavoriteRedux';
@@ -22,6 +23,7 @@ import PlaceActions from '../../Redux/PlaceRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
+import {ConvertDistance} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import ModalLoader from '../../Components/Modal/ModalLoader';
@@ -73,17 +75,40 @@ export class ProfileScreen extends Component {
   };
 
   onHostPress = () => {
-    const {navigation, currentUser} = this.props;
+    const {navigation, currentUser, userLocation} = this.props;
+
+    const belitungCoord = {
+      latitude: -2.9114149,
+      longitude: 107.7045183,
+    };
 
     if (currentUser) {
-      if (currentUser.availableHostLeft || currentUser.superUser)
+      if (currentUser.superUser) {
         navigation.navigate('AddPlaceScreen');
-      else
-        DropDownHolder.alert(
-          'warn',
-          I18n.t('alreadyHostTitle'),
-          I18n.t('alreadyHostMessage'),
+        return;
+      }
+
+      if (userLocation) {
+        const distance = ConvertDistance(
+          getDistance(userLocation, belitungCoord),
+          1000,
         );
+        if (parseFloat(distance) < 70) {
+          //inside Belitung only
+          if (currentUser.availableHostLeft)
+            navigation.navigate('AddPlaceScreen');
+          else
+            DropDownHolder.alert(
+              'warn',
+              I18n.t('alreadyHostTitle'),
+              I18n.t('alreadyHostMessage'),
+            );
+        } else {
+          DropDownHolder.alert('warn', I18n.t('notInArea'), undefined);
+        }
+      } else {
+        DropDownHolder.alert('warn', I18n.t('noGps'), undefined);
+      }
     } else DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
   };
 
@@ -414,6 +439,7 @@ const styles = StyleSheet.create({});
 const mapStateToProps = state => ({
   currentUser: state.session.user,
   myPlaces: state.place.myPlaces,
+  userLocation: state.session.userLocation,
 });
 
 const mapDispatchToProps = dispatch => ({

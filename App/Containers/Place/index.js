@@ -258,6 +258,11 @@ export class PlaceScreen extends Component {
     if (!currentUser) {
       DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
     } else {
+      if (currentUser.superUser) {
+        navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
+        return;
+      }
+
       let distance = '-';
       if (item.location && userLocation)
         distance = ConvertDistance(
@@ -598,7 +603,10 @@ export class PlaceScreen extends Component {
             <View style={[AppStyles.flex1, AppStyles.baseMarginLeft]}>
               <TextInput
                 // onFocus={!currentUser ? this.onPostPress : () => {}}
-                editable={currentUser != null && parseFloat(distance) < 0.5} //less than 500m
+                editable={
+                  currentUser != null &&
+                  (currentUser.superUser || parseFloat(distance) < 0.5)
+                } //less than 500m
                 value={textToPost}
                 placeholder={
                   currentUser != null
@@ -648,7 +656,10 @@ export class PlaceScreen extends Component {
                 ]}>
                 <TouchableOpacity
                   disabled={
-                    imageToPost || !currentUser || parseFloat(distance) >= 0.5
+                    imageToPost ||
+                    !currentUser ||
+                    ((distance === '-' || parseFloat(distance)) >= 0.5 &&
+                      !currentUser.superUser)
                   }
                   onPress={this.addImage}>
                   <AntDesign
