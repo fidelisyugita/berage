@@ -4,7 +4,14 @@ import {call, put, select} from 'redux-saga/effects';
 import PostActions from '../Redux/PostRedux';
 
 import {httpsCallable} from './Utils';
-import {GET_POSTS, ADD_POST, LIKE_POST, DISLIKE_POST} from './Consts';
+import {
+  GET_POSTS,
+  ADD_POST,
+  LIKE_POST,
+  DISLIKE_POST,
+  COMMENT,
+  GET_COMMENTS,
+} from './Consts';
 
 export function* getPosts(api, action) {
   try {
@@ -79,6 +86,44 @@ export function* dislikePost(api, action) {
     }
   } catch (error) {
     yield put(PostActions.dislikePostFailure(error));
+    if (action.callback) action.callback({ok: false});
+  }
+}
+
+export function* comment(api, action) {
+  try {
+    const response = yield httpsCallable(COMMENT, action.data);
+
+    console.tron.log({comment: response});
+
+    if (response.data.ok) {
+      yield put(PostActions.commentSuccess(response.data.payload));
+      if (action.callback) action.callback({ok: true});
+    } else {
+      yield put(PostActions.commentFailure(response.data.error));
+      if (action.callback) action.callback({ok: false});
+    }
+  } catch (error) {
+    yield put(PostActions.commentFailure(error));
+    if (action.callback) action.callback({ok: false});
+  }
+}
+
+export function* getComments(api, action) {
+  try {
+    const response = yield httpsCallable(GET_COMMENTS, action.data);
+
+    console.tron.log({getComments: response});
+
+    if (response.data.ok) {
+      yield put(PostActions.getCommentsSuccess(response.data.payload));
+      if (action.callback) action.callback({ok: true});
+    } else {
+      yield put(PostActions.getCommentsFailure(response.data.error));
+      if (action.callback) action.callback({ok: false});
+    }
+  } catch (error) {
+    yield put(PostActions.getCommentsFailure(error));
     if (action.callback) action.callback({ok: false});
   }
 }

@@ -26,6 +26,9 @@ const ApplicationStyles = {
   section: {
     paddingHorizontal: Metrics.marginHorizontal,
   },
+  sectionSmall: {
+    paddingHorizontal: Metrics.smallMargin,
+  },
   sectionMargin: {
     marginHorizontal: Metrics.marginHorizontal,
   },
@@ -94,6 +97,9 @@ const ApplicationStyles = {
   },
   basePaddingTop: {
     paddingTop: Metrics.baseMargin,
+  },
+  basePaddingHorizontal: {
+    paddingHorizontal: Metrics.baseMargin,
   },
   smallPaddingTop: {
     paddingTop: Metrics.smallMargin,
@@ -187,6 +193,9 @@ const ApplicationStyles = {
   },
   justifyEvenly: {
     justifyContent: 'space-evenly',
+  },
+  justifyEnd: {
+    justifyContent: 'flex-end',
   },
   alignCenter: {
     alignItems: 'center',

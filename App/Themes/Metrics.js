@@ -33,6 +33,7 @@ const metrics = {
     medium: Scale(140),
     large: Scale(170),
     xl: Scale(200),
+    xxl: Scale(230),
   },
   avatars: {
     tiny: Scale(20),

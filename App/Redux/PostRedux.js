@@ -25,6 +25,14 @@ const {Types, Creators} = createActions({
   dislikePostSuccess: ['payload'],
   dislikePostFailure: ['error'],
 
+  commentRequest: ['data', 'callback'],
+  commentSuccess: ['payload'],
+  commentFailure: ['error'],
+
+  getCommentsRequest: ['data', 'callback'],
+  getCommentsSuccess: ['payload'],
+  getCommentsFailure: ['error'],
+
   removePosts: null,
 });
 
@@ -42,10 +50,14 @@ export const DEFAULT_STATE = {
 
 export const INITIAL_STATE = Immutable({
   rootPosts: {},
+  rootComments: {},
+  comments: [],
   getPosts: DEFAULT_STATE,
   addPost: DEFAULT_STATE,
   likePost: DEFAULT_STATE,
   dislikePost: DEFAULT_STATE,
+  comment: DEFAULT_STATE,
+  getComments: DEFAULT_STATE,
 });
 
 /* ------------- Reducers ------------- */
@@ -131,10 +143,25 @@ export const likePostRequest = (state, {data}) => {
 };
 export const likePostSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {placeId, postId} = state.likePost.data;
+
+  let tempPosts = [...state.rootPosts[placeId]];
+  const postIndex = tempPosts.findIndex(post => post.id === postId);
+  let post = {...tempPosts[postIndex]};
+
+  let tempLikedBy = post.likedBy ? [...post.likedBy] : [];
+  tempLikedBy.push(payload.userId);
+
+  post.likedBy = tempLikedBy;
+  tempPosts[postIndex] = post;
 
   return state.merge({
     ...state,
     likePost: {fetching: false, error: null, payload, data: null},
+    rootPosts: {
+      ...state.rootPosts,
+      [placeId]: tempPosts,
+    },
   });
 };
 export const likePostFailure = (state, {error}) => {
@@ -158,11 +185,25 @@ export const dislikePostRequest = (state, {data}) => {
 };
 export const dislikePostSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {placeId, postId} = state.dislikePost.data;
+
+  let tempPosts = [...state.rootPosts[placeId]];
+  const postIndex = tempPosts.findIndex(post => post.id === postId);
+  let post = {...tempPosts[postIndex]};
+
+  let tempDislikedBy = post.dislikedBy ? [...post.dislikedBy] : [];
+  tempDislikedBy.push(payload.userId);
+
+  post.dislikedBy = tempDislikedBy;
+  tempPosts[postIndex] = post;
 
   return state.merge({
     ...state,
     dislikePost: {fetching: false, error: null, payload, data: null},
-    myPlaces: payload,
+    rootPosts: {
+      ...state.rootPosts,
+      [placeId]: tempPosts,
+    },
   });
 };
 export const dislikePostFailure = (state, {error}) => {
@@ -175,6 +216,100 @@ export const dislikePostFailure = (state, {error}) => {
   return state.merge({
     ...state,
     dislikePost: {fetching: false, error, payload: null},
+  });
+};
+
+export const commentRequest = (state, {data}) => {
+  return state.merge({
+    ...state,
+    comment: {...state.comment, fetching: true, data},
+  });
+};
+export const commentSuccess = (state, {payload}) => {
+  // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+  const {placeId, postId} = state.comment.data;
+
+  let tempPosts = [...state.rootPosts[placeId]];
+  // console.tron.log({tempPosts});
+  const postIndex = tempPosts.findIndex(post => post.id === postId);
+  let post = {...tempPosts[postIndex]};
+  console.tron.log({post});
+
+  let tempComments = post.comments ? [...post.comments] : [];
+  tempComments.push(payload.id);
+  console.tron.log({tempComments});
+
+  post.comments = tempComments;
+  tempPosts[postIndex] = post;
+  console.tron.log({after: tempPosts});
+
+  return state.merge({
+    ...state,
+    comment: {fetching: false, error: null, payload, data: null},
+    rootPosts: {
+      ...state.rootPosts,
+      [placeId]: tempPosts,
+    },
+    rootComments: {
+      ...state.rootComments,
+      [postId]: [
+        ...state.rootComments[postId],
+        {...payload, updatedAt: new Date()},
+      ],
+    },
+    // comments: [...state.comments, {...payload, updatedAt: new Date()}],
+  });
+};
+export const commentFailure = (state, {error}) => {
+  DropDownHolder.alert(
+    'error',
+    I18n.t('errorDefault'),
+    error.message || I18n.t('tryAgain'),
+  );
+
+  return state.merge({
+    ...state,
+    comment: {fetching: false, error, payload: null},
+  });
+};
+
+export const getCommentsRequest = (state, {data}) => {
+  return state.merge({
+    ...state,
+    getComments: {...state.getComments, fetching: true, data},
+  });
+};
+export const getCommentsSuccess = (state, {payload}) => {
+  // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
+
+  return state.merge({
+    ...state,
+    getComments: {fetching: false, error: null, payload, data: null},
+    rootComments: {
+      ...state.rootComments,
+      [state.getComments.data.postId]: payload.sort(
+        (a, b) =>
+          new Date(a.updatedAt._seconds * 1000) -
+          new Date(b.updatedAt._seconds * 1000),
+      ),
+    },
+    // comments: payload.sort(
+    //   (a, b) =>
+    //     new Date(a.updatedAt._seconds * 1000) -
+    //     new Date(b.updatedAt._seconds * 1000),
+    // ),
+  });
+};
+export const getCommentsFailure = (state, {error}) => {
+  DropDownHolder.alert(
+    'error',
+    I18n.t('errorDefault'),
+    error.message || I18n.t('tryAgain'),
+  );
+
+  return state.merge({
+    ...state,
+    getComments: {fetching: false, error, payload: null},
   });
 };
 
@@ -198,4 +333,12 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.DISLIKE_POST_REQUEST]: dislikePostRequest,
   [Types.DISLIKE_POST_SUCCESS]: dislikePostSuccess,
   [Types.DISLIKE_POST_FAILURE]: dislikePostFailure,
+
+  [Types.COMMENT_REQUEST]: commentRequest,
+  [Types.COMMENT_SUCCESS]: commentSuccess,
+  [Types.COMMENT_FAILURE]: commentFailure,
+
+  [Types.GET_COMMENTS_REQUEST]: getCommentsRequest,
+  [Types.GET_COMMENTS_SUCCESS]: getCommentsSuccess,
+  [Types.GET_COMMENTS_FAILURE]: getCommentsFailure,
 });

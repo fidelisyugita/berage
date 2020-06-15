@@ -34,7 +34,14 @@ import {
 import {getFavorites, addFavorite, removeFavorite} from './FavoriteSagas';
 import {getInboxes, sendNotif} from './InboxSagas';
 import {getBanners, addBanner, deleteBanner} from './BannerSagas';
-import {getPosts, addPost, likePost, dislikePost} from './PostSagas';
+import {
+  getPosts,
+  addPost,
+  likePost,
+  dislikePost,
+  comment,
+  getComments,
+} from './PostSagas';
 
 /* ------------- API ------------- */
 
@@ -83,5 +90,7 @@ export default function* root() {
     takeLatest(PostTypes.ADD_POST_REQUEST, addPost, api),
     takeLatest(PostTypes.LIKE_POST_REQUEST, likePost, api),
     takeLatest(PostTypes.DISLIKE_POST_REQUEST, dislikePost, api),
+    takeLatest(PostTypes.COMMENT_REQUEST, comment, api),
+    takeLatest(PostTypes.GET_COMMENTS_REQUEST, getComments, api),
   ]);
 }

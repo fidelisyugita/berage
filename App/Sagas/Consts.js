@@ -26,6 +26,8 @@ export const GET_POSTS = 'post-get';
 export const ADD_POST = 'post-add';
 export const LIKE_POST = 'post-like';
 export const DISLIKE_POST = 'post-dislike';
+export const COMMENT = 'post-comment';
+export const GET_COMMENTS = 'post-getComments';
 
 export const GET_CONSTANT = 'constant-get';
 export const SAVE_CONSTANT = 'constant-save';

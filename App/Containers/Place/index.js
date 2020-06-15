@@ -240,6 +240,29 @@ export class PlaceScreen extends Component {
     console.tron.log({result});
   };
 
+  onLikeDislikePress(post, like = true) {
+    const {item} = this.state;
+    const {currentUser, likePostRequest, dislikePostRequest} = this.props;
+
+    this.setState({isLoading: true});
+
+    const data = {
+      placeId: item.id, //for updating redux
+      postId: post.id,
+      updatedBy: currentUser,
+    };
+
+    console.tron.log({data});
+
+    if (like) likePostRequest(data, this.likeDislikeCallback);
+    else dislikePostRequest(data, this.likeDislikeCallback);
+  }
+
+  likeDislikeCallback = result => {
+    this.setState({isLoading: false});
+    console.tron.log({result});
+  };
+
   onRefresh = () => {
     this.setState({refreshing: true}, () => this.loadData());
   };
@@ -391,7 +414,7 @@ export class PlaceScreen extends Component {
               </TouchableHighlight>
             )}
             <Swiper
-              height={Metrics.images.xl + Metrics.marginVertical}
+              height={Metrics.images.xxl + Metrics.marginVertical}
               autoplay={true}
               loop={true}
               showsButtons={false}
@@ -403,7 +426,7 @@ export class PlaceScreen extends Component {
                   style={{
                     ...AppStyles.border5,
                     width: '100%',
-                    height: Metrics.images.xl,
+                    height: Metrics.images.xxl,
                   }}
                 />
               ))}
@@ -688,13 +711,22 @@ export class PlaceScreen extends Component {
         <FlatList
           style={[AppStyles.container]}
           data={posts || []}
-          keyExtractor={(item, idx) => `post-${idx}`}
-          renderItem={({item, idx}) => (
-            <Post
-              item={item}
-              // onPress={() => navigation.navigate('PlaceScreen', {item})}
-            />
-          )}
+          keyExtractor={(post, idx) => `post-${idx}`}
+          renderItem={data => {
+            return (
+              <Post
+                item={data.item}
+                currentUser={currentUser}
+                onLike={() => this.onLikeDislikePress(data.item, true)}
+                onDislike={() => this.onLikeDislikePress(data.item, false)}
+                onComment={() =>
+                  navigation.navigate('CommentsScreen', {
+                    item: data.item,
+                  })
+                }
+              />
+            );
+          }}
         />
       </ScrollView>
     );

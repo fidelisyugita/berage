@@ -103,28 +103,6 @@ export class ChatRoomScreen extends Component {
         }>
         <ModalLoader visible={isLoading} />
         <HeaderTitle title={I18n.t('chat')} shadow />
-        {/* {currentUser && rooms.length < 1 && (
-          <Room
-            item={{
-              user: {
-                _id: '6k9ZGxcPoEevJtpqOgEIO7oFmJu2',
-                name: 'Fidelis Yugita',
-                avatar:
-                  'https://lh3.googleusercontent.com/a-/AOh14GgBJeSYfmuu_qlD_KfS42dlI_YT71fP-LktWXrwsA',
-              },
-            }}
-            onPress={() =>
-              navigation.navigate('ChatScreen', {
-                user: {
-                  _id: '6k9ZGxcPoEevJtpqOgEIO7oFmJu2',
-                  name: 'Fidelis Yugita',
-                  avatar:
-                    'https://lh3.googleusercontent.com/a-/AOh14GgBJeSYfmuu_qlD_KfS42dlI_YT71fP-LktWXrwsA',
-                },
-              })
-            }
-          />
-        )} */}
         <FlatList
           data={rooms}
           keyExtractor={(item, idx) => item + idx}

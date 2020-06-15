@@ -204,7 +204,7 @@ export class ExploreScreen extends Component {
           }}>
           <Swiper
             // width={Scale(375)} //but swiper bigger
-            height={Metrics.images.xl + Metrics.baseMargin}
+            height={Metrics.images.xxl + Metrics.baseMargin}
             autoplay={true}
             loop={true}
             showsButtons={false}
@@ -227,7 +227,7 @@ export class ExploreScreen extends Component {
                     AppStyles.border3,
                     {
                       width: '100%',
-                      height: Metrics.images.xl,
+                      height: Metrics.images.xxl,
                     },
                   ]}
                 />
