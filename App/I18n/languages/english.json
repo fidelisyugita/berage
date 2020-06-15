@@ -1,26 +1,119 @@
 {
-   "signIn": "Sign In",
-   "logOut": "Log Out",
-   "loginLogoutExampleTitle": "Login/Logout Redux + Sagas Example",
-   "progressiveImageComponent": "Progressive Image Component",
-   "api": "API",
-   "locale": "I18n Locale",
-   "rnVectorIcons": "RN Vector Icons",
-   "loginWithFacebook": "Login with Facebook",
-   "rni18n": "RN i18n",
-   "igniteGenerated": "Ignite Generate Screens",
-   "forgotPassword": "Forgot Password",
-   "username": "Username",
-   "password": "Password",
-   "cancel": "Cancel",
-   "welcome": "Welcome",
-   "login": "Login",
-   "tempIndicator": "F",
-   "componentExamples": "Component Examples",
-   "usageExamples": "Usage Examples",
-   "apiTesting": "API Testing",
-   "themeSettings": "Theme Settings",
-   "deviceDetails": "Device Details",
-   "noItems": "No Items",
-   "search": "Search"
+  "explore": "Explore",
+  "saved": "Saved",
+  "chat": "Chat",
+  "inbox": "Inbox",
+  "profile": "Profile",
+
+  "searchPlaceholder": "Tongkrongan kite..",
+  "popular": "Popular",
+  "recommended": "Recommended",
+  "seeAll": "Liate nok lain",
+
+  "viewProfile": "Profil diri",
+  "viewEditProfile": "Profil diri",
+  "personalName": "Name ikak",
+
+  "admin": "Admin",
+  "setBanner": "Set Banner",
+  "setPopular": "Set Popular",
+  "setRecommended": "Set Recommended",
+  "sendNotif": "Send Notification",
+
+  "hosting": "Hosting",
+  "yourPlaces": "Tempat ikak",
+  "listYourSpace": "Tambah tempat",
+
+  "support": "Support",
+  "help": "Help",
+  "feedback": "Feedback",
+
+  "legal": "Legal",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+
+  "login": "Login",
+  "logout": "Logout",
+
+  "yesterday": "Kemari",
+
+  "share": "Bagie",
+  "comment": "Komen",
+
+  "submit": "Submit",
+  "add": "Tambah",
+  "save": "Simpan",
+
+  "savedDetail": "Klik icon Love idang nyimpan disine.",
+  "chatDetail": "Ngelakar cube kan biak-biak.",
+  "inboxDetail": "Disine idang pesan/pemberitahuan.",
+  "profileDetail": "Login dulu biar dapat akses lebe.",
+  "hostDetail": "Disine tempat-tempat nok ikak host.",
+  "onlineDetail": "Biak-biak nok online ade disine mun join.",
+  "maintenanceDetail": "Pembaharuan sistem, coba lagi nanti.",
+
+  "placeName": "Name tempat",
+  "placeCategories": "Kategori",
+  "placeStatus": "Status",
+  "placeDescription": "Intro sikit",
+  "setPlaceCoordinate": "Set your place coordinate",
+
+  "name": "Name tempat",
+  "categories": "Kategori",
+  "status": "Status",
+  "description": "Intro sikit",
+
+  "max": "Max",
+  "price": "Harge",
+
+  "priceDetail": "Harge dalam Rp (from - to)",
+
+  "pinYourLocation": "Tande'ek tempat ikak",
+
+  "title": "Judul",
+  "url": "Url",
+
+  "successDefault": "Berhasil",
+  "errorDefault": "Gagal mroses e",
+  "tryAgain": "Cube tes agi kini",
+
+  "fieldsRequired": "Isi semue data e",
+
+  "permissionDenied": "Izin e gagal",
+  "needLocationAccess": "Berage ne perlu gps ikak biar akses ikak nyaman",
+
+  "seePeople": "Liat biak-biak",
+  "joinAt": "Join at",
+  "peopleAreOnline": "Biak-biak online",
+  "online": "Online",
+  "meetOthers": "Ngelakar yuk",
+  "meetPeopleHere": "Liat nok online",
+  "join": "Join",
+  
+  "alreadyHostTitle": "Lah isa ngehost",
+  "alreadyHostMessage": "Tunggu di approve ye biar dapat host agi",
+  
+  "searchNotFound": "Dak ketemu nok ikak cari",
+
+  "loginFirst": "Login dulu",
+
+  "verify": "Verify",
+  
+  "tellUsPlaceholder": "Cube cerite, kite ngelakar?",
+  "commentPlaceholder": "Ikan iu ikan buas yuk balas",
+  "loginFirstPlaceholder": "Login dulu, jadi nyaman cerite disine",
+  "toFarPlaceholder": "Jarak ikak kejaoan. Kesine dulu atau restart app e",
+  "berage": "Berage",
+  "textIsEmpty": "Mane kate-kate e?",
+
+  "minute": "menit",
+  "available": "Tersedia",
+  
+  "open": "Buka",
+  "closed": "Tutup",
+  
+  "notInArea": "Jarak ikak kejaoan",
+
+  "noGps": "GPS mati",
+
 }

@@ -1,34 +1,47 @@
-import {Dimensions, Platform} from 'react-native'
+import {Dimensions, Platform} from 'react-native';
+import {Scale} from '../Transforms';
 
-const { width, height } = Dimensions.get('window')
+const {width, height} = Dimensions.get('window');
 
 // Used via Metrics.baseMargin
 const metrics = {
-  marginHorizontal: 10,
-  marginVertical: 10,
-  section: 25,
-  baseMargin: 10,
-  doubleBaseMargin: 20,
-  smallMargin: 5,
-  doubleSection: 50,
+  marginHorizontal: Scale(14),
+  marginVertical: Scale(16),
+  section: Scale(25),
+  baseMargin: Scale(10),
+  doubleBaseMargin: Scale(20),
+  smallMargin: Scale(4),
+  tinyMargin: Scale(2),
+  doubleSection: Scale(50),
   horizontalLineHeight: 1,
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
-  navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
-  buttonRadius: 4,
+  navBarHeight: Platform.OS === 'ios' ? Scale(64) : Scale(54),
+  buttonRadius: Scale(4),
+  imageRadius: Scale(7),
+  circleRadius: 50,
   icons: {
-    tiny: 15,
-    small: 20,
-    medium: 30,
-    large: 45,
-    xl: 50
+    tiny: Scale(20),
+    small: Scale(25),
+    medium: Scale(30),
+    large: Scale(35),
+    xl: Scale(40),
   },
   images: {
-    small: 20,
-    medium: 40,
-    large: 60,
-    logo: 200
-  }
-}
+    tiny: Scale(80),
+    small: Scale(110),
+    medium: Scale(140),
+    large: Scale(170),
+    xl: Scale(200),
+    xxl: Scale(230),
+  },
+  avatars: {
+    tiny: Scale(20),
+    small: Scale(30),
+    medium: Scale(40),
+    large: Scale(50),
+    xl: Scale(60),
+  },
+};
 
-export default metrics
+export default metrics;

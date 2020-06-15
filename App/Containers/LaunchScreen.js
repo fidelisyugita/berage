@@ -1,32 +1,83 @@
-import React, { Component } from 'react'
-import { ScrollView, Text, Image, View } from 'react-native'
-import DevscreensButton from '../../ignite/DevScreens/DevscreensButton.js'
+/* eslint-disable curly */
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
 
-import { Images } from '../Themes'
+import SessionActions from '../Redux/SessionRedux';
+import FavoriteActions from '../Redux/FavoriteRedux';
+
+import I18n from '../I18n';
+import {Scale} from '../Transforms';
+import {GetUserCoordinate} from '../Lib';
+
+import Logo from '../Images/svg/Logo.svg';
+
+import {DropDownHolder} from '../Components/DropDownHolder';
 
 // Styles
-import styles from './Styles/LaunchScreenStyles'
+import styles from './Styles/LaunchScreenStyles';
 
-export default class LaunchScreen extends Component {
-  render () {
+export class LaunchScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      denyCounter: 0,
+    };
+  }
+
+  componentDidMount() {
+    // this.getLocation();
+    this.loadData();
+
+    setTimeout(() => this.props.navigation.navigate('Main'), 500);
+  }
+
+  loadData() {
+    const {currentUser, getFavoritesRequest} = this.props;
+    if (currentUser) getFavoritesRequest();
+  }
+
+  async getLocation() {
+    const {saveUserLocation} = this.props;
+
+    try {
+      const coords = await GetUserCoordinate();
+      console.tron.log({getUserPosition: coords});
+      saveUserLocation(coords);
+    } catch (error) {
+      console.tron.error({error});
+      DropDownHolder.alert(
+        'error',
+        error.message || I18n.t('errorDefault'),
+        I18n.t('needLocationAccess'),
+      );
+    }
+  }
+
+  render() {
     return (
-      <View style={styles.mainContainer}>
-        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <ScrollView style={styles.container}>
-          <View style={styles.centered}>
-            <Image source={Images.launch} style={styles.logo} />
-          </View>
-
-          <View style={styles.section} >
-            <Image source={Images.ready} />
-            <Text style={styles.sectionText}>
-              This probably isn't what your app is going to look like. Unless your designer handed you this screen and, in that case, congrats! You're ready to ship. For everyone else, this is where you'll see a live preview of your fully functioning app using Ignite.
-            </Text>
-          </View>
-
-          <DevscreensButton />
-        </ScrollView>
-      </View>
-    )
+      <TouchableOpacity
+        style={styles.container}
+        // onPress={() => this.props.navigation.navigate('Main')}
+      >
+        <Logo width={Scale(300)} height={Scale(50)} />
+      </TouchableOpacity>
+    );
   }
 }
+const mapStateToProps = state => ({
+  currentUser: state.session.user,
+  userLocation: state.session.userLocation,
+  favoriteIds: state.session.favoriteIds,
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveUserLocation: data => dispatch(SessionActions.saveUserLocation(data)),
+  getFavoritesRequest: (data, callback) =>
+    dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LaunchScreen);
