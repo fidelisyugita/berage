@@ -21,6 +21,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
 import {getDistance} from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
+import openMap, {createOpenLink} from 'react-native-open-maps';
+import getDirections from 'react-native-google-maps-directions';
 
 import FavoriteActions from '../../Redux/FavoriteRedux';
 import PlaceActions from '../../Redux/PlaceRedux';
@@ -310,6 +312,37 @@ export class PlaceScreen extends Component {
     if (slotLeft >= 0) firebasePlace.change(slotLeft - 1);
   };
 
+  openMaps = () => {
+    const {userLocation} = this.props;
+    const {item} = this.state;
+
+    if (item.location) {
+      if (userLocation) {
+        getDirections({
+          source: userLocation,
+          destination: item.location,
+          params: [
+            {
+              key: 'travelmode',
+              value: 'driving', // may be "walking", "bicycling" or "transit" as well
+            },
+            {
+              key: 'dir_action',
+              value: 'navigate', // this instantly initializes navigation using the given travel mode
+            },
+          ],
+        });
+      } else {
+        openMap({
+          ...item.location,
+          zoom: 30,
+          // navigate_mode: 'navigate',
+          // end: item.name,
+        });
+      }
+    }
+  };
+
   render() {
     const {
       navigation,
@@ -477,7 +510,7 @@ export class PlaceScreen extends Component {
                 </Text>
               </View>
             </View>
-            <View style={AppStyles.flex1}>
+            <TouchableOpacity style={AppStyles.flex1} onPress={this.openMaps}>
               <View style={AppStyles.row}>
                 <Fontisto
                   name="map-marker-alt"
@@ -485,15 +518,15 @@ export class PlaceScreen extends Component {
                   color={Colors.baseText}
                 />
                 <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                  {`${distance} km`}
+                  {`${distance !== '-' ? distance : '?'} km`}
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
                 {distance !== '-'
                   ? `${EstimateDriveTime(distance)} ${I18n.t('minute')}`
-                  : '-'}
+                  : `? ${I18n.t('minute')}`}
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={AppStyles.flex1}>
               <View style={AppStyles.row}>
                 <Fontisto
