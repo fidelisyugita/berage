@@ -23,7 +23,9 @@ const Inbox = props => {
       <View style={[AppStyles.sectionVertical, AppStyles.borderTop5]}>
         <View style={[AppStyles.row]}>
           <CustomImage
-            source={{uri: item.image}}
+            source={{
+              uri: item.image && item.image.uri ? item.image.uri : item.image,
+            }}
             style={[
               AppStyles.border3,
               AppStyles.avatarMedium,

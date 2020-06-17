@@ -64,7 +64,7 @@ class FirebasePlace {
       .child(currentUser.uid)
       .update({...currentUser, timestamp: this.timestamp});
 
-    setTimeout(() => this.leave(), 5 * 60 * 1000); //leave after 5mins
+    // setTimeout(() => this.leave(), 5 * 60 * 1000); //leave after 5mins
   };
 
   leave() {

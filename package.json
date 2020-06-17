@@ -16,6 +16,7 @@
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "npx jetify && cd android && ./gradlew assembleRelease && ./gradlew installRelease",
+    "android:bundle": "npx jetify && cd android && ./gradlew bundleRelease && ./gradlew installRelease",
     "android:hockeyapp": "cd android && ./gradlew assembleRelease && puck -submit=auto app/build/outputs/apk/app-release.apk",
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",

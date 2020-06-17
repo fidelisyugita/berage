@@ -27,6 +27,7 @@ import CustomImage from '../../Components/CustomImage';
 import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
+import Loader from '../../Components/Loader';
 
 import {chats} from '../Dummy';
 
@@ -90,8 +91,9 @@ export class InboxScreen extends Component {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader visible={getInboxes.fetching && inboxes.length < 1} />
+        {/* <ModalLoader visible={getInboxes.fetching && inboxes.length < 1} /> */}
         <HeaderTitle title={I18n.t('inbox')} shadow />
+        {getInboxes.fetching && <Loader style={[AppStyles.sectionVertical]} />}
         <FlatList
           data={inboxes}
           keyExtractor={(item, idx) => item + idx}

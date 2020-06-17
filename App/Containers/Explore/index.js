@@ -222,7 +222,12 @@ export class ExploreScreen extends Component {
                 key={banner.image}
                 onPress={() => NavigateUrl(banner.url)}>
                 <CustomImage
-                  source={{uri: banner.image}}
+                  source={{
+                    uri:
+                      banner.image && banner.image.uri
+                        ? banner.image.uri
+                        : banner.image,
+                  }}
                   style={[
                     AppStyles.border3,
                     {

@@ -56,8 +56,8 @@ export class OnlineUsersScreen extends Component {
        * make sure it's okay
        * or change it
        */
-      // firebasePlace.offOnlineUsers();
-      // firebasePlace = null;
+      firebasePlace.offOnlineUsers();
+      firebasePlace = null;
     }
   }
 

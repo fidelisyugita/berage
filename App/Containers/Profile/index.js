@@ -189,7 +189,7 @@ export class ProfileScreen extends Component {
                 />
               </View>
             </TouchableHighlight>
-            <TouchableHighlight
+            {/* <TouchableHighlight
               onPress={() => navigation.navigate('setPopular')}
               underlayColor={Colors.highlightUnderlay}
               style={AppStyles.section}>
@@ -230,7 +230,7 @@ export class ProfileScreen extends Component {
                   color={Colors.baseText}
                 />
               </View>
-            </TouchableHighlight>
+            </TouchableHighlight> */}
             <TouchableHighlight
               onPress={() => navigation.navigate('SendNotifScreen')}
               underlayColor={Colors.highlightUnderlay}
