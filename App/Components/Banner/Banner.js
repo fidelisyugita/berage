@@ -12,14 +12,13 @@ import {DateFormatter} from '../../Lib';
 
 import CustomImage from '../CustomImage';
 
-const Inbox = props => {
-  const {children, item, onPress} = props;
+const Banner = props => {
+  const {children, item, onPress, onDeletePress} = props;
+
+  console.tron.log({item});
 
   return (
-    <TouchableHighlight
-      onPress={onPress}
-      underlayColor={Colors.highlightUnderlay}
-      style={[AppStyles.section]}>
+    <View style={[AppStyles.section]}>
       <View style={[AppStyles.sectionVertical, AppStyles.borderTop5]}>
         <View style={[AppStyles.row]}>
           <CustomImage
@@ -50,11 +49,9 @@ const Inbox = props => {
           </View>
         </View>
 
-        <View style={AppStyles.sectionVertical}>
+        {/* <View style={AppStyles.container}>
           <CustomImage
-            source={{
-              uri: item.image && item.image.uri ? item.image.uri : item.image,
-            }}
+            source={{uri: item.image}}
             style={{
               ...AppStyles.border3,
               ...AppStyles.borderImage,
@@ -63,19 +60,63 @@ const Inbox = props => {
             }}
             imageStyle={AppStyles.borderImage}
           />
+        </View> */}
+      </View>
+
+      <View
+        style={
+          {
+            // ...AppStyles.section,
+            // ...AppStyles.sectionVerticalBase,
+            // ...AppStyles.shadow,
+          }
+        }>
+        <CustomImage
+          source={{
+            uri: item.image && item.image.uri ? item.image.uri : item.image,
+          }}
+          style={{
+            ...AppStyles.border3,
+            ...AppStyles.borderImage,
+            height: Metrics.images.large,
+            width: '100%',
+          }}
+          imageStyle={AppStyles.borderImage}
+        />
+        <View
+          style={{
+            ...AppStyles.section,
+            ...AppStyles.sectionVerticalBase,
+            ...AppStyles.borderImage,
+            backgroundColor: Colors.tempHomeLoader,
+          }}>
+          <TouchableHighlight
+            underlayColor={Colors.highlightUnderlay}
+            onPress={onDeletePress}
+            style={{
+              ...AppStyles.sectionVerticalBase,
+              ...AppStyles.alignCenter,
+              ...AppStyles.border7,
+              ...AppStyles.borderImage,
+              ...AppStyles.shadow,
+              width: '100%',
+            }}>
+            <Text style={[Fonts.style.large]}>{I18n.t('delete')}</Text>
+          </TouchableHighlight>
         </View>
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 
-Inbox.propTypes = {
+Banner.propTypes = {
   item: PropTypes.object.isRequired,
   onPress: PropTypes.func.isRequired,
+  onDeletePress: PropTypes.func.isRequired,
 };
 
-Inbox.defaultProps = {
+Banner.defaultProps = {
   style: {},
 };
 
-export default Inbox;
+export default Banner;

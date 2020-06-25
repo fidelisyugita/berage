@@ -64,10 +64,10 @@ export class SearchPlaceScreen extends Component {
 
     return (
       <ScrollView>
-        <ModalLoader
+        {/* <ModalLoader
           visible={getPlaces.fetching}
           imageSource={Images.homeLoader}
-        />
+        /> */}
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <View
@@ -99,6 +99,8 @@ export class SearchPlaceScreen extends Component {
             />
           </View>
         </View>
+
+        {getPlaces.fetching && <Loader style={[AppStyles.sectionVertical]} />}
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <FlatList

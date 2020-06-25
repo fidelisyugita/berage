@@ -156,16 +156,16 @@ export class ExploreScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader
+        {/* <ModalLoader
           visible={
             getPopularPlaces.fetching ||
             getRecommendedPlaces.fetching ||
             (getBanners.fetching && banners.length < 1)
           }
           imageSource={Images.homeLoader}
-        />
+        /> */}
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <TouchableWithoutFeedback
@@ -196,6 +196,12 @@ export class ExploreScreen extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
+
+        {(getPopularPlaces.fetching ||
+          getRecommendedPlaces.fetching ||
+          getBanners.fetching) && (
+          <Loader style={[AppStyles.sectionVertical]} />
+        )}
 
         <View
           style={{
