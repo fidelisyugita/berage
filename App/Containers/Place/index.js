@@ -294,7 +294,10 @@ export class PlaceScreen extends Component {
           getDistance(userLocation, item.location),
           1000,
         );
-      if (parseFloat(distance) < 0.5) {
+
+      const isAroundThePlace = parseFloat(distance) < 0.1; //less than 100m
+
+      if (isAroundThePlace) {
         navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
       } else DropDownHolder.alert('warn', I18n.t('notInArea'), undefined);
     }
@@ -379,6 +382,7 @@ export class PlaceScreen extends Component {
         getDistance(userLocation, item.location),
         1000,
       );
+    const isAroundThePlace = parseFloat(distance) < 0.1; //less than 100m
 
     return (
       <ScrollView
@@ -661,12 +665,12 @@ export class PlaceScreen extends Component {
                 // onFocus={!currentUser ? this.onPostPress : () => {}}
                 editable={
                   currentUser != null &&
-                  (currentUser.superUser || parseFloat(distance) < 0.5)
-                } //less than 500m
+                  (currentUser.superUser || isAroundThePlace)
+                } //less than 100m
                 value={textToPost}
                 placeholder={
                   currentUser != null
-                    ? parseFloat(distance) < 0.5
+                    ? isAroundThePlace
                       ? I18n.t('tellUsPlaceholder')
                       : I18n.t('toFarPlaceholder')
                     : I18n.t('loginFirstPlaceholder')
@@ -714,8 +718,7 @@ export class PlaceScreen extends Component {
                   disabled={
                     imageToPost ||
                     !currentUser ||
-                    ((distance === '-' || parseFloat(distance)) >= 0.5 &&
-                      !currentUser.superUser)
+                    (!isAroundThePlace && !currentUser.superUser)
                   }
                   onPress={this.addImage}>
                   <AntDesign

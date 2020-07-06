@@ -109,6 +109,7 @@ export class ExploreScreen extends Component {
           ...AppStyles.sectionVerticalSmall,
           flexDirection: 'row',
           justifyContent: 'space-between',
+          marginTop: Scale(8),
         }}>
         <Text style={Fonts.style.large3}>{section.title}</Text>
         <TouchableOpacity onPress={section.onPress}>

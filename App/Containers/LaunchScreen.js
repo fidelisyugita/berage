@@ -11,11 +11,13 @@ import {Scale} from '../Transforms';
 import {GetUserCoordinate} from '../Lib';
 
 import Logo from '../Images/svg/Logo.svg';
+import BerageText from '../Images/svg/BerageText.svg';
 
 import {DropDownHolder} from '../Components/DropDownHolder';
 
 // Styles
 import styles from './Styles/LaunchScreenStyles';
+import {AppStyles} from '../Themes';
 
 export class LaunchScreen extends Component {
   constructor(props) {
@@ -60,7 +62,8 @@ export class LaunchScreen extends Component {
         style={styles.container}
         // onPress={() => this.props.navigation.navigate('Main')}
       >
-        <Logo width={Scale(300)} height={Scale(50)} />
+        <Logo width={Scale(100)} height={Scale(100)} />
+        <BerageText width={Scale(200)} height={Scale(70)} />
       </TouchableOpacity>
     );
   }
