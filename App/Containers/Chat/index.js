@@ -104,7 +104,7 @@ export class ChatRoomScreen extends Component {
         <ModalLoader visible={isLoading} />
         <HeaderTitle title={I18n.t('chat')} shadow />
         <FlatList
-          data={rooms}
+          data={rooms.sort((a, b) => b.updatedAt - a.updatedAt)}
           keyExtractor={(item, idx) => item + idx}
           renderItem={({item}) => (
             <Room

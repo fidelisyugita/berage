@@ -36,14 +36,20 @@ import EmptyState from '../../Components/EmptyState';
 
 import {images, items} from '../Dummy';
 
+const DATA_PER_PAGE = 10;
+
 export class SearchPlaceScreen extends Component {
   constructor(props) {
     super(props);
+    this.onEndReachedCalledDuringMomentum = true;
+
     this.state = {
       isLoading: false,
       refreshing: false,
       searchText: '',
       firstOpen: true,
+      page: 0,
+      isLoadMore: false,
     };
   }
 
@@ -51,85 +57,130 @@ export class SearchPlaceScreen extends Component {
 
   onSearch = () => {
     const {getPlacesRequest} = this.props;
-    const {searchText} = this.state;
+    const {searchText, page} = this.state;
 
-    this.setState({firstOpen: false});
+    this.setState({firstOpen: false, page: 0, isLoadMore: false});
+    getPlacesRequest({searchText, page: 0, limit: DATA_PER_PAGE});
+  };
 
-    getPlacesRequest({searchText});
+  loadMore = () => {
+    const {getPlacesRequest, getPlaces} = this.props;
+    const {searchText, page} = this.state;
+
+    console.tron.log({getPlaces});
+
+    const {payload} = getPlaces;
+
+    if (
+      !this.onEndReachedCalledDuringMomentum &&
+      payload.length === DATA_PER_PAGE
+    ) {
+      console.tron.log('load moreeee');
+
+      this.setState({page: page + 1, isLoadMore: true});
+      getPlacesRequest({searchText, page: page + 1, limit: DATA_PER_PAGE});
+      this.onEndReachedCalledDuringMomentum = true;
+    }
+  };
+
+  renderHeader = () => {
+    const {navigation, userLocation, getPlaces, places} = this.props;
+    const {refreshing, searchText, firstOpen, isLoadMore} = this.state;
+
+    return (
+      <View
+        style={[
+          AppStyles.container,
+          AppStyles.containerBottom,
+          AppStyles.section,
+        ]}>
+        <View
+          style={{
+            backgroundColor: Colors.white,
+            borderRadius: Metrics.circleRadius,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: Metrics.marginHorizontal,
+            ...AppStyles.shadow,
+          }}>
+          <TouchableOpacity onPress={() => navigation.pop()}>
+            <Icon
+              name="arrow-left"
+              size={Metrics.icons.tiny}
+              color={Colors.placeholder}
+            />
+          </TouchableOpacity>
+          <TextInput
+            style={[
+              Fonts.style.medium,
+              AppStyles.smallMarginLeft,
+              AppStyles.flex1,
+            ]}
+            value={searchText}
+            onChangeText={text => this.setState({searchText: text})}
+            onEndEditing={this.onSearch}
+            placeholder={I18n.t('searchPlaceholder')}
+          />
+        </View>
+
+        {getPlaces.fetching && !isLoadMore && (
+          <Loader style={[AppStyles.sectionVertical]} />
+        )}
+      </View>
+    );
+  };
+
+  renderFooter = () => {
+    const {navigation, userLocation, getPlaces, places} = this.props;
+    const {refreshing, searchText, firstOpen, isLoadMore} = this.state;
+
+    return (
+      <View>
+        {getPlaces.fetching && isLoadMore && (
+          <Loader style={[AppStyles.sectionVertical]} />
+        )}
+      </View>
+    );
   };
 
   render() {
     const {navigation, userLocation, getPlaces, places} = this.props;
-    const {refreshing, searchText, firstOpen} = this.state;
+    const {refreshing, searchText, firstOpen, isLoadMore} = this.state;
 
     return (
-      <ScrollView>
-        {/* <ModalLoader
-          visible={getPlaces.fetching}
-          imageSource={Images.homeLoader}
-        /> */}
-
-        <View style={[AppStyles.container, AppStyles.section]}>
-          <View
-            style={{
-              backgroundColor: Colors.white,
-              borderRadius: Metrics.circleRadius,
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingHorizontal: Metrics.marginHorizontal,
-              ...AppStyles.shadow,
-            }}>
-            <TouchableOpacity onPress={() => navigation.pop()}>
-              <Icon
-                name="arrow-left"
-                size={Metrics.icons.tiny}
-                color={Colors.placeholder}
-              />
-            </TouchableOpacity>
-            <TextInput
-              style={[
-                Fonts.style.medium,
-                AppStyles.smallMarginLeft,
-                AppStyles.flex1,
-              ]}
-              value={searchText}
-              onChangeText={text => this.setState({searchText: text})}
-              onEndEditing={this.onSearch}
-              placeholder={I18n.t('searchPlaceholder')}
-            />
-          </View>
-        </View>
-
-        {getPlaces.fetching && <Loader style={[AppStyles.sectionVertical]} />}
-
-        <View style={[AppStyles.container, AppStyles.section]}>
-          <FlatList
-            data={places || []}
-            keyExtractor={(item, idx) => item + idx}
-            renderItem={({item}) => (
-              <Place
-                item={item}
-                userLocation={userLocation}
-                onPress={() => navigation.navigate('PlaceScreen', {item})}
-              />
-            )}
-            ListEmptyComponent={() => (
-              <EmptyState
-                imageSource={Images.homeLoader}
-                message={firstOpen ? null : I18n.t('searchNotFound')}
-                containerStyle={{
-                  backgroundColor: Colors.tempHomeLoader,
-                  height: Metrics.screenHeight,
-                }}
-                imageStyle={{
-                  width: Metrics.screenWidth,
-                  height: Metrics.screenWidth,
-                }}
-              />
-            )}
+      <FlatList
+        style={[AppStyles.section]}
+        ListHeaderComponent={this.renderHeader}
+        ListFooterComponent={this.renderFooter}
+        data={places || []}
+        keyExtractor={(item, idx) => item + idx}
+        renderItem={({item}) => (
+          <Place
+            item={item}
+            userLocation={userLocation}
+            onPress={() => navigation.navigate('PlaceScreen', {item})}
           />
-        </View>
-      </ScrollView>
+        )}
+        ListEmptyComponent={() => (
+          <EmptyState
+            imageSource={Images.homeLoader}
+            message={firstOpen ? null : I18n.t('searchNotFound')}
+            containerStyle={{
+              backgroundColor: Colors.tempHomeLoader,
+              height: Metrics.screenHeight,
+            }}
+            imageStyle={{
+              width: Metrics.screenWidth,
+              height: Metrics.screenWidth,
+            }}
+          />
+        )}
+        onEndReachedThreshold={0.1}
+        onEndReached={this.loadMore}
+        onMomentumScrollBegin={() => {
+          this.onEndReachedCalledDuringMomentum = false;
+        }}
+      />
     );
   }
 }
