@@ -283,7 +283,7 @@ export class PlaceScreen extends Component {
     if (!currentUser) {
       DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
     } else {
-      if (currentUser.superUser) {
+      if (currentUser.superUser || currentUser.premiumUser) {
         navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
         return;
       }
@@ -665,7 +665,9 @@ export class PlaceScreen extends Component {
                 // onFocus={!currentUser ? this.onPostPress : () => {}}
                 editable={
                   currentUser != null &&
-                  (currentUser.superUser || isAroundThePlace)
+                  (currentUser.superUser ||
+                    currentUser.premiumUser ||
+                    isAroundThePlace)
                 } //less than 100m
                 value={textToPost}
                 placeholder={
@@ -718,7 +720,9 @@ export class PlaceScreen extends Component {
                   disabled={
                     imageToPost ||
                     !currentUser ||
-                    (!isAroundThePlace && !currentUser.superUser)
+                    (!isAroundThePlace &&
+                      !currentUser.superUser &&
+                      !currentUser.premiumUser)
                   }
                   onPress={this.addImage}>
                   <AntDesign
