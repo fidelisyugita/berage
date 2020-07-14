@@ -73,7 +73,7 @@ class FirebaseChat {
       const {text, user} = messages[i];
       const message = {
         text,
-        user,
+        user: {...user, receiver: false},
         timestamp: this.timestamp,
       };
       this.append(message);
@@ -93,6 +93,8 @@ class FirebaseChat {
         _id: targetUser._id || targetUser.uid,
         avatar: targetUser.avatar || targetUser.photoURL,
         name: targetUser.name || targetUser.displayName,
+        fcmToken: targetUser.fcmToken,
+        receiver: true,
       },
     });
     this.targetRoomRef.update(message);

@@ -44,7 +44,7 @@ export class AddBannerScreen extends Component {
 
   addImage = async () => {
     try {
-      const image = await UploadImage('banners');
+      const image = await UploadImage('banners', Scale(750), Scale(460));
       console.tron.log({image});
       this.setState({image});
     } catch (error) {

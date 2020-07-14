@@ -63,7 +63,7 @@ export function* startup(action) {
       error.message || I18n.t('errorDefault'),
       I18n.t('needLocationAccess'),
     );
-    setTimeout(() => BackHandler.exitApp(), 1000);
+    setTimeout(() => BackHandler.exitApp(), 10000);
   }
 
   const currentUser = yield select(getUser);
