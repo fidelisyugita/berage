@@ -44,16 +44,16 @@ export class SendNotifScreen extends Component {
 
   addImage = async () => {
     try {
-      const image = await UploadImage('inboxes');
+      const image = await UploadImage('inboxes', Scale(750), Scale(460));
       console.tron.log({image});
       this.setState({image});
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
+      // DropDownHolder.alert(
+      //   'error',
+      //   I18n.t('errorDefault'),
+      //   error.message || I18n.t('tryAgain'),
+      // );
     }
   };
 
@@ -73,6 +73,11 @@ export class SendNotifScreen extends Component {
 
     this.setState({isLoading: true});
 
+    /**
+     * TODO
+     * - add placeId
+     */
+
     const data = {
       image: image
         ? {
@@ -83,6 +88,7 @@ export class SendNotifScreen extends Component {
       title,
       url: url.startsWith('http') ? url : `http://${url}`,
       description,
+      placeId: null,
     };
 
     console.tron.log({data});

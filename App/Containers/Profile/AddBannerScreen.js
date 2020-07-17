@@ -49,11 +49,11 @@ export class AddBannerScreen extends Component {
       this.setState({image});
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
+      // DropDownHolder.alert(
+      //   'error',
+      //   I18n.t('errorDefault'),
+      //   error.message || I18n.t('tryAgain'),
+      // );
     }
   };
 

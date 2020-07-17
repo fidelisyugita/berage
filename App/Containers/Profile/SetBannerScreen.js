@@ -71,7 +71,8 @@ export class SetBannerScreen extends Component {
   };
 
   onDeletePress(item) {
-    if (item.image && item.image.refPath) DeleteImage(item.image.refPath);
+    //change to soft delete
+    // if (item.image && item.image.refPath) DeleteImage(item.image.refPath);
     this.props.deleteBannerRequest({id: item.id});
   }
 

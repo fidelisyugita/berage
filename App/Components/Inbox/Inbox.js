@@ -58,7 +58,7 @@ const Inbox = props => {
             style={{
               ...AppStyles.border3,
               ...AppStyles.borderImage,
-              height: Metrics.images.large,
+              height: Metrics.images.xxl,
               width: '100%',
             }}
             imageStyle={AppStyles.borderImage}
