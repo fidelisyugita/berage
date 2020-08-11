@@ -99,6 +99,7 @@ export class ChatScreen extends Component {
             _id: currentUser.uid,
             name: currentUser.displayName,
             avatar: currentUser.photoURL,
+            fcmToken: currentUser.fcmToken,
           }}
         />
       </View>

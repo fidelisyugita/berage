@@ -57,7 +57,7 @@ class FirebaseChat {
     //   .limitToLast(20)
     //   .on('child_added', snapshot => callback(this.parse(snapshot)));
 
-    this.roomRef.limitToLast(20).on('value', snapshot => {
+    this.roomRef.limitToLast(100).on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         callback(this.parse(childSnapshot));
       });

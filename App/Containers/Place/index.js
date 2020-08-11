@@ -382,7 +382,7 @@ export class PlaceScreen extends Component {
         getDistance(userLocation, item.location),
         1000,
       );
-    const isAroundThePlace = parseFloat(distance) < 0.1; //less than 100m
+    const isAroundThePlace = parseFloat(distance) < 0.5; //less than 500m
 
     return (
       <ScrollView
