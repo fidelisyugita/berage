@@ -10,6 +10,7 @@
     "lint": "standard --verbose | snazzy",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && npx react-native run-android",
+    "clean:ios": "cd ios && pod install && cd ../ && react-native run-ios",
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build && rm -rf node_modules/ && npm cache clean --force && npm i",
     "test:watch": "jest --watch",
     "updateSnapshot": "jest --updateSnapshot",
