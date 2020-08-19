@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   SectionList,
   RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -68,7 +69,7 @@ export class ChatScreen extends Component {
     const name = (targetUser && targetUser.name) || targetUser.displayName;
 
     return (
-      <View style={[AppStyles.flex1]}>
+      <SafeAreaView style={[AppStyles.flex1]}>
         <ModalLoader visible={isLoading} />
         <CustomHeader
           onBack={() => navigation.pop()}
@@ -102,7 +103,7 @@ export class ChatScreen extends Component {
             fcmToken: currentUser.fcmToken,
           }}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }

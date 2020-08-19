@@ -9,6 +9,7 @@ import {
   SectionList,
   RefreshControl,
   TouchableHighlight,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -89,39 +90,41 @@ export class SavedScreen extends Component {
     const {isLoading, refreshing} = this.state;
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
-        }>
-        <ModalLoader visible={isLoading || getFavorites.fetching} />
-        <HeaderTitle title={I18n.t('saved')} shadow />
-        <FlatList
-          data={favorites}
-          keyExtractor={(item, idx) => item + idx}
-          renderItem={({item}) => (
-            <SavedPlace
-              item={item}
-              onPress={() => navigation.navigate('PlaceScreen', {item})}
-              userLocation={userLocation}
-            />
-          )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptySavedData}
-              message={I18n.t('savedDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}>
-              {!currentUser && <LoginButton onPress={this.onLoginPress} />}
-            </EmptyState>
-          )}
-        />
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          }>
+          <ModalLoader visible={isLoading || getFavorites.fetching} />
+          <HeaderTitle title={I18n.t('saved')} shadow />
+          <FlatList
+            data={favorites}
+            keyExtractor={(item, idx) => item + idx}
+            renderItem={({item}) => (
+              <SavedPlace
+                item={item}
+                onPress={() => navigation.navigate('PlaceScreen', {item})}
+                userLocation={userLocation}
+              />
+            )}
+            ListEmptyComponent={() => (
+              <EmptyState
+                imageSource={Images.emptySavedData}
+                message={I18n.t('savedDetail')}
+                containerStyle={{
+                  backgroundColor: Colors.white,
+                  height: Metrics.screenHeight,
+                }}
+                imageStyle={{
+                  width: Metrics.screenWidth,
+                  height: Metrics.screenWidth,
+                }}>
+                {!currentUser && <LoginButton onPress={this.onLoginPress} />}
+              </EmptyState>
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

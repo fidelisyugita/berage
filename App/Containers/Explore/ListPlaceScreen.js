@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PermissionsAndroid,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -81,46 +82,48 @@ export class ListPlaceScreen extends Component {
     const {refreshing} = this.state;
 
     return (
-      <ScrollView>
-        {/* <ModalLoader
+      <SafeAreaView>
+        <ScrollView>
+          {/* <ModalLoader
           visible={getPopularPlaces.fetching || getRecommendedPlaces.fetching}
           imageSource={Images.homeLoader}
         /> */}
-        <CustomHeader onBack={() => navigation.pop()} />
-        {(getPopularPlaces.fetching || getRecommendedPlaces.fetching) && (
-          <Loader style={[AppStyles.sectionVertical]} />
-        )}
+          <CustomHeader onBack={() => navigation.pop()} />
+          {(getPopularPlaces.fetching || getRecommendedPlaces.fetching) && (
+            <Loader style={[AppStyles.sectionVertical]} />
+          )}
 
-        <View style={[AppStyles.container, AppStyles.section]}>
-          <FlatList
-            data={places || []}
-            keyExtractor={(item, idx) => item + idx}
-            // onEndReached={this.loadMore}
-            // onEndReachedThreshold={0.4}
-            renderItem={({item}) => (
-              <Place
-                item={item}
-                userLocation={userLocation}
-                onPress={() => navigation.navigate('PlaceScreen', {item})}
-              />
-            )}
-            ListEmptyComponent={() => (
-              <EmptyState
-                imageSource={Images.homeLoader}
-                message={I18n.t('searchNotFound')}
-                containerStyle={{
-                  backgroundColor: Colors.tempHomeLoader,
-                  height: Metrics.screenHeight,
-                }}
-                imageStyle={{
-                  width: Metrics.screenWidth,
-                  height: Metrics.screenWidth,
-                }}
-              />
-            )}
-          />
-        </View>
-      </ScrollView>
+          <View style={[AppStyles.container, AppStyles.section]}>
+            <FlatList
+              data={places || []}
+              keyExtractor={(item, idx) => item + idx}
+              // onEndReached={this.loadMore}
+              // onEndReachedThreshold={0.4}
+              renderItem={({item}) => (
+                <Place
+                  item={item}
+                  userLocation={userLocation}
+                  onPress={() => navigation.navigate('PlaceScreen', {item})}
+                />
+              )}
+              ListEmptyComponent={() => (
+                <EmptyState
+                  imageSource={Images.homeLoader}
+                  message={I18n.t('searchNotFound')}
+                  containerStyle={{
+                    backgroundColor: Colors.tempHomeLoader,
+                    height: Metrics.screenHeight,
+                  }}
+                  imageStyle={{
+                    width: Metrics.screenWidth,
+                    height: Metrics.screenWidth,
+                  }}
+                />
+              )}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

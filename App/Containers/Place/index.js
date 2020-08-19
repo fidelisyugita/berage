@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -385,390 +386,395 @@ export class PlaceScreen extends Component {
     const isAroundThePlace = parseFloat(distance) < 0.5; //less than 500m
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
-        }>
-        <ModalLoader
-          visible={
-            setPopular.fetching ||
-            setRecommended.fetching ||
-            addPost.fetching ||
-            isLoading
-          }
-        />
-        <View style={AppStyles.shadow}>
-          <View>
-            <TouchableHighlight
-              onPress={() => navigation.pop()}
-              style={{...AppStyles.btnIcon, ...styles.headerIcon}}>
-              <AntDesign
-                name="arrowleft"
-                size={Metrics.icons.tiny}
-                color={Colors.silver}
-              />
-            </TouchableHighlight>
-            <TouchableHighlight
-              // onPress={() => navigation.pop()}
-              style={{
-                ...AppStyles.btnIcon,
-                ...styles.headerIcon,
-                left: Scale(280),
-              }}>
-              <AntDesign
-                name="sharealt"
-                size={Metrics.icons.tiny}
-                color={Colors.silver}
-              />
-            </TouchableHighlight>
-            {owner && currentUser && owner.uid === currentUser.uid ? (
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          }>
+          <ModalLoader
+            visible={
+              setPopular.fetching ||
+              setRecommended.fetching ||
+              addPost.fetching ||
+              isLoading
+            }
+          />
+          <View style={AppStyles.shadow}>
+            <View>
               <TouchableHighlight
-                onPress={() => navigation.navigate('AddPlaceScreen', {item})}
-                style={{
-                  ...AppStyles.btnIcon,
-                  ...styles.headerIcon,
-                  left: Scale(325),
-                }}>
+                onPress={() => navigation.pop()}
+                style={{...AppStyles.btnIcon, ...styles.headerIcon}}>
                 <AntDesign
-                  name={'edit'}
+                  name="arrowleft"
                   size={Metrics.icons.tiny}
                   color={Colors.silver}
                 />
               </TouchableHighlight>
-            ) : (
               <TouchableHighlight
-                onPress={this.addRemoveFavorite}
+                // onPress={() => navigation.pop()}
                 style={{
                   ...AppStyles.btnIcon,
                   ...styles.headerIcon,
-                  left: Scale(325),
+                  left: Scale(280),
                 }}>
                 <AntDesign
-                  name={isLiked ? 'heart' : 'hearto'}
+                  name="sharealt"
                   size={Metrics.icons.tiny}
-                  color={isLiked ? Colors.fire : Colors.silver}
+                  color={Colors.silver}
                 />
               </TouchableHighlight>
-            )}
-            <Swiper
-              height={Metrics.images.xxl + Metrics.marginVertical}
-              autoplay={true}
-              loop={true}
-              showsButtons={false}
-              showsPagination={true}>
-              {item.images.map(image => (
-                <CustomImage
-                  key={image}
-                  source={{uri: image.uri ? image.uri : image}}
+              {owner && currentUser && owner.uid === currentUser.uid ? (
+                <TouchableHighlight
+                  onPress={() => navigation.navigate('AddPlaceScreen', {item})}
                   style={{
-                    ...AppStyles.border5,
-                    width: '100%',
-                    height: Metrics.images.xxl,
-                  }}
-                />
-              ))}
-            </Swiper>
-          </View>
+                    ...AppStyles.btnIcon,
+                    ...styles.headerIcon,
+                    left: Scale(325),
+                  }}>
+                  <AntDesign
+                    name={'edit'}
+                    size={Metrics.icons.tiny}
+                    color={Colors.silver}
+                  />
+                </TouchableHighlight>
+              ) : (
+                <TouchableHighlight
+                  onPress={this.addRemoveFavorite}
+                  style={{
+                    ...AppStyles.btnIcon,
+                    ...styles.headerIcon,
+                    left: Scale(325),
+                  }}>
+                  <AntDesign
+                    name={isLiked ? 'heart' : 'hearto'}
+                    size={Metrics.icons.tiny}
+                    color={isLiked ? Colors.fire : Colors.silver}
+                  />
+                </TouchableHighlight>
+              )}
+              <Swiper
+                height={Metrics.images.xxl + Metrics.marginVertical}
+                autoplay={true}
+                loop={true}
+                showsButtons={false}
+                showsPagination={true}>
+                {item.images.map(image => (
+                  <CustomImage
+                    key={image}
+                    source={{uri: image.uri ? image.uri : image}}
+                    style={{
+                      ...AppStyles.border5,
+                      width: '100%',
+                      height: Metrics.images.xxl,
+                    }}
+                  />
+                ))}
+              </Swiper>
+            </View>
 
-          <View style={[AppStyles.sectionMargin, AppStyles.borderBottom5]}>
-            <Text style={Fonts.style.large3}>{item.name || '-'}</Text>
-            <Text style={[Fonts.style.small2, AppStyles.containerSmall]}>
-              {item.categories.join(', ')}
-            </Text>
-            <Text
-              style={[
-                Fonts.style.small,
-                AppStyles.containerSmall,
-                AppStyles.containerBottom,
-              ]}>
-              {item.description}
-            </Text>
-          </View>
-          <View
-            style={[
-              AppStyles.sectionVertical,
-              AppStyles.section,
-              AppStyles.row,
-              AppStyles.borderBottom7,
-            ]}>
+            <View style={[AppStyles.sectionMargin, AppStyles.borderBottom5]}>
+              <Text style={Fonts.style.large3}>{item.name || '-'}</Text>
+              <Text style={[Fonts.style.small2, AppStyles.containerSmall]}>
+                {item.categories.join(', ')}
+              </Text>
+              <Text
+                style={[
+                  Fonts.style.small,
+                  AppStyles.containerSmall,
+                  AppStyles.containerBottom,
+                ]}>
+                {item.description}
+              </Text>
+            </View>
             <View
               style={[
-                AppStyles.baseMarginRight,
-                AppStyles.minWidth3,
+                AppStyles.sectionVertical,
+                AppStyles.section,
                 AppStyles.row,
+                AppStyles.borderBottom7,
               ]}>
-              <View>
+              <View
+                style={[
+                  AppStyles.baseMarginRight,
+                  AppStyles.minWidth3,
+                  AppStyles.row,
+                ]}>
+                <View>
+                  <View style={AppStyles.row}>
+                    <Fontisto
+                      name="clock"
+                      size={Metrics.icons.tiny}
+                      color={Colors.baseText}
+                    />
+                    <Text
+                      style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
+                      {status}
+                    </Text>
+                  </View>
+                  <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                    {`${I18n.t('available')}: ${slotLeft < 1 ? '?' : slotLeft}`}
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity style={AppStyles.flex1} onPress={this.openMaps}>
                 <View style={AppStyles.row}>
                   <Fontisto
-                    name="clock"
+                    name="map-marker-alt"
                     size={Metrics.icons.tiny}
                     color={Colors.baseText}
                   />
                   <Text
                     style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                    {status}
+                    {`${distance !== '-' ? distance : '?'} km`}
                   </Text>
                 </View>
                 <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                  {`${I18n.t('available')}: ${slotLeft < 1 ? '?' : slotLeft}`}
+                  {distance !== '-'
+                    ? `${EstimateDriveTime(distance)} ${I18n.t('minute')}`
+                    : `? ${I18n.t('minute')}`}
                 </Text>
-              </View>
-            </View>
-            <TouchableOpacity style={AppStyles.flex1} onPress={this.openMaps}>
-              <View style={AppStyles.row}>
-                <Fontisto
-                  name="map-marker-alt"
-                  size={Metrics.icons.tiny}
-                  color={Colors.baseText}
-                />
-                <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                  {`${distance !== '-' ? distance : '?'} km`}
-                </Text>
-              </View>
-              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {distance !== '-'
-                  ? `${EstimateDriveTime(distance)} ${I18n.t('minute')}`
-                  : `? ${I18n.t('minute')}`}
-              </Text>
-            </TouchableOpacity>
-            <View style={AppStyles.flex1}>
-              <View style={AppStyles.row}>
-                <Fontisto
-                  name="dollar"
-                  size={Metrics.icons.tiny}
-                  color={Colors.baseText}
-                />
-                <Fontisto
-                  name="dollar"
-                  size={Metrics.icons.tiny}
-                  color={Colors.baseText}
-                />
-                <Fontisto
-                  name="dollar"
-                  size={Metrics.icons.tiny}
-                  color={Colors.border}
-                />
-                <Fontisto
-                  name="dollar"
-                  size={Metrics.icons.tiny}
-                  color={Colors.border}
-                />
-              </View>
-              <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
-                {DisplayMoney(item.minPrice)}-{DisplayMoney(item.maxPrice)}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        {((currentUser && currentUser.superUser) ||
-          (owner && currentUser && owner.uid === currentUser.uid)) && (
-          <View style={styles.containerOnline}>
-            <View style={{...styles.sectionOnline}}>
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                onPress={this.onSlotIncrease}
-                style={styles.btnSave}>
-                <Text style={[Fonts.style.large]}>+</Text>
-              </TouchableHighlight>
-              <View style={{width: Metrics.baseMargin}} />
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                onPress={this.onSlotDecrease}
-                style={styles.btnSave}>
-                <Text style={[Fonts.style.large]}>-</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        )}
-
-        <View style={styles.containerOnline}>
-          <View style={styles.sectionOnline}>
-            <Text style={[Fonts.style.xl]}>
-              {`${I18n.t('peopleAreOnline')}: ${onlineUsers.length || '?'}`}
-            </Text>
-            <TouchableHighlight
-              // disabled={!currentUser}
-              underlayColor={Colors.highlightUnderlay}
-              onPress={this.onJoinPress}
-              style={[
-                AppStyles.section,
-                AppStyles.sectionVerticalSmall,
-                AppStyles.shadow,
-                AppStyles.borderImage,
-                AppStyles.alignCenter,
-              ]}>
-              <Text style={[Fonts.style.xl]}>{I18n.t('join')}</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-
-        {currentUser && currentUser.superUser && (
-          <View style={styles.containerOnline}>
-            <View style={{...styles.sectionOnline, flexDirection: 'column'}}>
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                onPress={this.onSetPopular}
-                style={styles.btnSave}>
-                <Text style={[Fonts.style.large]}>{I18n.t('setPopular')}</Text>
-              </TouchableHighlight>
-
-              <View style={{height: Metrics.baseMargin}} />
-
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                onPress={this.onSetRecommended}
-                style={styles.btnSave}>
-                <Text style={[Fonts.style.large]}>
-                  {I18n.t('setRecommended')}
-                </Text>
-              </TouchableHighlight>
-
-              <View style={{height: Metrics.baseMargin}} />
-
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                // onPress={this.onSetRecommended}
-                style={styles.btnSave}>
-                <Text style={[Fonts.style.large]}>{I18n.t('verify')}</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        )}
-
-        <View
-          style={[
-            AppStyles.container,
-            AppStyles.section,
-            AppStyles.sectionVerticalBase,
-            AppStyles.shadow,
-          ]}>
-          <View style={[AppStyles.row]}>
-            {currentUser && currentUser.photoURL ? (
-              <CustomImage
-                source={{uri: currentUser.photoURL}}
-                style={[
-                  AppStyles.avatarMedium,
-                  AppStyles.borderCircle,
-                  AppStyles.border3,
-                ]}
-                imageStyle={AppStyles.borderCircle}
-              />
-            ) : (
-              <IconUserDefault
-                width={Metrics.avatars.medium}
-                height={Metrics.avatars.medium}
-              />
-            )}
-            <View style={[AppStyles.flex1, AppStyles.baseMarginLeft]}>
-              <TextInput
-                // onFocus={!currentUser ? this.onPostPress : () => {}}
-                editable={
-                  currentUser != null &&
-                  (currentUser.superUser ||
-                    currentUser.premiumUser ||
-                    isAroundThePlace)
-                } //less than 100m
-                value={textToPost}
-                placeholder={
-                  currentUser != null
-                    ? isAroundThePlace
-                      ? I18n.t('tellUsPlaceholder')
-                      : I18n.t('toFarPlaceholder')
-                    : I18n.t('loginFirstPlaceholder')
-                }
-                multiline={true}
-                maxLength={MAX_LENGTH}
-                onChangeText={text => this.setState({textToPost: text})}
-                style={[
-                  Fonts.style.large,
-                  AppStyles.flex1,
-                  AppStyles.smallPaddingTop,
-                ]}
-              />
-              {imageToPost && (
-                <View>
-                  <CustomImage
-                    source={{uri: imageToPost.path || imageToPost.uri}}
-                    style={{
-                      ...AppStyles.borderImage,
-                      ...AppStyles.border5,
-                      ...AppStyles.baseMarginBottom,
-                      height: Metrics.screenWidth - Scale(90),
-                      width: Metrics.screenWidth - Scale(90),
-                    }}
-                    imageStyle={AppStyles.borderImage}
+              </TouchableOpacity>
+              <View style={AppStyles.flex1}>
+                <View style={AppStyles.row}>
+                  <Fontisto
+                    name="dollar"
+                    size={Metrics.icons.tiny}
+                    color={Colors.baseText}
                   />
+                  <Fontisto
+                    name="dollar"
+                    size={Metrics.icons.tiny}
+                    color={Colors.baseText}
+                  />
+                  <Fontisto
+                    name="dollar"
+                    size={Metrics.icons.tiny}
+                    color={Colors.border}
+                  />
+                  <Fontisto
+                    name="dollar"
+                    size={Metrics.icons.tiny}
+                    color={Colors.border}
+                  />
+                </View>
+                <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
+                  {DisplayMoney(item.minPrice)}-{DisplayMoney(item.maxPrice)}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {((currentUser && currentUser.superUser) ||
+            (owner && currentUser && owner.uid === currentUser.uid)) && (
+            <View style={styles.containerOnline}>
+              <View style={{...styles.sectionOnline}}>
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  onPress={this.onSlotIncrease}
+                  style={styles.btnSave}>
+                  <Text style={[Fonts.style.large]}>+</Text>
+                </TouchableHighlight>
+                <View style={{width: Metrics.baseMargin}} />
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  onPress={this.onSlotDecrease}
+                  style={styles.btnSave}>
+                  <Text style={[Fonts.style.large]}>-</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          )}
+
+          <View style={styles.containerOnline}>
+            <View style={styles.sectionOnline}>
+              <Text style={[Fonts.style.xl]}>
+                {`${I18n.t('peopleAreOnline')}: ${onlineUsers.length || '?'}`}
+              </Text>
+              <TouchableHighlight
+                // disabled={!currentUser}
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onJoinPress}
+                style={[
+                  AppStyles.section,
+                  AppStyles.sectionVerticalSmall,
+                  AppStyles.shadow,
+                  AppStyles.borderImage,
+                  AppStyles.alignCenter,
+                ]}>
+                <Text style={[Fonts.style.xl]}>{I18n.t('join')}</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+
+          {currentUser && currentUser.superUser && (
+            <View style={styles.containerOnline}>
+              <View style={{...styles.sectionOnline, flexDirection: 'column'}}>
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  onPress={this.onSetPopular}
+                  style={styles.btnSave}>
+                  <Text style={[Fonts.style.large]}>
+                    {I18n.t('setPopular')}
+                  </Text>
+                </TouchableHighlight>
+
+                <View style={{height: Metrics.baseMargin}} />
+
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  onPress={this.onSetRecommended}
+                  style={styles.btnSave}>
+                  <Text style={[Fonts.style.large]}>
+                    {I18n.t('setRecommended')}
+                  </Text>
+                </TouchableHighlight>
+
+                <View style={{height: Metrics.baseMargin}} />
+
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  // onPress={this.onSetRecommended}
+                  style={styles.btnSave}>
+                  <Text style={[Fonts.style.large]}>{I18n.t('verify')}</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          )}
+
+          <View
+            style={[
+              AppStyles.container,
+              AppStyles.section,
+              AppStyles.sectionVerticalBase,
+              AppStyles.shadow,
+            ]}>
+            <View style={[AppStyles.row]}>
+              {currentUser && currentUser.photoURL ? (
+                <CustomImage
+                  source={{uri: currentUser.photoURL}}
+                  style={[
+                    AppStyles.avatarMedium,
+                    AppStyles.borderCircle,
+                    AppStyles.border3,
+                  ]}
+                  imageStyle={AppStyles.borderCircle}
+                />
+              ) : (
+                <IconUserDefault
+                  width={Metrics.avatars.medium}
+                  height={Metrics.avatars.medium}
+                />
+              )}
+              <View style={[AppStyles.flex1, AppStyles.baseMarginLeft]}>
+                <TextInput
+                  // onFocus={!currentUser ? this.onPostPress : () => {}}
+                  editable={
+                    currentUser != null &&
+                    (currentUser.superUser ||
+                      currentUser.premiumUser ||
+                      isAroundThePlace)
+                  } //less than 100m
+                  value={textToPost}
+                  placeholder={
+                    currentUser != null
+                      ? isAroundThePlace
+                        ? I18n.t('tellUsPlaceholder')
+                        : I18n.t('toFarPlaceholder')
+                      : I18n.t('loginFirstPlaceholder')
+                  }
+                  multiline={true}
+                  maxLength={MAX_LENGTH}
+                  onChangeText={text => this.setState({textToPost: text})}
+                  style={[
+                    Fonts.style.large,
+                    AppStyles.flex1,
+                    AppStyles.smallPaddingTop,
+                  ]}
+                />
+                {imageToPost && (
+                  <View>
+                    <CustomImage
+                      source={{uri: imageToPost.path || imageToPost.uri}}
+                      style={{
+                        ...AppStyles.borderImage,
+                        ...AppStyles.border5,
+                        ...AppStyles.baseMarginBottom,
+                        height: Metrics.screenWidth - Scale(90),
+                        width: Metrics.screenWidth - Scale(90),
+                      }}
+                      imageStyle={AppStyles.borderImage}
+                    />
+                    <TouchableOpacity
+                      style={[AppStyles.btnIcon, AppStyles.positionAbsolute]}
+                      onPress={() => this.deleteImage(imageToPost)}>
+                      <MaterialIcons
+                        name="cancel"
+                        size={Metrics.icons.medium}
+                        color={Colors.baseText}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                )}
+                <View
+                  style={[
+                    AppStyles.row,
+                    AppStyles.alignCenter,
+                    AppStyles.justifyBetween,
+                  ]}>
                   <TouchableOpacity
-                    style={[AppStyles.btnIcon, AppStyles.positionAbsolute]}
-                    onPress={() => this.deleteImage(imageToPost)}>
-                    <MaterialIcons
-                      name="cancel"
+                    disabled={
+                      imageToPost ||
+                      !currentUser ||
+                      (!isAroundThePlace &&
+                        !currentUser.superUser &&
+                        !currentUser.premiumUser)
+                    }
+                    onPress={this.addImage}>
+                    <AntDesign
+                      name="picture"
                       size={Metrics.icons.medium}
                       color={Colors.baseText}
                     />
                   </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={this.onSubmitPress}
+                    // disabled={textToPost.length < 1}
+                    style={[
+                      AppStyles.section,
+                      AppStyles.sectionVerticalBase,
+                      AppStyles.borderCircle,
+                      AppStyles.darkShadow,
+                    ]}>
+                    <Text style={[Fonts.style.medium]}>{I18n.t('berage')}</Text>
+                  </TouchableOpacity>
                 </View>
-              )}
-              <View
-                style={[
-                  AppStyles.row,
-                  AppStyles.alignCenter,
-                  AppStyles.justifyBetween,
-                ]}>
-                <TouchableOpacity
-                  disabled={
-                    imageToPost ||
-                    !currentUser ||
-                    (!isAroundThePlace &&
-                      !currentUser.superUser &&
-                      !currentUser.premiumUser)
-                  }
-                  onPress={this.addImage}>
-                  <AntDesign
-                    name="picture"
-                    size={Metrics.icons.medium}
-                    color={Colors.baseText}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={this.onSubmitPress}
-                  // disabled={textToPost.length < 1}
-                  style={[
-                    AppStyles.section,
-                    AppStyles.sectionVerticalBase,
-                    AppStyles.borderCircle,
-                    AppStyles.darkShadow,
-                  ]}>
-                  <Text style={[Fonts.style.medium]}>{I18n.t('berage')}</Text>
-                </TouchableOpacity>
               </View>
             </View>
           </View>
-        </View>
 
-        {getPosts.fetching && <Loader style={[AppStyles.container]} />}
-        <FlatList
-          style={[AppStyles.container]}
-          data={posts || []}
-          keyExtractor={(post, idx) => `post-${idx}`}
-          renderItem={data => {
-            return (
-              <Post
-                item={data.item}
-                currentUser={currentUser}
-                onLike={() => this.onLikeDislikePress(data.item, true)}
-                onDislike={() => this.onLikeDislikePress(data.item, false)}
-                onComment={() =>
-                  navigation.navigate('CommentsScreen', {
-                    item: data.item,
-                  })
-                }
-              />
-            );
-          }}
-        />
-      </ScrollView>
+          {getPosts.fetching && <Loader style={[AppStyles.container]} />}
+          <FlatList
+            style={[AppStyles.container]}
+            data={posts || []}
+            keyExtractor={(post, idx) => `post-${idx}`}
+            renderItem={data => {
+              return (
+                <Post
+                  item={data.item}
+                  currentUser={currentUser}
+                  onLike={() => this.onLikeDislikePress(data.item, true)}
+                  onDislike={() => this.onLikeDislikePress(data.item, false)}
+                  onComment={() =>
+                    navigation.navigate('CommentsScreen', {
+                      item: data.item,
+                    })
+                  }
+                />
+              );
+            }}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

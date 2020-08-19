@@ -10,6 +10,7 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -152,43 +153,45 @@ export class AddBannerScreen extends Component {
     const {isLoading, image, title, url, description} = this.state;
 
     return (
-      <ScrollView>
-        <CustomHeader onBack={() => navigation.pop()} />
-        <View style={[AppStyles.container, AppStyles.section]}>
-          {this.renderImage()}
-          <TextInput
-            value={title}
-            placeholder={I18n.t('title')}
-            onChangeText={text => this.setState({title: text})}
-            style={styles.inputText}
-          />
-          <TextInput
-            value={url}
-            placeholder={I18n.t('url')}
-            onChangeText={text => this.setState({url: text})}
-            style={styles.inputText}
-          />
-          <TextInput
-            value={description}
-            multiline={true}
-            numberOfLines={3}
-            placeholder={I18n.t('description')}
-            onChangeText={text => this.setState({description: text})}
-            style={styles.inputText}
-          />
+      <SafeAreaView>
+        <ScrollView>
+          <CustomHeader onBack={() => navigation.pop()} />
+          <View style={[AppStyles.container, AppStyles.section]}>
+            {this.renderImage()}
+            <TextInput
+              value={title}
+              placeholder={I18n.t('title')}
+              onChangeText={text => this.setState({title: text})}
+              style={styles.inputText}
+            />
+            <TextInput
+              value={url}
+              placeholder={I18n.t('url')}
+              onChangeText={text => this.setState({url: text})}
+              style={styles.inputText}
+            />
+            <TextInput
+              value={description}
+              multiline={true}
+              numberOfLines={3}
+              placeholder={I18n.t('description')}
+              onChangeText={text => this.setState({description: text})}
+              style={styles.inputText}
+            />
 
-          {isLoading ? (
-            <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
-          ) : (
-            <TouchableHighlight
-              underlayColor={Colors.highlightUnderlay}
-              onPress={this.onSavePress}
-              style={styles.btnSave}>
-              <Text style={[Fonts.style.xl]}>{I18n.t('save')}</Text>
-            </TouchableHighlight>
-          )}
-        </View>
-      </ScrollView>
+            {isLoading ? (
+              <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
+            ) : (
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSavePress}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.xl]}>{I18n.t('save')}</Text>
+              </TouchableHighlight>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

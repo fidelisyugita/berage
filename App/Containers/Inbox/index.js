@@ -9,6 +9,7 @@ import {
   SectionList,
   RefreshControl,
   Linking,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -87,36 +88,43 @@ export class InboxScreen extends Component {
     const {isLoading, refreshing} = this.state;
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
-        }>
-        {/* <ModalLoader visible={getInboxes.fetching && inboxes.length < 1} /> */}
-        <HeaderTitle title={I18n.t('inbox')} shadow />
-        {getInboxes.fetching && <Loader style={[AppStyles.sectionVertical]} />}
-        <FlatList
-          data={inboxes}
-          keyExtractor={(item, idx) => item + idx}
-          renderItem={({item}) => (
-            <RenderInbox item={item} onPress={() => NavigateUrl(item.url)} />
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }>
+          {/* <ModalLoader visible={getInboxes.fetching && inboxes.length < 1} /> */}
+          <HeaderTitle title={I18n.t('inbox')} shadow />
+          {getInboxes.fetching && (
+            <Loader style={[AppStyles.sectionVertical]} />
           )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptyMessageData}
-              message={I18n.t('inboxDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}>
-              {!currentUser && <LoginButton onPress={this.onLoginPress} />}
-            </EmptyState>
-          )}
-        />
-      </ScrollView>
+          <FlatList
+            data={inboxes}
+            keyExtractor={(item, idx) => item + idx}
+            renderItem={({item}) => (
+              <RenderInbox item={item} onPress={() => NavigateUrl(item.url)} />
+            )}
+            ListEmptyComponent={() => (
+              <EmptyState
+                imageSource={Images.emptyMessageData}
+                message={I18n.t('inboxDetail')}
+                containerStyle={{
+                  backgroundColor: Colors.white,
+                  height: Metrics.screenHeight,
+                }}
+                imageStyle={{
+                  width: Metrics.screenWidth,
+                  height: Metrics.screenWidth,
+                }}>
+                {!currentUser && <LoginButton onPress={this.onLoginPress} />}
+              </EmptyState>
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

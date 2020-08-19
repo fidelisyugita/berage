@@ -9,6 +9,7 @@ import {
   FlatList,
   SectionList,
   RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -97,40 +98,42 @@ export class ChatRoomScreen extends Component {
     const {isLoading, refreshing, rooms} = this.state;
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
-        }>
-        <ModalLoader visible={isLoading} />
-        <HeaderTitle title={I18n.t('chat')} shadow />
-        <FlatList
-          data={rooms.sort((a, b) => b.updatedAt - a.updatedAt)}
-          keyExtractor={(item, idx) => item + idx}
-          renderItem={({item}) => (
-            <Room
-              item={item}
-              onPress={() =>
-                navigation.navigate('ChatScreen', {user: item.user || null})
-              }
-            />
-          )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptyMessageData}
-              message={I18n.t('chatDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}>
-              {!currentUser && <LoginButton onPress={this.onLoginPress} />}
-            </EmptyState>
-          )}
-        />
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          }>
+          <ModalLoader visible={isLoading} />
+          <HeaderTitle title={I18n.t('chat')} shadow />
+          <FlatList
+            data={rooms.sort((a, b) => b.updatedAt - a.updatedAt)}
+            keyExtractor={(item, idx) => item + idx}
+            renderItem={({item}) => (
+              <Room
+                item={item}
+                onPress={() =>
+                  navigation.navigate('ChatScreen', {user: item.user || null})
+                }
+              />
+            )}
+            ListEmptyComponent={() => (
+              <EmptyState
+                imageSource={Images.emptyMessageData}
+                message={I18n.t('chatDetail')}
+                containerStyle={{
+                  backgroundColor: Colors.white,
+                  height: Metrics.screenHeight,
+                }}
+                imageStyle={{
+                  width: Metrics.screenWidth,
+                  height: Metrics.screenWidth,
+                }}>
+                {!currentUser && <LoginButton onPress={this.onLoginPress} />}
+              </EmptyState>
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

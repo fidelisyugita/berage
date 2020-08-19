@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PermissionsAndroid,
+  SafeAreaView
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -220,7 +221,7 @@ export class AddPlaceScreen extends Component {
     // console.tron.log({imagePlaces});
 
     return (
-      <View>
+      <SafeAreaView>
         {imagePlaces.map(img => (
           <View
             key={img.modificationDate}
@@ -276,7 +277,7 @@ export class AddPlaceScreen extends Component {
             </View>
           </TouchableHighlight>
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 

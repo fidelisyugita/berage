@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   SectionList,
   RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -95,46 +96,48 @@ export class MyPlacesScreen extends Component {
     const {isLoading, refreshing} = this.state;
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
-        }>
-        <ModalLoader visible={isLoading || getUserPlaces.fetching} />
-        <CustomHeader onBack={() => navigation.pop()} />
-        <FlatList
-          data={myPlaces}
-          keyExtractor={(item, idx) => item + idx}
-          renderItem={({item}) => (
-            <SavedPlace
-              item={item}
-              onPress={() => navigation.navigate('PlaceScreen', {item})}
-              userLocation={userLocation}
-            />
-          )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptySavedData}
-              message={I18n.t('hostDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}>
-              {currentUser ? (
-                <LoginButton
-                  text={I18n.t('add')}
-                  onPress={() => navigation.navigate('AddPlaceScreen')}
-                />
-              ) : (
-                <LoginButton onPress={this.onLoginPress} />
-              )}
-            </EmptyState>
-          )}
-        />
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          }>
+          <ModalLoader visible={isLoading || getUserPlaces.fetching} />
+          <CustomHeader onBack={() => navigation.pop()} />
+          <FlatList
+            data={myPlaces}
+            keyExtractor={(item, idx) => item + idx}
+            renderItem={({item}) => (
+              <SavedPlace
+                item={item}
+                onPress={() => navigation.navigate('PlaceScreen', {item})}
+                userLocation={userLocation}
+              />
+            )}
+            ListEmptyComponent={() => (
+              <EmptyState
+                imageSource={Images.emptySavedData}
+                message={I18n.t('hostDetail')}
+                containerStyle={{
+                  backgroundColor: Colors.white,
+                  height: Metrics.screenHeight,
+                }}
+                imageStyle={{
+                  width: Metrics.screenWidth,
+                  height: Metrics.screenWidth,
+                }}>
+                {currentUser ? (
+                  <LoginButton
+                    text={I18n.t('add')}
+                    onPress={() => navigation.navigate('AddPlaceScreen')}
+                  />
+                ) : (
+                  <LoginButton onPress={this.onLoginPress} />
+                )}
+              </EmptyState>
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

@@ -16,12 +16,15 @@ import {httpsCallable} from './Utils';
 import {SAVE_USER} from './Consts';
 
 export function* loginWithGoogle(api, action) {
+  console.log('loginWithGoogle started');
   try {
     // Get the users ID token
     const data = yield GoogleSignin.signIn();
     console.tron.log({
       'GoogleSignin.signIn': data,
     });
+    console.log('GoogleSignin.signIn: ');
+    console.log(data);
 
     const currentUser = yield GoogleSignin.getTokens();
     console.tron.log({
@@ -30,6 +33,8 @@ export function* loginWithGoogle(api, action) {
     console.tron.log({
       'GoogleSignin.getTokens': currentUser,
     });
+    console.log('GoogleSignin.getTokens: ');
+    console.log(currentUser);
 
     // Create a Google credential with the token
     const googleCredential = yield auth.GoogleAuthProvider.credential(
@@ -39,16 +44,22 @@ export function* loginWithGoogle(api, action) {
     console.tron.log({
       googleCredential,
     });
+    console.log('googleCredential: ');
+    console.log(googleCredential);
 
     // Sign-in the user with the credential
     const firebaseUserCredential = yield auth().signInWithCredential(
       googleCredential,
     );
     console.tron.log({firebaseUserCredential});
+    console.log('firebaseUserCredential: ');
+    console.log(firebaseUserCredential);
 
     const fcmToken = yield messaging().getToken();
     const response = yield httpsCallable(SAVE_USER, {fcmToken});
     console.tron.log({response});
+    console.log('response: ');
+    console.log(response);
 
     let user = {
       phoneNumber: firebaseUserCredential.user.phoneNumber,

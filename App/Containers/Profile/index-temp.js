@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableHighlight,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -55,195 +56,197 @@ export class ProfileScreen extends Component {
     const {navigation, currentUser} = this.props;
 
     return (
-      <ScrollView>
-        <View
-          style={[
-            AppStyles.sectionMargin,
-            AppStyles.sectionVerticalDouble,
-            AppStyles.row,
-            AppStyles.alignCenter,
-            AppStyles.borderBottom5,
-          ]}>
-          <View style={[AppStyles.flex1]}>
-            <Text numberOfLines={1} style={Fonts.style.xxl3}>
-              {(currentUser && currentUser.displayName) ||
-                I18n.t('personalName')}
-            </Text>
-            <TouchableOpacity onPress={this.onLoginPress}>
-              <Text style={[Fonts.style.medium]}>
-                {I18n.t('viewEditProfile')}
+      <SafeAreaView>
+        <ScrollView>
+          <View
+            style={[
+              AppStyles.sectionMargin,
+              AppStyles.sectionVerticalDouble,
+              AppStyles.row,
+              AppStyles.alignCenter,
+              AppStyles.borderBottom5,
+            ]}>
+            <View style={[AppStyles.flex1]}>
+              <Text numberOfLines={1} style={Fonts.style.xxl3}>
+                {(currentUser && currentUser.displayName) ||
+                  I18n.t('personalName')}
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.onLoginPress}>
+                <Text style={[Fonts.style.medium]}>
+                  {I18n.t('viewEditProfile')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={AppStyles.baseMarginLeft}>
+              {currentUser && currentUser.photoURL ? (
+                <CustomImage
+                  source={{uri: currentUser.photoURL}}
+                  style={[
+                    AppStyles.avatarXl,
+                    AppStyles.borderCircle,
+                    AppStyles.border3,
+                  ]}
+                  imageStyle={AppStyles.borderCircle}
+                />
+              ) : (
+                <IconUserDefault
+                  width={Metrics.avatars.xl}
+                  height={Metrics.avatars.xl}
+                />
+              )}
+            </View>
           </View>
-          <View style={AppStyles.baseMarginLeft}>
-            {currentUser && currentUser.photoURL ? (
-              <CustomImage
-                source={{uri: currentUser.photoURL}}
-                style={[
-                  AppStyles.avatarXl,
-                  AppStyles.borderCircle,
-                  AppStyles.border3,
-                ]}
-                imageStyle={AppStyles.borderCircle}
+
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('yourPlaces')}
+              </Text>
+              <Icon
+                name="home"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
               />
-            ) : (
-              <IconUserDefault
-                width={Metrics.avatars.xl}
-                height={Metrics.avatars.xl}
+            </View>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            onPress={() => navigation.navigate('AddPlaceScreen')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('listYourSpace')}
+              </Text>
+              <Icon
+                name="home-plus"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
               />
-            )}
-          </View>
-        </View>
+            </View>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('yourPlaces')}
-            </Text>
-            <Icon
-              name="home"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('help')}
+              </Text>
+              <Icon
+                name="help"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() => navigation.navigate('AddPlaceScreen')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('listYourSpace')}
-            </Text>
-            <Icon
-              name="home-plus"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('feedback')}
+              </Text>
+              <Icon
+                name="card-text"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('help')}
-            </Text>
-            <Icon
-              name="help"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('termsOfService')}
+              </Text>
+              <Icon
+                name="file-document"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('feedback')}
-            </Text>
-            <Icon
-              name="card-text"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => console.tron.log('pressed')}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('privacyPolicy')}
+              </Text>
+              <Icon
+                name="shield-key"
+                size={Metrics.icons.tiny}
+                color={Colors.baseText}
+              />
+            </View>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('termsOfService')}
-            </Text>
-            <Icon
-              name="file-document"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={() => console.tron.log('pressed')}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('privacyPolicy')}
-            </Text>
-            <Icon
-              name="shield-key"
-              size={Metrics.icons.tiny}
-              color={Colors.baseText}
-            />
-          </View>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={this.onLogoutPress}
-          underlayColor={Colors.highlightUnderlay}
-          style={AppStyles.section}>
-          <View
-            style={[
-              AppStyles.row,
-              AppStyles.sectionVertical,
-              AppStyles.borderBottom5,
-              AppStyles.alignCenter,
-            ]}>
-            <Text style={[Fonts.style.large, AppStyles.flex1]}>
-              {I18n.t('logout')}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      </ScrollView>
+          <TouchableHighlight
+            onPress={this.onLogoutPress}
+            underlayColor={Colors.highlightUnderlay}
+            style={AppStyles.section}>
+            <View
+              style={[
+                AppStyles.row,
+                AppStyles.sectionVertical,
+                AppStyles.borderBottom5,
+                AppStyles.alignCenter,
+              ]}>
+              <Text style={[Fonts.style.large, AppStyles.flex1]}>
+                {I18n.t('logout')}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

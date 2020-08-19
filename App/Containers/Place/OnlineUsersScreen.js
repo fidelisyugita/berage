@@ -10,6 +10,7 @@ import {
   SectionList,
   RefreshControl,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -91,55 +92,57 @@ export class OnlineUsersScreen extends Component {
     const {isLoading, onlineUsers} = this.state;
 
     return (
-      <ScrollView>
-        <ModalLoader visible={isLoading} />
-        <CustomHeader onBack={() => navigation.pop()} />
-        <FlatList
-          data={onlineUsers}
-          keyExtractor={(item, idx) => item + idx}
-          numColumns={3}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              style={[
-                AppStyles.container,
-                AppStyles.section,
-                AppStyles.flex1,
-                AppStyles.alignCenter,
-              ]}
-              disabled={item.uid === currentUser.uid}
-              onPress={() => navigation.navigate('ChatScreen', {user: item})}>
-              <CustomImage
-                source={{uri: item.photoURL || null}}
+      <SafeAreaView>
+        <ScrollView>
+          <ModalLoader visible={isLoading} />
+          <CustomHeader onBack={() => navigation.pop()} />
+          <FlatList
+            data={onlineUsers}
+            keyExtractor={(item, idx) => item + idx}
+            numColumns={3}
+            renderItem={({item}) => (
+              <TouchableOpacity
                 style={[
-                  AppStyles.border3,
-                  AppStyles.avatarXl,
-                  AppStyles.borderCircle,
+                  AppStyles.container,
+                  AppStyles.section,
+                  AppStyles.flex1,
+                  AppStyles.alignCenter,
                 ]}
-                imageStyle={AppStyles.borderCircle}
+                disabled={item.uid === currentUser.uid}
+                onPress={() => navigation.navigate('ChatScreen', {user: item})}>
+                <CustomImage
+                  source={{uri: item.photoURL || null}}
+                  style={[
+                    AppStyles.border3,
+                    AppStyles.avatarXl,
+                    AppStyles.borderCircle,
+                  ]}
+                  imageStyle={AppStyles.borderCircle}
+                />
+                <Text
+                  numberOfLines={2}
+                  style={[Fonts.style.small3, Fonts.style.alignCenter]}>
+                  {item.displayName || '-'}
+                </Text>
+              </TouchableOpacity>
+            )}
+            ListEmptyComponent={() => (
+              <EmptyState
+                imageSource={Images.emptyMessageData}
+                message={I18n.t('onlineDetail')}
+                containerStyle={{
+                  backgroundColor: Colors.white,
+                  height: Metrics.screenHeight,
+                }}
+                imageStyle={{
+                  width: Metrics.screenWidth,
+                  height: Metrics.screenWidth,
+                }}
               />
-              <Text
-                numberOfLines={2}
-                style={[Fonts.style.small3, Fonts.style.alignCenter]}>
-                {item.displayName || '-'}
-              </Text>
-            </TouchableOpacity>
-          )}
-          ListEmptyComponent={() => (
-            <EmptyState
-              imageSource={Images.emptyMessageData}
-              message={I18n.t('onlineDetail')}
-              containerStyle={{
-                backgroundColor: Colors.white,
-                height: Metrics.screenHeight,
-              }}
-              imageStyle={{
-                width: Metrics.screenWidth,
-                height: Metrics.screenWidth,
-              }}
-            />
-          )}
-        />
-      </ScrollView>
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

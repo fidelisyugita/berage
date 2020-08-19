@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   SectionList,
   RefreshControl,
+  SafeAreaView
 } from 'react-native';
 import {connect} from 'react-redux';
 import {WebView} from 'react-native-webview';
@@ -44,13 +45,13 @@ export class PrivacyPolicyScreen extends Component {
     const {navigation} = this.props;
 
     return (
-      <View style={AppStyles.flex1}>
+      <SafeAreaView style={AppStyles.flex1}>
         <CustomHeader onBack={() => navigation.pop()} />
         <WebView
           source={{uri: 'https://berage.web.app'}}
           style={[AppStyles.sectionVertical]}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }

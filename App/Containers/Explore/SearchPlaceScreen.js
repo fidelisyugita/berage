@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PermissionsAndroid,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -95,14 +96,17 @@ export class SearchPlaceScreen extends Component {
           AppStyles.section,
         ]}>
         <View
-          style={{
-            backgroundColor: Colors.white,
-            borderRadius: Metrics.circleRadius,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: Metrics.marginHorizontal,
-            ...AppStyles.shadow,
-          }}>
+          style={[
+            AppStyles.shadow,
+            AppStyles.flex1,
+            AppStyles.borderCircle,
+            AppStyles.row,
+            AppStyles.alignCenter,
+            {
+              paddingHorizontal: Metrics.marginHorizontal,
+              height: Scale(50),
+            },
+          ]}>
           <TouchableOpacity onPress={() => navigation.pop()}>
             <Icon
               name="arrow-left"
@@ -148,39 +152,41 @@ export class SearchPlaceScreen extends Component {
     const {refreshing, searchText, firstOpen, isLoadMore} = this.state;
 
     return (
-      <FlatList
-        style={[AppStyles.section]}
-        ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFooter}
-        data={places || []}
-        keyExtractor={(item, idx) => item + idx}
-        renderItem={({item}) => (
-          <Place
-            item={item}
-            userLocation={userLocation}
-            onPress={() => navigation.navigate('PlaceScreen', {item})}
-          />
-        )}
-        ListEmptyComponent={() => (
-          <EmptyState
-            imageSource={Images.homeLoader}
-            message={firstOpen ? null : I18n.t('searchNotFound')}
-            containerStyle={{
-              backgroundColor: Colors.tempHomeLoader,
-              height: Metrics.screenHeight,
-            }}
-            imageStyle={{
-              width: Metrics.screenWidth,
-              height: Metrics.screenWidth,
-            }}
-          />
-        )}
-        onEndReachedThreshold={0.1}
-        onEndReached={this.loadMore}
-        onMomentumScrollBegin={() => {
-          this.onEndReachedCalledDuringMomentum = false;
-        }}
-      />
+      <SafeAreaView>
+        <FlatList
+          style={[AppStyles.section]}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFooter}
+          data={places || []}
+          keyExtractor={(item, idx) => item + idx}
+          renderItem={({item}) => (
+            <Place
+              item={item}
+              userLocation={userLocation}
+              onPress={() => navigation.navigate('PlaceScreen', {item})}
+            />
+          )}
+          ListEmptyComponent={() => (
+            <EmptyState
+              imageSource={Images.homeLoader}
+              message={firstOpen ? null : I18n.t('searchNotFound')}
+              containerStyle={{
+                backgroundColor: Colors.tempHomeLoader,
+                height: Metrics.screenHeight,
+              }}
+              imageStyle={{
+                width: Metrics.screenWidth,
+                height: Metrics.screenWidth,
+              }}
+            />
+          )}
+          onEndReachedThreshold={0.1}
+          onEndReached={this.loadMore}
+          onMomentumScrollBegin={() => {
+            this.onEndReachedCalledDuringMomentum = false;
+          }}
+        />
+      </SafeAreaView>
     );
   }
 }

@@ -14,6 +14,7 @@ import {
   TouchableHighlight,
   PermissionsAndroid,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -155,11 +156,15 @@ export class ExploreScreen extends Component {
     console.tron.log({getBanners});
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
-        }>
-        {/* <ModalLoader
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }>
+          {/* <ModalLoader
           visible={
             getPopularPlaces.fetching ||
             getRecommendedPlaces.fetching ||
@@ -168,101 +173,104 @@ export class ExploreScreen extends Component {
           imageSource={Images.homeLoader}
         /> */}
 
-        <View style={[AppStyles.container, AppStyles.section]}>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('SearchPlaceScreen')}>
-            <View
-              style={{
-                backgroundColor: Colors.white,
-                borderRadius: Metrics.circleRadius,
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: Metrics.marginHorizontal,
-                ...AppStyles.shadow,
-              }}>
-              <Icon
-                name="magnifier"
-                size={Metrics.icons.tiny}
-                color={Colors.placeholder}
-              />
-              <TextInput
-                editable={false}
+          <View style={[AppStyles.container, AppStyles.section]}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('SearchPlaceScreen')}>
+              <View
                 style={[
-                  Fonts.style.medium,
-                  AppStyles.smallMarginLeft,
+                  AppStyles.shadow,
                   AppStyles.flex1,
-                ]}
-                placeholder={I18n.t('searchPlaceholder')}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-
-        {(getPopularPlaces.fetching ||
-          getRecommendedPlaces.fetching ||
-          getBanners.fetching) && (
-          <Loader style={[AppStyles.sectionVertical]} />
-        )}
-
-        <View
-          style={{
-            ...AppStyles.container,
-            // width: Scale(300), //make the image smaller
-          }}>
-          <Swiper
-            // width={Scale(375)} //but swiper bigger
-            height={Metrics.images.xxl + Metrics.baseMargin}
-            autoplay={true}
-            loop={true}
-            showsButtons={false}
-            showsPagination={true}>
-            {banners.map(banner => (
-              // <View
-              //   key={image}
-              //   style={
-              //     {
-              //       //   marginRight: Metrics.marginHorizontal,
-              //     }
-              //   }>
-              <TouchableHighlight
-                style={AppStyles.shadow}
-                key={banner.image}
-                onPress={() => NavigateUrl(banner.url)}>
-                <CustomImage
-                  source={{
-                    uri:
-                      banner.image && banner.image.uri
-                        ? banner.image.uri
-                        : banner.image,
-                  }}
-                  style={[
-                    AppStyles.border3,
-                    {
-                      width: '100%',
-                      height: Metrics.images.xxl,
-                    },
-                  ]}
+                  AppStyles.borderCircle,
+                  AppStyles.row,
+                  AppStyles.alignCenter,
+                  {
+                    paddingHorizontal: Metrics.marginHorizontal,
+                    height: Scale(50),
+                  },
+                ]}>
+                <Icon
+                  name="magnifier"
+                  size={Metrics.icons.tiny}
+                  color={Colors.placeholder}
                 />
-              </TouchableHighlight>
-              // </View>
-            ))}
-          </Swiper>
-        </View>
+                <Text
+                  style={[
+                    Fonts.style.medium,
+                    AppStyles.smallMarginLeft,
+                    {color: Colors.placeholder},
+                  ]}>
+                  {I18n.t('searchPlaceholder')}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
 
-        <SectionList
-          sections={sections}
-          keyExtractor={(item, idx) => item + idx}
-          renderSectionHeader={this.renderHeader}
-          renderItem={({item}) => (
-            <Place
-              item={item}
-              userLocation={userLocation}
-              onPress={() => navigation.navigate('PlaceScreen', {item})}
-            />
+          {(getPopularPlaces.fetching ||
+            getRecommendedPlaces.fetching ||
+            getBanners.fetching) && (
+            <Loader style={[AppStyles.sectionVertical]} />
           )}
-          style={[AppStyles.section]}
-        />
-      </ScrollView>
+
+          <View
+            style={{
+              ...AppStyles.container,
+              // width: Scale(300), //make the image smaller
+            }}>
+            <Swiper
+              // width={Scale(375)} //but swiper bigger
+              height={Metrics.images.xxl + Metrics.baseMargin}
+              autoplay={true}
+              loop={true}
+              showsButtons={false}
+              showsPagination={true}>
+              {banners.map(banner => (
+                // <View
+                //   key={image}
+                //   style={
+                //     {
+                //       //   marginRight: Metrics.marginHorizontal,
+                //     }
+                //   }>
+                <TouchableHighlight
+                  style={AppStyles.shadow}
+                  key={banner.image}
+                  onPress={() => NavigateUrl(banner.url)}>
+                  <CustomImage
+                    source={{
+                      uri:
+                        banner.image && banner.image.uri
+                          ? banner.image.uri
+                          : banner.image,
+                    }}
+                    style={[
+                      AppStyles.border3,
+                      {
+                        width: '100%',
+                        height: Metrics.images.xxl,
+                      },
+                    ]}
+                  />
+                </TouchableHighlight>
+                // </View>
+              ))}
+            </Swiper>
+          </View>
+
+          <SectionList
+            sections={sections}
+            keyExtractor={(item, idx) => item + idx}
+            renderSectionHeader={this.renderHeader}
+            renderItem={({item}) => (
+              <Place
+                item={item}
+                userLocation={userLocation}
+                onPress={() => navigation.navigate('PlaceScreen', {item})}
+              />
+            )}
+            style={[AppStyles.section]}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

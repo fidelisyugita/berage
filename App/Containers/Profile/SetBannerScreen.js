@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   SectionList,
   RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -88,37 +89,39 @@ export class SetBannerScreen extends Component {
     const {isLoading, refreshing} = this.state;
 
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
-        }>
-        <ModalLoader
-          visible={isLoading || getBanners.fetching || deleteBanner.fetching}
-        />
-        <CustomHeader
-          onBack={() => navigation.pop()}
-          renderRight={() => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('AddBannerScreen')}>
-              <Text
-                style={{...Fonts.style.large, padding: Metrics.smallMargin}}>
-                {I18n.t('add')}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-        <FlatList
-          data={banners}
-          keyExtractor={(item, idx) => item + idx}
-          renderItem={({item}) => (
-            <RenderBanner
-              item={item}
-              onPress={() => NavigateUrl(item.url)}
-              onDeletePress={() => this.onDeletePress(item)}
-            />
-          )}
-        />
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          }>
+          <ModalLoader
+            visible={isLoading || getBanners.fetching || deleteBanner.fetching}
+          />
+          <CustomHeader
+            onBack={() => navigation.pop()}
+            renderRight={() => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('AddBannerScreen')}>
+                <Text
+                  style={{...Fonts.style.large, padding: Metrics.smallMargin}}>
+                  {I18n.t('add')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+          <FlatList
+            data={banners}
+            keyExtractor={(item, idx) => item + idx}
+            renderItem={({item}) => (
+              <RenderBanner
+                item={item}
+                onPress={() => NavigateUrl(item.url)}
+                onDeletePress={() => this.onDeletePress(item)}
+              />
+            )}
+          />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

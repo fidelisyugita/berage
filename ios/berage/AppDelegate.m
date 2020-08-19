@@ -11,10 +11,21 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <GoogleMaps/GoogleMaps.h>
+#import <Firebase.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyCaGiaoCvv4i_d3j7jrQssIdsfRdW40Bwc"]; // add this line using the api key obtained from Google Console
+  // Add me --- \/
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
+  // Add me --- /\
+  // ...
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"berage"

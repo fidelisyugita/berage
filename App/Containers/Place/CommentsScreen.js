@@ -10,6 +10,7 @@ import {
   SectionList,
   RefreshControl,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -103,7 +104,7 @@ export class CommentsScreen extends Component {
     const {isLoading, refreshing, item, textToPost} = this.state;
 
     return (
-      <View style={[AppStyles.flex1]}>
+      <SafeAreaView style={[AppStyles.flex1]}>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
@@ -181,7 +182,7 @@ export class CommentsScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
