@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   PermissionsAndroid,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -221,7 +221,7 @@ export class AddPlaceScreen extends Component {
     // console.tron.log({imagePlaces});
 
     return (
-      <SafeAreaView>
+      <View>
         {imagePlaces.map(img => (
           <View
             key={img.modificationDate}
@@ -277,7 +277,7 @@ export class AddPlaceScreen extends Component {
             </View>
           </TouchableHighlight>
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -336,54 +336,55 @@ export class AddPlaceScreen extends Component {
     console.tron.log({placeLocation});
 
     return (
-      <ScrollView>
-        <CustomHeader onBack={this.onBack} />
-        <View style={[AppStyles.container, AppStyles.section]}>
-          {this.renderImagePlaces()}
-          <TextInput
-            value={placeName}
-            placeholder={I18n.t('name')}
-            onChangeText={text => this.setState({placeName: text})}
-            style={styles.inputText}
-          />
-          <TextInput
-            value={placeDescription}
-            multiline={true}
-            numberOfLines={3}
-            placeholder={I18n.t('description')}
-            onChangeText={text => this.setState({placeDescription: text})}
-            style={styles.inputText}
-          />
+      <SafeAreaView>
+        <ScrollView>
+          <CustomHeader onBack={this.onBack} />
+          <View style={[AppStyles.container, AppStyles.section]}>
+            {this.renderImagePlaces()}
+            <TextInput
+              value={placeName}
+              placeholder={I18n.t('name')}
+              onChangeText={text => this.setState({placeName: text})}
+              style={styles.inputText}
+            />
+            <TextInput
+              value={placeDescription}
+              multiline={true}
+              numberOfLines={3}
+              placeholder={I18n.t('description')}
+              onChangeText={text => this.setState({placeDescription: text})}
+              style={styles.inputText}
+            />
 
-          <TextInput
-            editable={false}
-            placeholder={`${I18n.t('categories')} (${I18n.t(
-              'max',
-            )} ${MAX_CATEGORY})`}
-            onChangeText={text => this.setState({placeCategories: text})}
-            style={{...styles.inputText, borderColor: Colors.transparent}}
-          />
-          <FlatList
-            data={CATEGORIES_DATA}
-            keyExtractor={(item, idx) => item + idx}
-            numColumns={2}
-            renderItem={({item}) => (
-              <TouchableHighlight
-                underlayColor={Colors.highlightUnderlay}
-                onPress={() => this.addCategories(item)}
-                style={{
-                  ...styles.radioBtn,
-                  backgroundColor: placeCategories.includes(item)
-                    ? Colors.border
-                    : Colors.silver,
-                }}>
-                <Text numberOfLines={1} style={[Fonts.style.medium]}>
-                  {item}
-                </Text>
-              </TouchableHighlight>
-            )}
-          />
-          {/* <TextInput
+            <TextInput
+              editable={false}
+              placeholder={`${I18n.t('categories')} (${I18n.t(
+                'max',
+              )} ${MAX_CATEGORY})`}
+              onChangeText={text => this.setState({placeCategories: text})}
+              style={{...styles.inputText, borderColor: Colors.transparent}}
+            />
+            <FlatList
+              data={CATEGORIES_DATA}
+              keyExtractor={(item, idx) => item + idx}
+              numColumns={2}
+              renderItem={({item}) => (
+                <TouchableHighlight
+                  underlayColor={Colors.highlightUnderlay}
+                  onPress={() => this.addCategories(item)}
+                  style={{
+                    ...styles.radioBtn,
+                    backgroundColor: placeCategories.includes(item)
+                      ? Colors.border
+                      : Colors.silver,
+                  }}>
+                  <Text numberOfLines={1} style={[Fonts.style.medium]}>
+                    {item}
+                  </Text>
+                </TouchableHighlight>
+              )}
+            />
+            {/* <TextInput
             editable={false}
             placeholder={I18n.t('status')}
             onChangeText={text => this.setState({placeStatus: text})}
@@ -409,45 +410,45 @@ export class AddPlaceScreen extends Component {
             )}
           /> */}
 
-          <TextInput
-            editable={false}
-            placeholder={I18n.t('priceDetail')}
-            style={{...styles.inputText, borderColor: Colors.transparent}}
-          />
-          <View style={[AppStyles.row]}>
             <TextInput
-              value={minPrice.toString()}
-              keyboardType="number-pad"
-              placeholder={I18n.t('from')}
-              onChangeText={text => this.onChangeNumber('minPrice', text)}
-              style={{
-                ...styles.inputText,
-                ...AppStyles.flex1,
-                ...Fonts.style.alignVerticalCenter,
-              }}
+              editable={false}
+              placeholder={I18n.t('priceDetail')}
+              style={{...styles.inputText, borderColor: Colors.transparent}}
             />
-            <Text
-              style={[
-                Fonts.style.medium3,
-                Fonts.style.alignVerticalCenter,
-                AppStyles.section,
-              ]}>
-              -
-            </Text>
-            <TextInput
-              value={maxPrice.toString()}
-              keyboardType="number-pad"
-              placeholder={I18n.t('to')}
-              onChangeText={text => this.onChangeNumber('maxPrice', text)}
-              style={{
-                ...styles.inputText,
-                ...AppStyles.flex1,
-                ...Fonts.style.alignVerticalCenter,
-              }}
-            />
-          </View>
+            <View style={[AppStyles.row]}>
+              <TextInput
+                value={minPrice.toString()}
+                keyboardType="number-pad"
+                placeholder={I18n.t('from')}
+                onChangeText={text => this.onChangeNumber('minPrice', text)}
+                style={{
+                  ...styles.inputText,
+                  ...AppStyles.flex1,
+                  ...Fonts.style.alignVerticalCenter,
+                }}
+              />
+              <Text
+                style={[
+                  Fonts.style.medium3,
+                  Fonts.style.alignVerticalCenter,
+                  AppStyles.section,
+                ]}>
+                -
+              </Text>
+              <TextInput
+                value={maxPrice.toString()}
+                keyboardType="number-pad"
+                placeholder={I18n.t('to')}
+                onChangeText={text => this.onChangeNumber('maxPrice', text)}
+                style={{
+                  ...styles.inputText,
+                  ...AppStyles.flex1,
+                  ...Fonts.style.alignVerticalCenter,
+                }}
+              />
+            </View>
 
-          {/* {!placeLocation && (
+            {/* {!placeLocation && (
             <TouchableHighlight
               underlayColor={Colors.highlightUnderlay}
               onPress={this.getUserPosition}
@@ -472,50 +473,53 @@ export class AddPlaceScreen extends Component {
             </TouchableHighlight>
           )} */}
 
-          <TextInput
-            editable={false}
-            placeholder={I18n.t('pinYourLocation')}
-            style={{...styles.inputText, borderColor: Colors.transparent}}
-          />
-          <MapView
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            style={{
-              ...AppStyles.flex1,
-              // ...AppStyles.sectionMargin,
-              height: Scale(300),
-            }}
-            region={{
-              latitude: (placeLocation && placeLocation.latitude) || -2.7482,
-              longitude: (placeLocation && placeLocation.longitude) || 107.6591,
-              latitudeDelta: 0.0055,
-              longitudeDelta: 0.00521,
-            }}>
-            <Marker
-              draggable
-              coordinate={{
+            <TextInput
+              editable={false}
+              placeholder={I18n.t('pinYourLocation')}
+              style={{...styles.inputText, borderColor: Colors.transparent}}
+            />
+            <MapView
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              style={{
+                ...AppStyles.flex1,
+                // ...AppStyles.sectionMargin,
+                height: Scale(300),
+              }}
+              region={{
                 latitude: (placeLocation && placeLocation.latitude) || -2.7482,
                 longitude:
                   (placeLocation && placeLocation.longitude) || 107.6591,
-              }}
-              onDragEnd={e => {
-                console.tron.log({e});
-                this.setState({placeLocation: e.nativeEvent.coordinate});
-              }}
-            />
-          </MapView>
+                latitudeDelta: 0.0055,
+                longitudeDelta: 0.00521,
+              }}>
+              <Marker
+                draggable
+                coordinate={{
+                  latitude:
+                    (placeLocation && placeLocation.latitude) || -2.7482,
+                  longitude:
+                    (placeLocation && placeLocation.longitude) || 107.6591,
+                }}
+                onDragEnd={e => {
+                  console.tron.log({e});
+                  this.setState({placeLocation: e.nativeEvent.coordinate});
+                }}
+              />
+            </MapView>
 
-          {isLoading ? (
-            <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
-          ) : (
-            <TouchableHighlight
-              underlayColor={Colors.highlightUnderlay}
-              onPress={this.onSavePress}
-              style={styles.btnSave}>
-              <Text style={[Fonts.style.xl]}>{I18n.t('save')}</Text>
-            </TouchableHighlight>
-          )}
-        </View>
-      </ScrollView>
+            {isLoading ? (
+              <Loader style={[AppStyles.topSpace, AppStyles.bottomSpace]} />
+            ) : (
+              <TouchableHighlight
+                underlayColor={Colors.highlightUnderlay}
+                onPress={this.onSavePress}
+                style={styles.btnSave}>
+                <Text style={[Fonts.style.xl]}>{I18n.t('save')}</Text>
+              </TouchableHighlight>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
