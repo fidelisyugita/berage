@@ -537,6 +537,8 @@ const styles = StyleSheet.create({
     ...AppStyles.borderBottom7,
     ...Fonts.style.medium,
     ...Fonts.style.alignBottom,
+    minHeight: Scale(30),
+    marginTop: Scale(10),
   },
   btnSave: {
     ...AppStyles.topSpace,

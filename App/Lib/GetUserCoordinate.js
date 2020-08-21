@@ -6,6 +6,7 @@ import I18n from '../I18n';
 export default () => {
   return new Promise((resolve, reject) => {
     if (Platform.OS === 'ios') {
+      // Geolocation.requestAuthorization();
       Geolocation.getCurrentPosition(
         position => {
           console.tron.log({position});

@@ -36,6 +36,7 @@
 		76D05567DBF1C1B53A95B897 /* libPods-berageTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63AE47414C1B8B08841D6190 /* libPods-berageTests.a */; };
 		7E0392FF6167486394B2D91F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32AE7973A50B4E74B091D3A1 /* SimpleLineIcons.ttf */; };
 		8E038EE171DD493AB2C374B9 /* GRAFSHAD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88C48CC16214485B6DF4184 /* GRAFSHAD.ttf */; };
+		9334048A24F04055002725CA /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9334048924F04055002725CA /* File.swift */; };
 		9371DFC724EFCC8A0007F999 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9371DFC624EFCC8A0007F999 /* GoogleService-Info.plist */; };
 		9AFCF7B58ED74C5390F51A19 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC37DD5BC7F543F095F03F08 /* Foundation.ttf */; };
 		A43AD3311B5B4C0CB9D49685 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DEB86498ABA410390B3D690 /* FontAwesome5_Solid.ttf */; };
@@ -102,6 +103,8 @@
 		8DEB86498ABA410390B3D690 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		8FC12B6704292C15D6E0F12C /* Pods-berage-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-berage-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-berage-tvOSTests/Pods-berage-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		911F0C83F7BF4E7F86B9A6FE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		9334048824F04054002725CA /* berage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "berage-Bridging-Header.h"; sourceTree = "<group>"; };
+		9334048924F04055002725CA /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		9356DCC00C88C2E27308D705 /* Pods-berageTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-berageTests.debug.xcconfig"; path = "Target Support Files/Pods-berageTests/Pods-berageTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9371DFC624EFCC8A0007F999 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DBD02C8193D35B618B3E35E /* Pods-berageTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-berageTests.release.xcconfig"; path = "Target Support Files/Pods-berageTests/Pods-berageTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				9371DFC624EFCC8A0007F999 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				9334048924F04055002725CA /* File.swift */,
+				9334048824F04054002725CA /* berage-Bridging-Header.h */,
 			);
 			name = berage;
 			sourceTree = "<group>";
@@ -381,7 +386,8 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = C67497M2TB;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = 1160;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -713,6 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				9334048A24F04055002725CA /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -766,6 +773,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9356DCC00C88C2E27308D705 /* Pods-berageTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -789,6 +797,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9DBD02C8193D35B618B3E35E /* Pods-berageTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = berageTests/Info.plist;
@@ -810,8 +819,9 @@
 			baseConfigurationReference = 30FE5C9C0175F6F2CF11E88E /* Pods-berage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = C67497M2TB;
@@ -826,6 +836,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -835,8 +848,9 @@
 			baseConfigurationReference = 516A67C917FD233DF11EE452 /* Pods-berage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C67497M2TB;
 				INFOPLIST_FILE = berage/Info.plist;
@@ -850,6 +864,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
