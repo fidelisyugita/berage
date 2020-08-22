@@ -835,7 +835,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Fidelis Yugita (Development)";
 				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -863,7 +863,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Fidelis Yugita (Distribution)";
 				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
