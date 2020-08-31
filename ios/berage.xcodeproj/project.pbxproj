@@ -21,7 +21,6 @@
 		23832D3DDFB247039BA337F8 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DC19676D046F79B6A09A6 /* MaterialIcons.ttf */; };
 		29BE9679D79780B7D79BFCAA /* libPods-berage-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20067985F493F220D12EC16D /* libPods-berage-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* berageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* berageTests.m */; };
 		3D490ADDE2708F7E6EFA5761 /* libPods-berage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF139069C4B05B4E796F1CD /* libPods-berage.a */; };
@@ -469,7 +468,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,8 +820,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = C67497M2TB;
 				INFOPLIST_FILE = berage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -851,7 +850,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = C67497M2TB;
 				INFOPLIST_FILE = berage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1007,7 +1007,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: Fidelis Yugita Trio Bagaskoro (T725UMW8AM)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "Apple Development: Fidelis Yugita Trio Bagaskoro (T725UMW8AM)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1060,7 +1061,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Fidelis Yugita Trio Bagaskoro (C67497M2TB)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "Apple Distribution: Fidelis Yugita Trio Bagaskoro (C67497M2TB)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
