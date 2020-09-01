@@ -48,6 +48,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Berage needs access to your location to provide more info</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Berage needs access to your location to provide more info</string>
 	<key>NSMainNibFile</key>
@@ -89,7 +91,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDarkContent</string>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
