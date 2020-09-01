@@ -13,7 +13,8 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <Firebase.h>
-#import <RNGoogleSignin/RNGoogleSignin.h>
+//#import <RNGoogleSignin/RNGoogleSignin.h>
+#import "RNGoogleSignin.h"
 
 @implementation AppDelegate
 

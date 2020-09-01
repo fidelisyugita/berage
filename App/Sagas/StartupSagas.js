@@ -25,6 +25,7 @@ const {getUser} = SessionSelectors;
 export function* startup(action) {
   GoogleSignin.configure({
     webClientId: Secrets.WEB_CLIENT_ID,
+    iosClientId: Secrets.IOS_CLIENT_ID,
   });
 
   try {
