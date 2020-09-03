@@ -128,11 +128,19 @@ export function* loginWithApple(api, action) {
       console.log('firebaseUserCredential: ');
       console.log(firebaseUserCredential);
 
-      const fcmToken = yield messaging().getToken();
-      const response = yield httpsCallable(SAVE_USER, {fcmToken});
-      console.tron.log({response});
-      console.log('response: ');
-      console.log(response);
+      let fcmToken = null;
+      let response = null;
+
+      const hasPermission = yield messaging().requestPermission();
+      console.log('hasPermission: ');
+      console.log(hasPermission);
+      if (hasPermission) {
+        fcmToken = yield messaging().getToken();
+        response = yield httpsCallable(SAVE_USER, {fcmToken});
+        console.tron.log({response});
+        console.log('response: ');
+        console.log(response);
+      }
 
       let user = {
         phoneNumber: firebaseUserCredential.user.phoneNumber,
@@ -145,7 +153,8 @@ export function* loginWithApple(api, action) {
         fcmToken,
       };
 
-      if (response.data.ok) user = {...user, ...response.data.payload};
+      if (response && response.data && response.data.ok)
+        user = {...user, ...response.data.payload};
       console.tron.log({user});
 
       yield put(SessionActions.saveUser(user));
