@@ -157,6 +157,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loginWithGoogleRequest: (data, callback) =>
     dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
+  loginWithAppleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithAppleRequest(data, callback)),
 });
 
 export default connect(

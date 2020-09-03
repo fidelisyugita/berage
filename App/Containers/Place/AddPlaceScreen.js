@@ -479,7 +479,7 @@ export class AddPlaceScreen extends Component {
               style={{...styles.inputText, borderColor: Colors.transparent}}
             />
             <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={{
                 ...AppStyles.flex1,
                 // ...AppStyles.sectionMargin,

@@ -3,6 +3,12 @@ import {call, put} from 'redux-saga/effects';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import messaging from '@react-native-firebase/messaging';
+import appleAuth, {
+  AppleAuthRequestScope,
+  AppleAuthRequestOperation,
+} from '@invertase/react-native-apple-authentication';
+
+import I18n from '../I18n';
 
 import AuthActions from '../Redux/AuthRedux';
 import SessionActions from '../Redux/SessionRedux';
@@ -84,9 +90,77 @@ export function* loginWithGoogle(api, action) {
   }
 }
 
+export function* loginWithApple(api, action) {
+  console.log('loginWithApple started');
+  try {
+    // Start the sign-in request
+    const appleAuthRequestResponse = yield appleAuth.performRequest({
+      requestedOperation: AppleAuthRequestOperation.LOGIN,
+      requestedScopes: [
+        AppleAuthRequestScope.EMAIL,
+        AppleAuthRequestScope.FULL_NAME,
+      ],
+    });
+    console.log('appleAuthRequestResponse: ');
+    console.log(appleAuthRequestResponse);
+
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      yield put(
+        AuthActions.loginWithGoogleFailure({
+          message: I18n.t('noIdentifyToken'),
+        }),
+      );
+      if (action.callback) action.callback({ok: false});
+    } else {
+      // Create a Firebase credential from the response
+      const {identityToken, nonce} = appleAuthRequestResponse;
+      const appleCredential = auth.AppleAuthProvider.credential(
+        identityToken,
+        nonce,
+      );
+
+      // Sign the user in with the credential
+      const firebaseUserCredential = yield auth().signInWithCredential(
+        appleCredential,
+      );
+      console.tron.log({firebaseUserCredential});
+      console.log('firebaseUserCredential: ');
+      console.log(firebaseUserCredential);
+
+      const fcmToken = yield messaging().getToken();
+      const response = yield httpsCallable(SAVE_USER, {fcmToken});
+      console.tron.log({response});
+      console.log('response: ');
+      console.log(response);
+
+      let user = {
+        phoneNumber: firebaseUserCredential.user.phoneNumber,
+        photoURL: firebaseUserCredential.user.photoURL,
+        displayName: firebaseUserCredential.user.displayName,
+        email: firebaseUserCredential.user.email,
+        isAnonymous: firebaseUserCredential.user.isAnonymous,
+        emailVerified: firebaseUserCredential.user.emailVerified,
+        uid: firebaseUserCredential.user.uid,
+        fcmToken,
+      };
+
+      if (response.data.ok) user = {...user, ...response.data.payload};
+      console.tron.log({user});
+
+      yield put(SessionActions.saveUser(user));
+      yield put(AuthActions.loginWithGoogleSuccess({ok: true}));
+      if (action.callback) action.callback({ok: true});
+    }
+  } catch (error) {
+    yield put(AuthActions.loginWithGoogleFailure(error));
+    if (action.callback) action.callback({ok: false});
+  }
+}
+
 export function* logout(api, action) {
   try {
-    yield GoogleSignin.signOut();
+    if (GoogleSignin.isSignedIn()) yield GoogleSignin.signOut();
     const firebaseUserCredential = yield auth().signOut();
     console.tron.log({firebaseUserCredential});
 

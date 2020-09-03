@@ -10,6 +10,7 @@ import {
   RefreshControl,
   TouchableHighlight,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -60,14 +61,15 @@ export class SavedScreen extends Component {
   };
 
   onLoginPress = () => {
-    const {loginWithGoogleRequest} = this.props;
+    const {loginWithGoogleRequest, loginWithAppleRequest} = this.props;
 
     this.setState({isLoading: true});
 
-    loginWithGoogleRequest(null, this.googleLoginCallback);
+    if (Platform.OS === 'ios') loginWithAppleRequest(null, this.loginCallback);
+    else loginWithGoogleRequest(null, this.loginCallback);
   };
 
-  googleLoginCallback = result => {
+  loginCallback = result => {
     if (result.ok) {
       console.tron.log({result});
       this.loadData();
@@ -143,6 +145,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(FavoriteActions.getFavoritesRequest(data, callback)),
   loginWithGoogleRequest: (data, callback) =>
     dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
+  loginWithAppleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithAppleRequest(data, callback)),
 });
 
 export default connect(

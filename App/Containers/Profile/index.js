@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   Alert,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -51,16 +52,22 @@ export class ProfileScreen extends Component {
   }
 
   onLoginPress = () => {
-    const {loginWithGoogleRequest, currentUser} = this.props;
+    const {
+      loginWithGoogleRequest,
+      loginWithAppleRequest,
+      currentUser,
+    } = this.props;
 
     if (!currentUser) {
       this.setState({isLoading: true});
 
-      loginWithGoogleRequest(null, this.googleLoginCallback);
+      if (Platform.OS === 'ios')
+        loginWithAppleRequest(null, this.loginCallback);
+      else loginWithGoogleRequest(null, this.loginCallback);
     }
   };
 
-  googleLoginCallback = result => {
+  loginCallback = result => {
     const {getFavoritesRequest, getUserPlacesRequest} = this.props;
     if (result.ok) {
       console.tron.log({result});
@@ -448,6 +455,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loginWithGoogleRequest: (data, callback) =>
     dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
+  loginWithAppleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithAppleRequest(data, callback)),
   logoutRequest: () => dispatch(AuthActions.logoutRequest()),
   getFavoritesRequest: (data, callback) =>
     dispatch(FavoriteActions.getFavoritesRequest(data, callback)),

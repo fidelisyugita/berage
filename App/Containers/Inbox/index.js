@@ -10,12 +10,14 @@ import {
   RefreshControl,
   Linking,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Swiper from 'react-native-swiper';
 
 import InboxActions from '../../Redux/InboxRedux';
+import AuthActions from '../../Redux/AuthRedux';
 
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
@@ -64,14 +66,15 @@ export class InboxScreen extends Component {
   };
 
   onLoginPress = () => {
-    const {loginWithGoogleRequest} = this.props;
+    const {loginWithGoogleRequest, loginWithAppleRequest} = this.props;
 
     this.setState({isLoading: true});
 
-    loginWithGoogleRequest(null, this.googleLoginCallback);
+    if (Platform.OS === 'ios') loginWithAppleRequest(null, this.loginCallback);
+    else loginWithGoogleRequest(null, this.loginCallback);
   };
 
-  googleLoginCallback = result => {
+  loginCallback = result => {
     if (result.ok) {
       console.tron.log({result});
       this.loadData();
@@ -140,6 +143,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getInboxesRequest: (data, callback) =>
     dispatch(InboxActions.getInboxesRequest(data, callback)),
+  loginWithGoogleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithGoogleRequest(data, callback)),
+  loginWithAppleRequest: (data, callback) =>
+    dispatch(AuthActions.loginWithAppleRequest(data, callback)),
 });
 
 export default connect(

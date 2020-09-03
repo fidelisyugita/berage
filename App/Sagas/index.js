@@ -21,7 +21,7 @@ import {PostTypes} from '../Redux/PostRedux';
 import {startup} from './StartupSagas';
 import {getUserAvatar} from './GithubSagas';
 
-import {loginWithGoogle, logout} from './AuthSagas';
+import {loginWithGoogle, loginWithApple, logout} from './AuthSagas';
 import {
   getPlaces,
   getPopularPlaces,
@@ -60,6 +60,7 @@ export default function* root() {
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
 
     takeLatest(AuthTypes.LOGIN_WITH_GOOGLE_REQUEST, loginWithGoogle, api),
+    takeLatest(AuthTypes.LOGIN_WITH_APPLE_REQUEST, loginWithApple, api),
     takeLatest(AuthTypes.LOGOUT_REQUEST, logout, api),
 
     takeLatest(PlaceTypes.GET_PLACES_REQUEST, getPlaces, api),

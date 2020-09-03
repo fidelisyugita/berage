@@ -118,4 +118,7 @@
 
   "delete": "Apus",
 
+  "noIdentifyToken": "Apple Sign-In failed - no identify token returned",
+
+  
 }

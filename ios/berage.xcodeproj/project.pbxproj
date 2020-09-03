@@ -823,13 +823,13 @@
 				CODE_SIGN_ENTITLEMENTS = berage/Berage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = C67497M2TB;
 				INFOPLIST_FILE = berage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.6;
+				MARKETING_VERSION = 0.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -837,7 +837,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
-				PROVISIONING_PROFILE_SPECIFIER = Development;
+				PROVISIONING_PROFILE_SPECIFIER = "Berage Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -854,12 +854,12 @@
 				CODE_SIGN_ENTITLEMENTS = berage/Berage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = C67497M2TB;
 				INFOPLIST_FILE = berage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.6;
+				MARKETING_VERSION = 0.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -867,7 +867,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fidelisyugita.berage;
 				PRODUCT_NAME = Berage;
-				PROVISIONING_PROFILE_SPECIFIER = Distribution;
+				PROVISIONING_PROFILE_SPECIFIER = "Berage Dis";
 				SWIFT_OBJC_BRIDGING_HEADER = "berage-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
