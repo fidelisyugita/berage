@@ -104,6 +104,18 @@ export function* loginWithApple(api, action) {
     console.log('appleAuthRequestResponse: ');
     console.log(appleAuthRequestResponse);
 
+    let user = {
+      email: appleAuthRequestResponse.email,
+    };
+
+    const {fullName} = appleAuthRequestResponse;
+    if (fullName) {
+      user = {
+        ...user,
+        displayName: `${fullName.givenName} ${fullName.familyName}`,
+      };
+    }
+
     // Ensure Apple returned a user identityToken
     if (!appleAuthRequestResponse.identityToken) {
       yield put(
@@ -142,16 +154,13 @@ export function* loginWithApple(api, action) {
         console.log(response);
       }
 
-      let user = {
-        phoneNumber: firebaseUserCredential.user.phoneNumber,
-        photoURL: firebaseUserCredential.user.photoURL,
-        displayName: firebaseUserCredential.user.displayName,
-        email: firebaseUserCredential.user.email,
-        isAnonymous: firebaseUserCredential.user.isAnonymous,
-        emailVerified: firebaseUserCredential.user.emailVerified,
-        uid: firebaseUserCredential.user.uid,
+      user = {
+        ...user,
         fcmToken,
       };
+
+      console.log('user: ');
+      console.log(user);
 
       if (response && response.data && response.data.ok)
         user = {...user, ...response.data.payload};
