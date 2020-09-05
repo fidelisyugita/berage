@@ -13,6 +13,7 @@ import AddBannerScreen from '../Containers/Profile/AddBannerScreen';
 import SendNotifScreen from '../Containers/Profile/SendNotifScreen';
 import PrivacyPolicyScreen from '../Containers/Profile/PrivacyPolicyScreen';
 import TermsOfServiceScreen from '../Containers/Profile/TermsOfServiceScreen';
+import EditProfileScreen from '../Containers/Profile/EditProfileScreen';
 
 import ChatScreen from '../Containers/Chat/ChatScreen';
 
@@ -37,6 +38,7 @@ const MainNav = createStackNavigator(
     SendNotifScreen: {screen: SendNotifScreen},
     PrivacyPolicyScreen: {screen: PrivacyPolicyScreen},
     TermsOfServiceScreen: {screen: TermsOfServiceScreen},
+    EditProfileScreen: {screen: EditProfileScreen},
 
     ChatScreen: {screen: ChatScreen},
 

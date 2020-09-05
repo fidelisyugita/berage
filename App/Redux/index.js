@@ -18,6 +18,7 @@ export const reducers = combineReducers({
   inbox: require('./InboxRedux').reducer,
   banner: require('./BannerRedux').reducer,
   post: require('./PostRedux').reducer,
+  user: require('./UserRedux').reducer,
 });
 
 export default () => {

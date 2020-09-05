@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import {getDistance} from 'geolib';
+import {AppleButton} from '@invertase/react-native-apple-authentication';
 
 import AuthActions from '../../Redux/AuthRedux';
 import FavoriteActions from '../../Redux/FavoriteRedux';
@@ -56,6 +57,7 @@ export class ProfileScreen extends Component {
       loginWithGoogleRequest,
       loginWithAppleRequest,
       currentUser,
+      navigation,
     } = this.props;
 
     if (!currentUser) {
@@ -64,6 +66,8 @@ export class ProfileScreen extends Component {
       if (Platform.OS === 'ios')
         loginWithAppleRequest(null, this.loginCallback);
       else loginWithGoogleRequest(null, this.loginCallback);
+    } else {
+      navigation.navigate('EditProfileScreen');
     }
   };
 
@@ -159,11 +163,23 @@ export class ProfileScreen extends Component {
                 {(currentUser && currentUser.displayName) ||
                   I18n.t('personalName')}
               </Text>
-              <TouchableOpacity onPress={this.onLoginPress}>
-                <Text style={[Fonts.style.medium, Fonts.style.linkColor]}>
-                  {currentUser ? I18n.t('viewProfile') : I18n.t('login')}
-                </Text>
-              </TouchableOpacity>
+              {Platform.OS === 'ios' && !currentUser ? (
+                <AppleButton
+                  buttonStyle={AppleButton.Style.WHITE}
+                  buttonType={AppleButton.Type.SIGN_IN}
+                  style={{
+                    width: Scale(150), // You must specify a width
+                    height: Scale(35), // You must specify a height
+                  }}
+                  onPress={this.onLoginPress}
+                />
+              ) : (
+                <TouchableOpacity onPress={this.onLoginPress}>
+                  <Text style={[Fonts.style.medium, Fonts.style.linkColor]}>
+                    {currentUser ? I18n.t('viewProfile') : I18n.t('login')}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
 

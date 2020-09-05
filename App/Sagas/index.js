@@ -15,6 +15,7 @@ import {ChatTypes} from '../Redux/ChatRedux';
 import {InboxTypes} from '../Redux/InboxRedux';
 import {BannerTypes} from '../Redux/BannerRedux';
 import {PostTypes} from '../Redux/PostRedux';
+import {UserTypes} from '../Redux/UserRedux';
 
 /* ------------- Sagas ------------- */
 
@@ -42,6 +43,7 @@ import {
   comment,
   getComments,
 } from './PostSagas';
+import {saveUser} from './UserSagas';
 
 /* ------------- API ------------- */
 
@@ -93,5 +95,7 @@ export default function* root() {
     takeLatest(PostTypes.DISLIKE_POST_REQUEST, dislikePost, api),
     takeLatest(PostTypes.COMMENT_REQUEST, comment, api),
     takeLatest(PostTypes.GET_COMMENTS_REQUEST, getComments, api),
+
+    takeLatest(UserTypes.SAVE_USER_REQUEST, saveUser, api),
   ]);
 }
