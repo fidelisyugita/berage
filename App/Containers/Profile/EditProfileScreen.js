@@ -60,9 +60,11 @@ export class EditProfileScreen extends Component {
   changePhoto = async () => {
     const {currentUser} = this.props;
 
+    console.log(currentUser);
+
     try {
       const image = await UploadImage(
-        `users/${currentUser.uid}`,
+        `users/${currentUser.uid || currentUser.id}`,
         Scale(480),
         Scale(480),
       );
@@ -76,10 +78,10 @@ export class EditProfileScreen extends Component {
     const {displayName, photoURL} = this.state;
     const {saveUserRequest} = this.props;
 
-    if (displayName.length < 1) {
-      DropDownHolder.alert('warn', I18n.t('fieldsRequired'), undefined);
-      return;
-    }
+    // if (displayName.length < 1) {
+    //   DropDownHolder.alert('warn', I18n.t('fieldsRequired'), undefined);
+    //   return;
+    // }
 
     this.setState({isLoading: true});
 
@@ -103,7 +105,9 @@ export class EditProfileScreen extends Component {
           <CustomHeader onBack={this.onBack} />
           <View style={[AppStyles.container, AppStyles.section]}>
             <View style={[AppStyles.row]}>
-              <View style={[AppStyles.alignCenter]}>
+              <TouchableOpacity
+                style={[AppStyles.alignCenter]}
+                onPress={this.changePhoto}>
                 {photoURL ? (
                   <CustomImage
                     source={{uri: photoURL}}
@@ -120,17 +124,15 @@ export class EditProfileScreen extends Component {
                     height={Metrics.avatars.xl}
                   />
                 )}
-                <TouchableOpacity onPress={this.changePhoto}>
-                  <Text
-                    style={[
-                      Fonts.style.medium,
-                      Fonts.style.linkColor,
-                      {marginTop: Scale(8)},
-                    ]}>
-                    {I18n.t('edit')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                <Text
+                  style={[
+                    Fonts.style.medium,
+                    Fonts.style.linkColor,
+                    {padding: Scale(8), paddingBottom: 0},
+                  ]}>
+                  {I18n.t('edit')}
+                </Text>
+              </TouchableOpacity>
               <View
                 style={[
                   AppStyles.justifyCenter,

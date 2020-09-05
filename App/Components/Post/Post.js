@@ -21,11 +21,11 @@ const Place = props => {
   const totalDislike = item.dislikedBy ? item.dislikedBy.length : 0;
   const isLiked =
     item.likedBy && currentUser
-      ? item.likedBy.includes(currentUser.uid)
+      ? item.likedBy.includes(currentUser.uid || currentUser.id)
       : false;
   const isDisliked =
     item.dislikedBy && currentUser
-      ? item.dislikedBy.includes(currentUser.uid)
+      ? item.dislikedBy.includes(currentUser.uid || currentUser.id)
       : false;
 
   return (

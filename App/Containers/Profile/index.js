@@ -72,11 +72,20 @@ export class ProfileScreen extends Component {
   };
 
   loginCallback = result => {
-    const {getFavoritesRequest, getUserPlacesRequest} = this.props;
+    const {
+      getFavoritesRequest,
+      getUserPlacesRequest,
+      currentUser,
+      navigation,
+    } = this.props;
     if (result.ok) {
       console.tron.log({result});
       getFavoritesRequest();
       getUserPlacesRequest();
+
+      const {displayName, photoURL} = currentUser;
+      if (!displayName || !displayName.length < 1 || !photoURL)
+        navigation.navigate('EditProfileScreen');
     }
     this.setState({isLoading: false});
   };
