@@ -14,8 +14,11 @@ export default async (
       cropping: cropping,
     });
     console.tron.log({image});
+    console.log('image');
+    console.log(image);
 
-    const refPath = `${path}/${image.modificationDate}.jpg`;
+    const refPath = `${path}/${image.modificationDate ||
+      image.creationDate}.jpg`;
     const reference = storage().ref(refPath);
     const uploadResponse = await reference.putFile(image.path);
     console.tron.log({uploadResponse});

@@ -83,9 +83,11 @@ export class ProfileScreen extends Component {
       getFavoritesRequest();
       getUserPlacesRequest();
 
+      console.log('currentUser');
+      console.log(currentUser);
+
       const {displayName, photoURL} = currentUser;
-      if (!displayName || !displayName.length < 1 || !photoURL)
-        navigation.navigate('EditProfileScreen');
+      if (!displayName || !photoURL) navigation.navigate('EditProfileScreen');
     }
     this.setState({isLoading: false});
   };
@@ -174,7 +176,7 @@ export class ProfileScreen extends Component {
               </Text>
               {Platform.OS === 'ios' && !currentUser ? (
                 <AppleButton
-                  buttonStyle={AppleButton.Style.WHITE}
+                  buttonStyle={AppleButton.Style.WHITE_OUTLINE}
                   buttonType={AppleButton.Type.SIGN_IN}
                   style={{
                     width: Scale(150), // You must specify a width

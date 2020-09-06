@@ -109,69 +109,75 @@ export function* loginWithApple(api, action) {
     };
 
     const {fullName} = appleAuthRequestResponse;
-    if (fullName) {
+    if (fullName && fullName.givenName) {
       user = {
         ...user,
-        displayName: `${fullName.givenName} ${fullName.familyName}`,
+        displayName: `${fullName.givenName}`,
       };
     }
 
     // Ensure Apple returned a user identityToken
-    if (!appleAuthRequestResponse.identityToken) {
-      yield put(
-        AuthActions.loginWithGoogleFailure({
-          message: I18n.t('noIdentifyToken'),
-        }),
-      );
-      if (action.callback) action.callback({ok: false});
+    if (!appleAuthRequestResponse.identityToken)
+      throw {message: I18n.t('noIdentifyToken')};
+
+    // Create a Firebase credential from the response
+    const {identityToken, nonce} = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(
+      identityToken,
+      nonce,
+    );
+
+    // Sign the user in with the credential
+    const firebaseUserCredential = yield auth().signInWithCredential(
+      appleCredential,
+    );
+    console.tron.log({firebaseUserCredential});
+    console.log('firebaseUserCredential: ');
+    console.log(firebaseUserCredential);
+
+    let fcmToken = null;
+    let response = null;
+
+    const hasPermission = yield messaging().requestPermission();
+    console.log('hasPermission: ');
+    console.log(hasPermission);
+    if (hasPermission) {
+      fcmToken = yield messaging().getToken();
+      response = yield httpsCallable(SAVE_USER, {fcmToken});
+      console.tron.log({response});
+      console.log('response: ');
+      console.log(response);
     } else {
-      // Create a Firebase credential from the response
-      const {identityToken, nonce} = appleAuthRequestResponse;
-      const appleCredential = auth.AppleAuthProvider.credential(
-        identityToken,
-        nonce,
-      );
-
-      // Sign the user in with the credential
-      const firebaseUserCredential = yield auth().signInWithCredential(
-        appleCredential,
-      );
-      console.tron.log({firebaseUserCredential});
-      console.log('firebaseUserCredential: ');
-      console.log(firebaseUserCredential);
-
-      let fcmToken = null;
-      let response = null;
-
-      const hasPermission = yield messaging().requestPermission();
-      console.log('hasPermission: ');
-      console.log(hasPermission);
-      if (hasPermission) {
-        fcmToken = yield messaging().getToken();
-        response = yield httpsCallable(SAVE_USER, {fcmToken});
-        console.tron.log({response});
-        console.log('response: ');
-        console.log(response);
-      }
-
-      user = {
-        ...user,
-        fcmToken,
-      };
-
-      console.log('user: ');
-      console.log(user);
-
-      if (response && response.data && response.data.ok)
-        user = {...user, ...response.data.payload};
-      console.tron.log({user});
-
-      yield put(SessionActions.saveUser(user));
-      yield put(AuthActions.loginWithGoogleSuccess({ok: true}));
-      if (action.callback) action.callback({ok: true});
+      response = yield httpsCallable(SAVE_USER, {});
+      console.tron.log({response});
+      console.log('response: ');
+      console.log(response);
     }
+
+    user = {
+      ...user,
+      fcmToken,
+    };
+
+    console.log('user: ');
+    console.log(user);
+
+    if (response.data.ok) user = {...user, ...response.data.payload};
+    console.tron.log({user});
+    console.log('user: ');
+    console.log(user);
+    // if (response && response.data && response.data.ok)
+    //   user = {...user, ...response.data.payload};
+    // console.tron.log({user});
+    if (user.id && !user.uid) user = {...user, uid: user.id};
+
+    if (!user.uid) throw {message: I18n.t('setupPermissionDetail')};
+
+    yield put(SessionActions.saveUser(user));
+    yield put(AuthActions.loginWithAppleSuccess({ok: true}));
+    if (action.callback) action.callback({ok: true});
   } catch (error) {
-    yield put(AuthActions.loginWithGoogleFailure(error));
+    yield put(AuthActions.loginWithAppleFailure(error));
     if (action.callback) action.callback({ok: false});
   }
 }

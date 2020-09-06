@@ -45,6 +45,7 @@ export class EditProfileScreen extends Component {
       isLoading: false,
       displayName: props.currentUser.displayName,
       photoURL: props.currentUser.photoURL,
+      photoPath: props.currentUser.photoPath,
     };
   }
 
@@ -59,6 +60,7 @@ export class EditProfileScreen extends Component {
 
   changePhoto = async () => {
     const {currentUser} = this.props;
+    const {photoPath} = this.state;
 
     console.log(currentUser);
 
@@ -68,14 +70,18 @@ export class EditProfileScreen extends Component {
         Scale(480),
         Scale(480),
       );
-      this.setState({photoURL: image.uri}, this.onSavePress);
+      if (photoPath) await DeleteImage(photoPath);
+      this.setState(
+        {photoURL: image.uri, photoPath: image.refPath},
+        this.onSavePress,
+      );
     } catch (error) {
       console.tron.log({error});
     }
   };
 
   onSavePress = () => {
-    const {displayName, photoURL} = this.state;
+    const {displayName, photoURL, photoPath} = this.state;
     const {saveUserRequest} = this.props;
 
     // if (displayName.length < 1) {
@@ -88,6 +94,7 @@ export class EditProfileScreen extends Component {
     const data = {
       displayName,
       photoURL,
+      photoPath,
     };
 
     console.tron.log({data});
@@ -98,6 +105,9 @@ export class EditProfileScreen extends Component {
   render() {
     const {navigation, currentUser} = this.props;
     const {displayName, photoURL} = this.state;
+
+    console.log('photoURL');
+    console.log(photoURL);
 
     return (
       <SafeAreaView>
