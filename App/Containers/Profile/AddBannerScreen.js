@@ -160,12 +160,14 @@ export class AddBannerScreen extends Component {
             {this.renderImage()}
             <TextInput
               value={title}
+              multiline={true}
               placeholder={I18n.t('title')}
               onChangeText={text => this.setState({title: text})}
               style={styles.inputText}
             />
             <TextInput
               value={url}
+              multiline={true}
               placeholder={I18n.t('url')}
               onChangeText={text => this.setState({url: text})}
               style={styles.inputText}
@@ -209,6 +211,7 @@ const styles = StyleSheet.create({
     ...AppStyles.borderBottom7,
     ...Fonts.style.medium,
     ...Fonts.style.alignBottom,
+    marginTop: Scale(10),
   },
   btnSave: {
     ...AppStyles.topSpace,

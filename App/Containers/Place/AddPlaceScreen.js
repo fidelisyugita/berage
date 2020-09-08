@@ -345,6 +345,7 @@ export class AddPlaceScreen extends Component {
             {this.renderImagePlaces()}
             <TextInput
               value={placeName}
+              multiline={true}
               placeholder={I18n.t('name')}
               onChangeText={text => this.setState({placeName: text})}
               style={styles.inputText}
@@ -360,6 +361,7 @@ export class AddPlaceScreen extends Component {
 
             <TextInput
               editable={false}
+              multiline={true}
               placeholder={`${I18n.t('categories')} (${I18n.t(
                 'max',
               )} ${MAX_CATEGORY})`}
@@ -367,6 +369,7 @@ export class AddPlaceScreen extends Component {
               style={{...styles.inputText, borderColor: Colors.transparent}}
             />
             <FlatList
+              style={{marginTop: Scale(10)}}
               data={CATEGORIES_DATA}
               keyExtractor={(item, idx) => item + idx}
               numColumns={2}
@@ -414,6 +417,7 @@ export class AddPlaceScreen extends Component {
 
             <TextInput
               editable={false}
+              multiline={true}
               placeholder={I18n.t('priceDetail')}
               style={{...styles.inputText, borderColor: Colors.transparent}}
             />
@@ -539,7 +543,7 @@ const styles = StyleSheet.create({
     ...AppStyles.borderBottom7,
     ...Fonts.style.medium,
     ...Fonts.style.alignBottom,
-    minHeight: Scale(30),
+    // minHeight: Scale(30),
     marginTop: Scale(10),
   },
   btnSave: {

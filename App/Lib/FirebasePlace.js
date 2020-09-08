@@ -59,6 +59,9 @@ class FirebasePlace {
   joinOnline = () => {
     const {currentUser, placeId} = this.state;
 
+    console.log('currentUser');
+    console.log(currentUser);
+
     this.onlineUsersRef
       // .child(placeId)
       .child(currentUser.uid)
