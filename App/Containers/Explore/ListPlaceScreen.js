@@ -82,11 +82,14 @@ export class ListPlaceScreen extends Component {
 
     return (
       <ScrollView>
-        <ModalLoader
+        {/* <ModalLoader
           visible={getPopularPlaces.fetching || getRecommendedPlaces.fetching}
           imageSource={Images.homeLoader}
-        />
+        /> */}
         <CustomHeader onBack={() => navigation.pop()} />
+        {(getPopularPlaces.fetching || getRecommendedPlaces.fetching) && (
+          <Loader style={[AppStyles.sectionVertical]} />
+        )}
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <FlatList

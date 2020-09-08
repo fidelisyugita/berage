@@ -21,6 +21,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
 import {getDistance} from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
+import openMap, {createOpenLink} from 'react-native-open-maps';
+import getDirections from 'react-native-google-maps-directions';
 
 import FavoriteActions from '../../Redux/FavoriteRedux';
 import PlaceActions from '../../Redux/PlaceRedux';
@@ -186,11 +188,11 @@ export class PlaceScreen extends Component {
       this.setState({imageToPost: image});
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
+      // DropDownHolder.alert(
+      //   'error',
+      //   I18n.t('errorDefault'),
+      //   error.message || I18n.t('tryAgain'),
+      // );
     }
   };
 
@@ -281,7 +283,7 @@ export class PlaceScreen extends Component {
     if (!currentUser) {
       DropDownHolder.alert('warn', I18n.t('loginFirst'), undefined);
     } else {
-      if (currentUser.superUser) {
+      if (currentUser.superUser || currentUser.premiumUser) {
         navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
         return;
       }
@@ -292,7 +294,10 @@ export class PlaceScreen extends Component {
           getDistance(userLocation, item.location),
           1000,
         );
-      if (parseFloat(distance) < 0.5) {
+
+      const isAroundThePlace = parseFloat(distance) < 0.1; //less than 100m
+
+      if (isAroundThePlace) {
         navigation.navigate('OnlineUsersScreen', {item, onlineUsers});
       } else DropDownHolder.alert('warn', I18n.t('notInArea'), undefined);
     }
@@ -308,6 +313,37 @@ export class PlaceScreen extends Component {
     const {slotLeft} = this.state;
 
     if (slotLeft >= 0) firebasePlace.change(slotLeft - 1);
+  };
+
+  openMaps = () => {
+    const {userLocation} = this.props;
+    const {item} = this.state;
+
+    if (item.location) {
+      if (userLocation) {
+        getDirections({
+          source: userLocation,
+          destination: item.location,
+          params: [
+            {
+              key: 'travelmode',
+              value: 'driving', // may be "walking", "bicycling" or "transit" as well
+            },
+            {
+              key: 'dir_action',
+              value: 'navigate', // this instantly initializes navigation using the given travel mode
+            },
+          ],
+        });
+      } else {
+        openMap({
+          ...item.location,
+          zoom: 30,
+          // navigate_mode: 'navigate',
+          // end: item.name,
+        });
+      }
+    }
   };
 
   render() {
@@ -346,6 +382,7 @@ export class PlaceScreen extends Component {
         getDistance(userLocation, item.location),
         1000,
       );
+    const isAroundThePlace = parseFloat(distance) < 0.5; //less than 500m
 
     return (
       <ScrollView
@@ -477,7 +514,7 @@ export class PlaceScreen extends Component {
                 </Text>
               </View>
             </View>
-            <View style={AppStyles.flex1}>
+            <TouchableOpacity style={AppStyles.flex1} onPress={this.openMaps}>
               <View style={AppStyles.row}>
                 <Fontisto
                   name="map-marker-alt"
@@ -485,15 +522,15 @@ export class PlaceScreen extends Component {
                   color={Colors.baseText}
                 />
                 <Text style={[AppStyles.smallMarginLeft, Fonts.style.medium3]}>
-                  {`${distance} km`}
+                  {`${distance !== '-' ? distance : '?'} km`}
                 </Text>
               </View>
               <Text style={[Fonts.style.small, AppStyles.containerTiny]}>
                 {distance !== '-'
                   ? `${EstimateDriveTime(distance)} ${I18n.t('minute')}`
-                  : '-'}
+                  : `? ${I18n.t('minute')}`}
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={AppStyles.flex1}>
               <View style={AppStyles.row}>
                 <Fontisto
@@ -628,12 +665,14 @@ export class PlaceScreen extends Component {
                 // onFocus={!currentUser ? this.onPostPress : () => {}}
                 editable={
                   currentUser != null &&
-                  (currentUser.superUser || parseFloat(distance) < 0.5)
-                } //less than 500m
+                  (currentUser.superUser ||
+                    currentUser.premiumUser ||
+                    isAroundThePlace)
+                } //less than 100m
                 value={textToPost}
                 placeholder={
                   currentUser != null
-                    ? parseFloat(distance) < 0.5
+                    ? isAroundThePlace
                       ? I18n.t('tellUsPlaceholder')
                       : I18n.t('toFarPlaceholder')
                     : I18n.t('loginFirstPlaceholder')
@@ -681,8 +720,9 @@ export class PlaceScreen extends Component {
                   disabled={
                     imageToPost ||
                     !currentUser ||
-                    ((distance === '-' || parseFloat(distance)) >= 0.5 &&
-                      !currentUser.superUser)
+                    (!isAroundThePlace &&
+                      !currentUser.superUser &&
+                      !currentUser.premiumUser)
                   }
                   onPress={this.addImage}>
                   <AntDesign

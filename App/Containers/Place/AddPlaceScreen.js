@@ -118,11 +118,11 @@ export class AddPlaceScreen extends Component {
       this.setState({imagePlaces: tempImages, hasChanged: true});
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
+      // DropDownHolder.alert(
+      //   'error',
+      //   I18n.t('errorDefault'),
+      //   error.message || I18n.t('tryAgain'),
+      // );
     }
   };
 

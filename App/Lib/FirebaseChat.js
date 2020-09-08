@@ -57,7 +57,7 @@ class FirebaseChat {
     //   .limitToLast(20)
     //   .on('child_added', snapshot => callback(this.parse(snapshot)));
 
-    this.roomRef.limitToLast(20).on('value', snapshot => {
+    this.roomRef.limitToLast(100).on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         callback(this.parse(childSnapshot));
       });
@@ -73,7 +73,7 @@ class FirebaseChat {
       const {text, user} = messages[i];
       const message = {
         text,
-        user,
+        user: {...user, receiver: false},
         timestamp: this.timestamp,
       };
       this.append(message);
@@ -93,6 +93,8 @@ class FirebaseChat {
         _id: targetUser._id || targetUser.uid,
         avatar: targetUser.avatar || targetUser.photoURL,
         name: targetUser.name || targetUser.displayName,
+        fcmToken: targetUser.fcmToken,
+        receiver: true,
       },
     });
     this.targetRoomRef.update(message);

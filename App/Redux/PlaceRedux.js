@@ -79,12 +79,12 @@ export const getPlacesRequest = (state, {data}) => {
 export const getPlacesSuccess = (state, {payload}) => {
   // DropDownHolder.alert('success', I18n.t('successDefault'), undefined);
   const {data} = state.getPlaces;
-  const offset = (data && data.offset) || 0;
+  const page = (data && data.page) || 0;
 
   return state.merge({
     ...state,
     getPlaces: {fetching: false, error: null, payload, data: null},
-    places: offset > 0 ? [...state.places, ...payload] : [...payload],
+    places: page > 0 ? [...state.places, ...payload] : [...payload],
   });
 };
 export const getPlacesFailure = (state, {error}) => {

@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import React, {Component} from 'react';
 import {
   Text,
@@ -21,7 +22,7 @@ import BannerActions from '../../Redux/BannerRedux';
 import {Colors, Fonts, Metrics, Images, AppStyles} from '../../Themes';
 import I18n from '../../I18n';
 import {Scale} from '../../Transforms';
-import {NavigateUrl} from '../../Lib';
+import {NavigateUrl, DeleteImage} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 import Loader from '../../Components/Loader';
@@ -30,7 +31,7 @@ import CustomHeader from '../../Components/CustomHeader';
 import EmptyState from '../../Components/EmptyState';
 import ModalLoader from '../../Components/Modal/ModalLoader';
 import LoginButton from '../../Components/LoginButton';
-import RenderInbox from '../../Components/Inbox/Inbox';
+import RenderBanner from '../../Components/Banner/Banner';
 
 import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
 
@@ -69,6 +70,12 @@ export class SetBannerScreen extends Component {
     this.setState({refreshing: true}, () => this.componentDidMount());
   };
 
+  onDeletePress(item) {
+    //change to soft delete
+    // if (item.image && item.image.refPath) DeleteImage(item.image.refPath);
+    this.props.deleteBannerRequest({id: item.id});
+  }
+
   render() {
     const {
       navigation,
@@ -76,6 +83,7 @@ export class SetBannerScreen extends Component {
       userLocation,
       getBanners,
       banners,
+      deleteBanner,
     } = this.props;
     const {isLoading, refreshing} = this.state;
 
@@ -84,7 +92,9 @@ export class SetBannerScreen extends Component {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader visible={isLoading || getBanners.fetching} />
+        <ModalLoader
+          visible={isLoading || getBanners.fetching || deleteBanner.fetching}
+        />
         <CustomHeader
           onBack={() => navigation.pop()}
           renderRight={() => (
@@ -101,7 +111,11 @@ export class SetBannerScreen extends Component {
           data={banners}
           keyExtractor={(item, idx) => item + idx}
           renderItem={({item}) => (
-            <RenderInbox item={item} onPress={() => NavigateUrl(item.url)} />
+            <RenderBanner
+              item={item}
+              onPress={() => NavigateUrl(item.url)}
+              onDeletePress={() => this.onDeletePress(item)}
+            />
           )}
         />
       </ScrollView>
@@ -115,11 +129,14 @@ const mapStateToProps = state => ({
   currentUser: state.session.user,
   getBanners: state.banner.getBanners,
   banners: state.banner.banners,
+  deleteBanner: state.banner.deleteBanner,
 });
 
 const mapDispatchToProps = dispatch => ({
   getBannersRequest: (data, callback) =>
     dispatch(BannerActions.getBannersRequest(data, callback)),
+  deleteBannerRequest: (data, callback) =>
+    dispatch(BannerActions.deleteBannerRequest(data, callback)),
 });
 
 export default connect(

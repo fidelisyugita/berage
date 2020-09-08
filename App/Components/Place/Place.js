@@ -27,6 +27,7 @@ const Place = props => {
         style={{
           ...AppStyles.borderImage,
           ...AppStyles.border3,
+          ...AppStyles.shadowSmall,
           width: Scale(120),
           height: Metrics.images.tiny,
         }}

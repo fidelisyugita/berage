@@ -109,6 +109,7 @@ export class ExploreScreen extends Component {
           ...AppStyles.sectionVerticalSmall,
           flexDirection: 'row',
           justifyContent: 'space-between',
+          marginTop: Scale(8),
         }}>
         <Text style={Fonts.style.large3}>{section.title}</Text>
         <TouchableOpacity onPress={section.onPress}>
@@ -156,16 +157,16 @@ export class ExploreScreen extends Component {
     return (
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={false} onRefresh={this.onRefresh} />
+          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
         }>
-        <ModalLoader
+        {/* <ModalLoader
           visible={
             getPopularPlaces.fetching ||
             getRecommendedPlaces.fetching ||
             (getBanners.fetching && banners.length < 1)
           }
           imageSource={Images.homeLoader}
-        />
+        /> */}
 
         <View style={[AppStyles.container, AppStyles.section]}>
           <TouchableWithoutFeedback
@@ -197,6 +198,12 @@ export class ExploreScreen extends Component {
           </TouchableWithoutFeedback>
         </View>
 
+        {(getPopularPlaces.fetching ||
+          getRecommendedPlaces.fetching ||
+          getBanners.fetching) && (
+          <Loader style={[AppStyles.sectionVertical]} />
+        )}
+
         <View
           style={{
             ...AppStyles.container,
@@ -222,7 +229,12 @@ export class ExploreScreen extends Component {
                 key={banner.image}
                 onPress={() => NavigateUrl(banner.url)}>
                 <CustomImage
-                  source={{uri: banner.image}}
+                  source={{
+                    uri:
+                      banner.image && banner.image.uri
+                        ? banner.image.uri
+                        : banner.image,
+                  }}
                   style={[
                     AppStyles.border3,
                     {

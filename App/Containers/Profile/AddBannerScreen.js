@@ -44,16 +44,16 @@ export class AddBannerScreen extends Component {
 
   addImage = async () => {
     try {
-      const image = await UploadImage('banners');
+      const image = await UploadImage('banners', Scale(750), Scale(460));
       console.tron.log({image});
       this.setState({image});
     } catch (error) {
       console.tron.log({error});
-      DropDownHolder.alert(
-        'error',
-        I18n.t('errorDefault'),
-        error.message || I18n.t('tryAgain'),
-      );
+      // DropDownHolder.alert(
+      //   'error',
+      //   I18n.t('errorDefault'),
+      //   error.message || I18n.t('tryAgain'),
+      // );
     }
   };
 
