@@ -46,11 +46,13 @@ const CATEGORIES_DATA = [
   'Keluarga',
   'Jasa',
   'Anak Muda',
+  'Wisata',
+  'Oleh-oleh',
 ];
 
 const STATUS_DATA = ['Buka', 'Tutup'];
 
-const MAX_CATEGORY = 5;
+const MAX_CATEGORY = 3;
 const MAX_IMAGES = 5;
 const TIME_NOW = new Date().getTime();
 
