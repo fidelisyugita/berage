@@ -214,7 +214,7 @@ export class PlaceScreen extends Component {
 
   onSubmitPress = () => {
     const {item, textToPost, imageToPost} = this.state;
-    const {addPostRequest} = this.props;
+    const {addPostRequest, currentUser} = this.props;
 
     if (textToPost.length < 1) {
       DropDownHolder.alert('warn', I18n.t('textIsEmpty'), undefined);
@@ -230,6 +230,7 @@ export class PlaceScreen extends Component {
               refPath: imageToPost.refPath,
             }
           : null,
+        updatedBy: currentUser,
       };
 
       console.tron.log({data});

@@ -115,7 +115,9 @@ export class AddPlaceScreen extends Component {
     let tempImages = [...this.state.imagePlaces];
 
     try {
-      const image = await UploadImage(`places/${currentUser.uid}/${TIME_NOW}`);
+      const image = await UploadImage(
+        `places/${currentUser.uid || currentUser.id}/${TIME_NOW}`,
+      );
       tempImages.push(image);
       console.tron.log({tempImages});
       this.setState({imagePlaces: tempImages, hasChanged: true});

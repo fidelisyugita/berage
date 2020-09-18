@@ -97,7 +97,7 @@ export class ChatScreen extends Component {
           messages={messages}
           onSend={firebaseChat.send}
           user={{
-            _id: currentUser.uid,
+            _id: currentUser.uid || currentUser.id,
             name: currentUser.displayName,
             avatar: currentUser.photoURL,
             fcmToken: currentUser.fcmToken,

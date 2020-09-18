@@ -64,7 +64,7 @@ class FirebasePlace {
 
     this.onlineUsersRef
       // .child(placeId)
-      .child(currentUser.uid)
+      .child(currentUser.uid || currentUser.id)
       .update({...currentUser, timestamp: this.timestamp});
 
     // setTimeout(() => this.leave(), 5 * 60 * 1000); //leave after 5mins
@@ -73,10 +73,10 @@ class FirebasePlace {
   leave() {
     const {currentUser, placeId} = this.state;
 
-    if (currentUser && currentUser.uid)
+    if (currentUser && (currentUser.uid || currentUser.id))
       this.onlineUsersRef
         // .child(placeId)
-        .child(currentUser.uid)
+        .child(currentUser.uid || currentUser.id)
         .remove();
 
     this.offOnlineUsers();

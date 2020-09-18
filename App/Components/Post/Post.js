@@ -11,6 +11,8 @@ import {DateFormatter} from '../../Lib';
 
 import CustomImage from '../../Components/CustomImage';
 
+import IconUserDefault from '../../Images/svg/IconUserDefault.svg';
+
 const Place = props => {
   const {children, item, onLike, onDislike, currentUser, onComment} = props;
   console.tron.log({currentUser});
@@ -37,7 +39,23 @@ const Place = props => {
         AppStyles.shadow,
       ]}>
       <View style={[AppStyles.row, AppStyles.alignCenter]}>
-        <CustomImage
+        {updatedBy && updatedBy.photoURL ? (
+          <CustomImage
+            source={{uri: updatedBy.photoURL}}
+            style={[
+              AppStyles.avatarMedium,
+              AppStyles.borderCircle,
+              AppStyles.border3,
+            ]}
+            imageStyle={AppStyles.borderCircle}
+          />
+        ) : (
+          <IconUserDefault
+            width={Metrics.avatars.medium}
+            height={Metrics.avatars.medium}
+          />
+        )}
+        {/* <CustomImage
           source={{uri: updatedBy.photoURL}}
           style={[
             AppStyles.avatarMedium,
@@ -45,7 +63,7 @@ const Place = props => {
             AppStyles.border3,
           ]}
           imageStyle={AppStyles.borderCircle}
-        />
+        /> */}
         <View style={[AppStyles.baseMarginLeft, AppStyles.justifyEvenly]}>
           <Text
             numberOfLines={1}
